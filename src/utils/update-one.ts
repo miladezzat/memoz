@@ -1,5 +1,6 @@
 const updateOne = (query:any, data:any, newData:any) => {
   let updated = {};
+
   const updatedData = data.map((datum:any) => {
     if (datum.id === query.id) {
       updated = {
@@ -11,6 +12,7 @@ const updateOne = (query:any, data:any, newData:any) => {
 
     return datum;
   });
+
   return { updated, updatedData };
 };
 

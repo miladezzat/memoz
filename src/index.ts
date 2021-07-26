@@ -3,6 +3,7 @@ import deleteData from './utils/delete';
 import uuid from './utils/uuid';
 import update from './utils/update';
 import updateOne from './utils/update-one';
+import getMany from './utils/get-many';
 
 class Memoz {
   private db: any[];
@@ -18,8 +19,12 @@ class Memoz {
     return { id, [key]: value };
   }
 
-  public get() {
-    return this.db;
+  public get(query?:any) {
+    if (!Object.keys(query || {}).length) {
+      return this.db;
+    }
+
+    return getMany(query, this.db);
   }
 
   public getOne(query:any) {
