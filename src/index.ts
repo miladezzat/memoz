@@ -3,6 +3,7 @@ import deleteData from './utils/delete';
 import uuid from './utils/uuid';
 import update from './utils/update';
 import updateOne from './utils/update-one';
+import getMany from './utils/get-many';
 
 class Memoz {
   private db: any[];
@@ -11,15 +12,19 @@ class Memoz {
     this.db = [];
   }
 
-  public write(key:string, value: any) {
+  public create(key:string, value: any) {
     const id = uuid();
     this.db.push({ id, [key]: value });
 
     return { id, [key]: value };
   }
 
-  public get() {
-    return this.db;
+  public get(query?:any) {
+    if (!Object.keys(query || {}).length) {
+      return this.db;
+    }
+
+    return getMany(query, this.db);
   }
 
   public getOne(query:any) {
@@ -28,12 +33,12 @@ class Memoz {
     return result;
   }
 
-  public delete(query:any) {
+  public deleteMany(query:any) {
     const results = deleteData(query, this.db);
-    const deleted = { deleted: true, number: this.db.length - results.length };
 
     this.db = results;
-    return deleted;
+
+    return { deleted: true, number: this.db.length - results.length };
   }
 
   public updateMany(query:any, newData:any) {

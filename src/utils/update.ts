@@ -8,7 +8,10 @@ const update = (query:any = {}, data:any = {}, newData: any = {}) => {
 
     results = results.map((datum:any) => {
       if (datum[key] === query[key]) {
-        return newData[key];
+        return {
+          ...datum,
+          ...newData,
+        };
       }
 
       return datum[key];
