@@ -1,7 +1,7 @@
 {
   "name": "memoz",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.0",
+  "description": "memoz is an in-memory database that persists on disk. The data model is key-value, but many different kind of values are supported: Strings, Lists, Sets, Sorted Sets, Hashes, Streams, HyperLogLogs, Bitmaps.",
   "main": "./build/index.js",
   "module": "./build/index.js",
   "files": [

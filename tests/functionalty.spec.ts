@@ -5,7 +5,7 @@ describe('Functionality', () => {
   const memoz = new Memoz();
 
   it('should write in array', () => {
-    const saved = memoz.write('name', 'milad');
+    const saved = memoz.create('name', 'milad');
     expect(saved).to.be.an('object').with.keys(['name', 'id']);
   });
 
@@ -32,10 +32,10 @@ describe('Functionality', () => {
   });
 
   it('should update one from array', () => {
-    memoz.write('name', 'milad');
-    memoz.write('name', 'milad');
-    memoz.write('name', 'milad');
-    memoz.write('name', 'milad');
+    memoz.create('name', 'milad');
+    memoz.create('name', 'milad');
+    memoz.create('name', 'milad');
+    memoz.create('name', 'milad');
 
     const { updated } = memoz.updateMany({ name: 'milad' }, { name: 'memo' });
     expect(updated).to.be.a('boolean').and.equal(true);

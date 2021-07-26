@@ -12,7 +12,7 @@ class Memoz {
     this.db = [];
   }
 
-  public write(key:string, value: any) {
+  public create(key:string, value: any) {
     const id = uuid();
     this.db.push({ id, [key]: value });
 
@@ -33,12 +33,12 @@ class Memoz {
     return result;
   }
 
-  public delete(query:any) {
+  public deleteMany(query:any) {
     const results = deleteData(query, this.db);
-    const deleted = { deleted: true, number: this.db.length - results.length };
 
     this.db = results;
-    return deleted;
+
+    return { deleted: true, number: this.db.length - results.length };
   }
 
   public updateMany(query:any, newData:any) {
