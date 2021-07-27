@@ -46,20 +46,19 @@
     "typescript": "^4.3.5"
   },
   "keywords": [
-    "algorithm",
-    "node",
-    "encryption",
-    "public key",
-    "private key",
-    "rsa",
-    "node-rsa",
-    "encrypt",
-    "encrypt by public key",
-    "decrypt by private key",
-    "rsa encryption",
-    "node-rsa typescript",
-    "Crypto-js RSA",
-    "Javascript RSA encryption"
+    "database",
+    "redis",
+    "transaction",
+    "pipelining",
+    "performance",
+    "queue",
+    "nodejs",
+    "pubsub",
+    "backpressure",
+    "cache",
+    "ram",
+    "simple",
+    "storage"
   ],
   "author": "Milad E. Fahmy <miladezzat.f@gmail.com> (https://milad-ezzat.vercel.app)",
   "config": {
