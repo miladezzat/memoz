@@ -1,5 +1,9 @@
 # Memoz
 
+[![npm version](https://badge.fury.io/js/memoz.svg)](https://badge.fury.io/js/memoz)&nbsp;
+![https://img.shields.io/npm/dm/memoz.svg](https://img.shields.io/npm/dm/memoz.svg)
+
+
 Memoz is an in-memory database that persists on disk. The data model is key-value, but many different kind of values are supported: Strings, Lists, Sets, Sorted Sets, Hashes, Streams, HyperLogLogs, Bitmaps. 
 
 1. [Installation](#installation)
@@ -7,7 +11,7 @@ Memoz is an in-memory database that persists on disk. The data model is key-valu
 3. [Methods](#methods)
 ## Installation
 
-```js
+```bash
 npm i memoz
 // or
 yarn add memoz
@@ -25,16 +29,17 @@ import Memoz from 'memoz';
 ## Methods
 
 1. [create](#create)
-2. [updateMany](#updateMany)
-3. [updateOne](#updateOne)
+2. [updateMany](#update-many)
+3. [updateOne](#update-one)
 4. [get](#get)
-5. [getOne](#getOne)
-6. [deleteMany](#deleteMany)
+5. [getOne](#get-one)
+6. [deleteMany](#delete-many)
+6. [deleteOne](#delete-one)
 
 
 ### create
 
-This methods take two parameters:
+This method takes two parameters:
 
 1. `key`, this is a `string`
 2. `value`,  this is an `any`, maybe `string`, `number`, `object`, `array` any valid data types in javascript
@@ -48,14 +53,80 @@ const person = memoz.create('name', 'john');
 
 ### updateMany
 
-This methods take two parameters:
+This method takes two parameters:
 
-1. `query`, this is a `object` contains keys and values, it will be `AND`
-2. `newData`,  this is an `any`, maybe `string`, `number`, `object`, `array` any valid data types in javascript
+1. `query`, this is a `object` contains keys and values, it will be `AND`, this is `required`
+2. `newData`,  this is an `any`, maybe `string`, `number`, `object`, `array` any valid data types in javascript, this is `required`
 
 ```js
 const memoz = new Memoz();
 
 const person = memoz.updateMany('name', 'Milad');
+// { updated: true }
+```
+
+### updateOne
+
+This method takes two parameters:
+
+1. `query`, this is a `object` contains keys and values, it will be `AND`, this is `required`
+2. `newData`,  this is an `any`, maybe `string`, `number`, `object`, `array` any valid data types in javascript, this is `required`
+
+```js
+const memoz = new Memoz();
+
+const person = memoz.updateOne('name', 'Milad');
 // {id: 'sdfd-dsfg455-dfg544fg', name: 'Milad'}
+```
+
+## get
+
+This method take one parameters:
+
+`query`, this is a `object` contains keys and values, it will be `AND`, this is `optional`
+
+```js
+const memoz = new Memoz();
+
+const person = memoz.get({'name':'Milad'});
+// [{id: 'sdfd-dsfg455-dfg544fg', name: 'Milad'}]
+```
+
+## getOne
+
+This method take one parameters:
+
+`query`, this is a `object` contains keys and values, it will be `AND`, this is `required`
+
+```js
+const memoz = new Memoz();
+
+const person = memoz.getOne({'name':'Milad'});
+// {id: 'sdfd-dsfg455-dfg544fg', name: 'Milad'}
+```
+
+## deleteMany
+
+This method take one parameters:
+
+`query`, this is a `object` contains keys and values, it will be `AND`, this is `required`
+
+```js
+const memoz = new Memoz();
+
+const person = memoz.deleteMany({'name':'Milad'});
+// {deleted: true, number: 5}
+```
+
+### deleteOne
+
+This method take one parameters:
+
+`query`, this is a `object` contains keys and values, it will be `AND`, this is `required`
+
+```js
+const memoz = new Memoz();
+
+const person = memoz.deleteOne({'name':'Milad'});
+// {deleted: { id: "dslkmds68-dfgh45", name: "Milad" }}
 ```
