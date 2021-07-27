@@ -1,6 +1,6 @@
 {
   "name": "memoz",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "memoz is an in-memory database that persists on disk. The data model is key-value, but many different kind of values are supported: Strings, Lists, Sets, Sorted Sets, Hashes, Streams, HyperLogLogs, Bitmaps.",
   "main": "./build/index.js",
   "module": "./build/index.js",
@@ -46,20 +46,19 @@
     "typescript": "^4.3.5"
   },
   "keywords": [
-    "algorithm",
-    "node",
-    "encryption",
-    "public key",
-    "private key",
-    "rsa",
-    "node-rsa",
-    "encrypt",
-    "encrypt by public key",
-    "decrypt by private key",
-    "rsa encryption",
-    "node-rsa typescript",
-    "Crypto-js RSA",
-    "Javascript RSA encryption"
+    "database",
+    "redis",
+    "transaction",
+    "pipelining",
+    "performance",
+    "queue",
+    "nodejs",
+    "pubsub",
+    "backpressure",
+    "cache",
+    "ram",
+    "simple",
+    "storage"
   ],
   "author": "Milad E. Fahmy <miladezzat.f@gmail.com> (https://milad-ezzat.vercel.app)",
   "config": {

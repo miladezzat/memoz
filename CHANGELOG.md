@@ -1,3 +1,17 @@
+### 1.1.0 (2021-07-27)
+
+##### Chores
+
+*  update package json ([029ad1fa](https://github.com/miladezzat/encrypt-rsa/commit/029ad1fada107c14f17d7ffb3c54e051cf35886a))
+
+##### Documentation Changes
+
+*  update docs ([276f3b47](https://github.com/miladezzat/encrypt-rsa/commit/276f3b47a675b0a3becc7db3450d9d259711bb94))
+
+##### New Features
+
+*  add deleteone function ([deae21e0](https://github.com/miladezzat/encrypt-rsa/commit/deae21e080bf25e12877fdc4d25e7ecf46b3860e))
+
 ## 1.0.0 (2021-07-26)
 
 ##### Documentation Changes

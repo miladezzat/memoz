@@ -4,6 +4,7 @@ import uuid from './utils/uuid';
 import update from './utils/update';
 import updateOne from './utils/update-one';
 import getMany from './utils/get-many';
+import deleteOne from './utils/delete-one';
 
 class Memoz {
   private db: any[];
@@ -39,6 +40,15 @@ class Memoz {
     this.db = results;
 
     return { deleted: true, number: this.db.length - results.length };
+  }
+
+  public deleteOne(query:any) {
+    const deleted = this.getOne(query);
+    const results = deleteOne(deleted, this.db);
+
+    this.db = results;
+
+    return { deleted };
   }
 
   public updateMany(query:any, newData:any) {
