@@ -1,6 +1,5 @@
 const getMany = (query:any, data:any) => {
-  let results = [...data];
-  // console.log({ results });
+  let results:any[] = [].concat(data);
 
   const keys = Object.keys(query);
 

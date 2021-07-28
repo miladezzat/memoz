@@ -1,5 +1,5 @@
 const update = (query:any = {}, data:any = {}, newData: any = {}) => {
-  let results = [...data];
+  let results:any[] = [].concat(data);
 
   const keys = Object.keys(query);
 
