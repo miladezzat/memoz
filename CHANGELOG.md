@@ -1,3 +1,9 @@
+#### 1.1.2 (2021-07-28)
+
+##### Documentation Changes
+
+*  update docs ([5bfdc44a](https://github.com/miladezzat/memoz/commit/5bfdc44a0becf825a7d3082d2e50392086c625df))
+
 #### 1.1.1 (2021-07-28)
 
 ##### Bug Fixes
