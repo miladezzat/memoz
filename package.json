@@ -1,6 +1,6 @@
 {
   "name": "memoz",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "memoz is an in-memory database that persists on disk. The data model is key-value, but many different kind of values are supported: Strings, Lists, Sets, Sorted Sets, Hashes, Streams, HyperLogLogs, Bitmaps.",
   "main": "./build/index.js",
   "module": "./build/index.js",
@@ -71,11 +71,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/miladezzat/encrypt-rsa.git"
+    "url": "git+https://github.com/miladezzat/memoz.git"
   },
-  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/miladezzat/encrypt-rsa/issues"
+    "url": "https://github.com/miladezzat/memoz/issues"
   },
-  "homepage": "https://milad-ezzat.vercel.app"
+  "homepage": "https://github.com/miladezzat/memoz#readme"
 }
