@@ -1,3 +1,18 @@
+#### 1.1.3 (2021-07-28)
+
+##### Chores
+
+*  update package  json and add husky ([e9322431](https://github.com/miladezzat/memoz/commit/e9322431c8696e3c454960b60790052b21aa51ad))
+
+##### Continuous Integration
+
+*  update ci ([c0bab78d](https://github.com/miladezzat/memoz/commit/c0bab78db3f014dd80daf52caaf272bf30091f07))
+
+##### Refactors
+
+*  setup environment ([95dd6d1e](https://github.com/miladezzat/memoz/commit/95dd6d1eca5f5b01ab5289bade89fe8fca066a46))
+*  update some codes ([9b8d080d](https://github.com/miladezzat/memoz/commit/9b8d080d93f2d1464f858d9a448d34cd90473957))
+
 #### 1.1.2 (2021-07-28)
 
 ##### Documentation Changes
