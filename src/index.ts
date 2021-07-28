@@ -5,7 +5,13 @@ import update from './utils/update';
 import updateOne from './utils/update-one';
 import getMany from './utils/get-many';
 import deleteOne from './utils/delete-one';
+import isObject from './utils/is-object';
 
+/**
+ * @description memoz is an in-memory database that persists on disk.
+ * The data model is key-value, but many different kind of values are supported:
+ * Strings, Lists, Sets, Sorted Sets, Hashes, Streams, HyperLogLogs, Bitmaps.
+ */
 class Memoz {
   private db: any[];
 
@@ -13,15 +19,37 @@ class Memoz {
     this.db = [];
   }
 
-  public create(key:string, value: any) {
-    const id = uuid();
-    this.db.push({ id, [key]: value });
+  /**
+   *
+   * @param document must be a javascript object with keys value pair
+   * @returns {Object}
+   */
+  public create(document:any): any {
+    if (!isObject(document)) {
+      throw new Error('the document must be a valid object');
+    }
 
-    return { id, [key]: value };
+    const dbDocument = {
+      id: uuid(),
+      ...document,
+    };
+
+    this.db.push(dbDocument);
+
+    return dbDocument;
   }
 
+  /**
+   *
+   * @param query
+   * @returns {Object}
+   */
   public get(query?:any) {
-    if (!Object.keys(query || {}).length) {
+    if (query && !isObject(query)) {
+      throw new Error('the query must be a valid object');
+    }
+
+    if (!query || !Object.keys(query).length) {
       return this.db;
     }
 

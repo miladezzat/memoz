@@ -39,15 +39,12 @@ import Memoz from 'memoz';
 
 ### create
 
-This method takes two parameters:
-
-1. `key`, this is a `string`
-2. `value`,  this is an `any`, maybe `string`, `number`, `object`, `array` any valid data types in javascript
+This method takes one parameter: javascript object
 
 ```js
 const memoz = new Memoz();
 
-const person = memoz.create('name', 'john');
+const person = memoz.create({'name', 'john'});
 // {id: 'sdfd-dsfg455-dfg544fg', name: 'john'}
 ```
 
