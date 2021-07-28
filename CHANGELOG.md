@@ -1,3 +1,9 @@
+#### 1.1.1 (2021-07-28)
+
+##### Bug Fixes
+
+*  solve package ([5eef46c0](https://github.com/miladezzat/memoz/commit/5eef46c09f17054bcc493ab568943efae4eeac4b))
+
 ### 1.1.0 (2021-07-27)
 
 ##### Chores
