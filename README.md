@@ -29,12 +29,12 @@ import Memoz from 'memoz';
 ## Methods
 
 1. [create](#create)
-2. [updateMany](#update-many)
-3. [updateOne](#update-one)
+2. [updateMany](#updatemany)
+3. [updateOne](#updateone)
 4. [get](#get)
-5. [getOne](#get-one)
-6. [deleteMany](#delete-many)
-6. [deleteOne](#delete-one)
+5. [getOne](#getone)
+6. [deleteMany](#deletemany)
+6. [deleteOne](#deleteone)
 
 
 ### create
