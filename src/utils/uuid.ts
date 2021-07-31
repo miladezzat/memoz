@@ -1,5 +1,9 @@
 /* eslint-disable no-mixed-operators */
-function uuid() {
+/**
+ *
+ * @returns {String}
+ */
+function uuid(): string {
   return `${'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
     (c) => {
       // eslint-disable-next-line no-bitwise

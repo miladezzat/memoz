@@ -1,3 +1,9 @@
+## 2.0.0 (2021-07-30)
+
+##### New Features
+
+*  update create method ([5d244251](https://github.com/miladezzat/memoz/commit/5d244251625b3e6e39de56b618902b71e774588c))
+
 #### 1.1.3 (2021-07-28)
 
 ##### Chores

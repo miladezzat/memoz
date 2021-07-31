@@ -1,4 +1,4 @@
-const convertQuery = (query:any, data:any) => {
+const getOne = (query:any, data:any) => {
   let results:any[] = [].concat(data);
 
   const keys = Object.keys(query);
@@ -12,4 +12,4 @@ const convertQuery = (query:any, data:any) => {
   return results[0];
 };
 
-export default convertQuery;
+export default getOne;
