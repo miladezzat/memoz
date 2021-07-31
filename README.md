@@ -4,7 +4,7 @@
 ![https://img.shields.io/npm/dm/memoz.svg](https://img.shields.io/npm/dm/memoz.svg)
 
 
-Memoz is an in-memory database that persists on disk. The data model is key-value, but many different kind of values are supported: Strings, Lists, Sets, Sorted Sets, Hashes, Streams, HyperLogLogs, Bitmaps. 
+Memoz is an in-memory database that persists on disk.
 
 1. [Installation](#installation)
 2. [Usage](#usage)
