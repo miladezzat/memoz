@@ -200,7 +200,7 @@ class Memoz {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  public isValidUUID(id:string):boolean {
+  public isValidId(id:string):boolean {
     return isValidUUid(id);
   }
 }
