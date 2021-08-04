@@ -12,6 +12,9 @@ import getMany from './utils/get-many';
 class Memoz {
   private db: any;
 
+  /**
+   * @description initialization the db
+   */
   constructor() {
     this.db = new Map();
   }
@@ -35,6 +38,11 @@ class Memoz {
     return dbDocument;
   }
 
+  /**
+   *
+   * @param documents must be ant array of a javascript object with keys value pair
+   * @returns {Object}
+   */
   public createMany(documents:any[]): any[] {
     documents.map((document) => {
       if (!isObject(document)) {
@@ -47,6 +55,11 @@ class Memoz {
     return documents.map((document) => this.createOne(document));
   }
 
+  /**
+   *
+   * @param id this must be a valid id
+   * @returns {Object}
+   */
   public getById(id: string): any {
     if (!isValidUUid(id)) {
       throw new Error('the document must be a valid object');
@@ -55,6 +68,13 @@ class Memoz {
     return this.db.get(id);
   }
 
+  /**
+   *
+   * @param query this a javascript object
+   * @returns {Object}
+   *
+   * @description get one document based on query conditions
+   */
   public getOne(query: any): any {
     if (!isObject(query)) {
       throw new Error('The query must be a valid object');
@@ -63,6 +83,13 @@ class Memoz {
     return getOne(query, [...this.db.values()]);
   }
 
+  /**
+   *
+   * @param query this is a javascript object
+   * @returns {Object}
+   *
+   * @description get all documents that match the query
+   */
   public getMany(query: any): any {
     if (!isObject(query)) {
       throw new Error('The query must be a valid object');
@@ -71,7 +98,15 @@ class Memoz {
     return getMany(query, [...this.db.values()]);
   }
 
-  public updateById(id:string, newData:any) {
+  /**
+   *
+   * @param id this must be a valid id
+   * @param newData this must be an object with key value pair
+   * @returns {Object}
+   *
+   * @description this update document by id
+   */
+  public updateById(id:string, newData:any): any {
     if (!isValidUUid(id)) {
       throw new Error('the document must be a valid object');
     }
@@ -93,7 +128,15 @@ class Memoz {
     return newObject;
   }
 
-  public updateOne(query:any, newData: any) {
+  /**
+ *
+ * @param query must be a javascript object
+ * @param newData must be a javascript object
+ * @returns {Object}
+ *
+ * @description this update the first document thar match the query
+ */
+  public updateOne(query:any, newData: any):any {
     if (!isObject(query)) {
       throw new Error('The query must be a valid object');
     }
@@ -115,7 +158,15 @@ class Memoz {
     return newObject;
   }
 
-  public updateMany(query:any, newData:any) {
+  /**
+   *
+   * @param query must be a javascript object
+   * @param newData must be a javascript object
+   * @returns {Object}
+   *
+   * @description this update all documents that match the query
+   */
+  public updateMany(query:any, newData:any):any {
     if (!isObject(query)) {
       throw new Error('The query must be a valid object');
     }
@@ -131,6 +182,13 @@ class Memoz {
     return { updated: true, n: documents.length, documents };
   }
 
+  /**
+   *
+   * @param id must be a valid id
+   * @returns {Object}
+   *
+   * @description this delete a documents by its id
+   */
   public deleteById(id: string): any {
     if (!isValidUUid(id)) {
       throw new Error('the document must be a valid object');
@@ -142,6 +200,13 @@ class Memoz {
     return deletedObject;
   }
 
+  /**
+   *
+   * @param query must be a javascript object
+   * @returns {Object}
+   *
+   * @description this must be delete the first document match the query
+   */
   public deleteOne(query:any): any {
     if (!isObject(query)) {
       throw new Error('The query must be a valid object');
@@ -152,7 +217,14 @@ class Memoz {
     return this.deleteById(deletedObject.id);
   }
 
-  public deleteMany(query:any) {
+  /**
+   *
+   * @param query must be a javascript object
+   * @returns {Object}
+   *
+   * @description this delete all documents that match the query
+   */
+  public deleteMany(query:any) :any {
     if (!isObject(query)) {
       throw new Error('The query must be a valid object');
     }
@@ -169,7 +241,13 @@ class Memoz {
     return { deleted: true, n: documents.length };
   }
 
-  public deleteAll() {
+  /**
+   *
+   * @returns {Object}
+   *
+   * @description this delete all documents
+   */
+  public deleteAll():any {
     const size = this.countDocuments();
 
     this.db.clear();
@@ -181,7 +259,14 @@ class Memoz {
     return { deleted: true, n: size };
   }
 
-  public countDocuments(query?:any) {
+  /**
+   *
+   * @param query must be a javascript object, optional
+   * @returns {Number}
+   *
+   * @description this return the number of documents in database based on query or the whole size
+   */
+  public countDocuments(query?:any): number {
     if (query && !isObject(query)) {
       throw new Error('The query must be a valid object');
     }
@@ -194,11 +279,24 @@ class Memoz {
     return this.db.size;
   }
 
+  /**
+   *
+   * @returns {String}
+   *
+   * @description this create a unique id
+   */
   // eslint-disable-next-line class-methods-use-this
   public id():string {
     return uuid();
   }
 
+  /**
+   *
+   * @param id string
+   * @returns {Boolean}
+   *
+   * @description this return true if id is valid id
+   */
   // eslint-disable-next-line class-methods-use-this
   public isValidId(id:string):boolean {
     return isValidUUid(id);
