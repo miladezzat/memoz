@@ -1,3 +1,16 @@
+#### 2.0.1 (2021-08-04)
+
+##### Chores
+
+*  update dpes ([dd121257](https://github.com/miladezzat/memoz/commit/dd121257dfc9f683757224bcedb8a8f4f4cf6edc))
+*  update deps ([c411d805](https://github.com/miladezzat/memoz/commit/c411d80582e04f31d67f85f00512aefed619ccad))
+*  update deps ([4173ee67](https://github.com/miladezzat/memoz/commit/4173ee67b1c3a38ce5df9d673014ff8d42ee7ace))
+
+##### Documentation Changes
+
+*  update js docs ([d687504c](https://github.com/miladezzat/memoz/commit/d687504c68e4852f63575c15a1d3bfc948a96cfd))
+*  update docs ([75a86338](https://github.com/miladezzat/memoz/commit/75a86338805b1de73ef27fc9a5cef173089c598c))
+
 ## 2.0.0 (2021-07-30)
 
 ##### New Features
