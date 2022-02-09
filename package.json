@@ -1,6 +1,6 @@
 {
   "name": "memoz",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "memoz is an in-memory database that persists on disk. The data model is key-value, but many different kind of values are supported: Strings, Lists, Sets, Sorted Sets, Hashes, Streams, HyperLogLogs, Bitmaps.",
   "main": "./build/index.js",
   "module": "./build/index.js",
@@ -13,8 +13,9 @@
     "test": "./node_modules/.bin/mocha -r ts-node/register tests/**/*.spec.ts",
     "build": "rollup -c",
     "depcheck": "./node_modules/.bin/npm-check -u",
-    "git-cz": "./node_modules/.bin/git-cz",
+    "commit": "./node_modules/.bin/git-cz",
     "husky": "./node_modules/.bin/husky init",
+    "docs:serve": "docsify serve docs",
     "postinstall": "husky install",
     "prepublishOnly": "./node_modules/.bin/pinst --disable",
     "postpublish": "./node_modules/.bin/pinst --enable",
@@ -43,26 +44,27 @@
   ],
   "author": "Milad E. Fahmy <miladezzat.f@gmail.com> (https://milad-ezzat.vercel.app)",
   "devDependencies": {
-    "@rollup/plugin-typescript": "^8.2.5",
-    "@types/chai": "^4.2.15",
-    "@types/mocha": "^9.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.29.0",
-    "@typescript-eslint/parser": "^4.29.0",
-    "chai": "^4.3.0",
+    "@rollup/plugin-typescript": "^8.3.0",
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^9.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.11.0",
+    "@typescript-eslint/parser": "^5.11.0",
+    "chai": "^4.3.6",
     "commitizen": "^4.2.3",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1",
+    "docsify-cli": "^4.4.3",
+    "eslint": "^8.8.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4",
     "generate-changelog": "^1.8.0",
-    "husky": "^7.0.1",
-    "mocha": "^9.0.3",
+    "husky": "^7.0.4",
+    "mocha": "^9.2.0",
     "npm-check": "^5.9.2",
     "pinst": "^2.1.6",
-    "rollup": "^2.55.1",
-    "ts-node": "^10.1.0",
-    "tslib": "^2.3.0",
-    "typescript": "^4.1.5"
+    "rollup": "^2.67.1",
+    "ts-node": "^10.5.0",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.5"
   },
   "husky": {
     "hooks": {
@@ -82,5 +84,5 @@
   "bugs": {
     "url": "https://github.com/miladezzat/memoz/issues"
   },
-  "homepage": "https://milad-ezzat.vercel.app/posts/cashe-memory"
+  "homepage": "https://60-min-code.github.io/memoz"
 }

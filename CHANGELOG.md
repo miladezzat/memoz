@@ -1,3 +1,13 @@
+### 2.1.0 (2022-02-09)
+
+##### Chores
+
+*  update docs ([2886b372](https://github.com/miladezzat/memoz/commit/2886b3722d15afb11918ebad028740ee71119195))
+
+##### New Features
+
+*  setup docs ([69b61d8a](https://github.com/miladezzat/memoz/commit/69b61d8a741982a3058ee5b3e266058b93c89fe7))
+
 #### 2.0.1 (2021-08-04)
 
 ##### Chores
