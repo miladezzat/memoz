@@ -1,3 +1,13 @@
+#### 2.1.1 (2022-02-11)
+
+##### Chores
+
+*  update deps ([75a1f4f1](https://github.com/miladezzat/memoz/commit/75a1f4f1c636a805cf10a73044e51f48a1af20db))
+
+##### Documentation Changes
+
+*  update docs ([4e9d1718](https://github.com/miladezzat/memoz/commit/4e9d17182e82ae778068fc531cd6d98e354ffc76))
+
 ### 2.1.0 (2022-02-09)
 
 ##### Chores
