@@ -1,6 +1,6 @@
 {
   "name": "memoz",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "memoz is an in-memory database that persists on disk. The data model is key-value, but many different kind of values are supported: Strings, Lists, Sets, Sorted Sets, Hashes, Streams, HyperLogLogs, Bitmaps.",
   "main": "./build/index.js",
   "module": "./build/index.js",
@@ -61,7 +61,7 @@
     "mocha": "^9.2.0",
     "npm-check": "^5.9.2",
     "pinst": "^2.1.6",
-    "rollup": "^2.67.1",
+    "rollup": "^2.67.2",
     "ts-node": "^10.5.0",
     "tslib": "^2.3.1",
     "typescript": "^4.5.5"
