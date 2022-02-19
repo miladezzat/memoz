@@ -1,3 +1,17 @@
+#### 2.1.2 (2022-02-19)
+
+##### Chores
+
+*  update deps ([e81eee88](https://github.com/miladezzat/memoz/commit/e81eee88c536ab426a1c818b1fff581a49ee2d52))
+
+##### Bug Fixes
+
+*  update docs ([ac42869a](https://github.com/miladezzat/memoz/commit/ac42869a6e4022d81f614a1e71d8e947fc156338))
+
+##### Other Changes
+
+* miladezzat/memoz into gh-pages ([ae7913f1](https://github.com/miladezzat/memoz/commit/ae7913f140b726f42614abc492c1715be2fc845d))
+
 #### 2.1.1 (2022-02-11)
 
 ##### Chores
