@@ -1,3 +1,9 @@
+### 2.2.0 (2024-09-16)
+
+##### Continuous Integration
+
+*  resolve pipeline ([de8a28fa](https://github.com/miladezzat/memoz/commit/de8a28fac41657db95ab3b873a05b867a944edf9))
+
 #### 2.1.2 (2022-02-19)
 
 ##### Chores
