@@ -26,23 +26,50 @@ import Memoz from 'memoz';
 
 ```
 
+## Persistent Disk Storage
+To enable disk persistence, you need to pass the path to a JSON file when initializing Memoz. This file will be used to save and load data.
+
+```ts
+const Memoz = require('memoz');
+// Or
+import Memoz from 'memoz';
+
+// Initialize Memoz with a file path for persistence
+const memoz = new Memoz({ persist: 'path/to/test-db.json' });
+
+// Create a new document
+const person = memoz.createOne({ name: 'john' });
+console.log(person);
+// { "name": "john", "id": "d112c727-b6b1-4ec2-9604-7af42f9748b1" }
+
+// Retrieve a document by ID
+const document = memoz.getById(person.id);
+console.log(document);
+// { "name": "john", "id": "d112c727-b6b1-4ec2-9604-7af42f9748b1" }
+```
+
 ## Methods
 
-1. [createOne](#createone)
-2. [createMany](#createmany)
-3. [getById](#getbyid)
-4. [getOne](#getone)
-5. [getMany](#getmany)
-6. [updateById](#updatebyid)
-7. [updateOne](#updateone)
-8. [updateMany](#updatemany)
-9. [deleteById](#deletebyid)
-10. [deleteOne](#deleteone)
-11. [deleteMany](#deletemany)
-12. [deleteAll](#deleteall)
-13. [countDocuments](#countdocuments)
-14. [id](#id)
-15. [isValidId](#isvalidid)
+- [Memoz](#memoz)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Persistent Disk Storage](#persistent-disk-storage)
+  - [Methods](#methods)
+    - [createOne](#createone)
+    - [createMany](#createmany)
+    - [getById](#getbyid)
+    - [getOne](#getone)
+    - [getMany](#getmany)
+    - [updateById](#updatebyid)
+    - [updateOne](#updateone)
+    - [updateMany](#updatemany)
+    - [deleteById](#deletebyid)
+    - [deleteOne](#deleteone)
+    - [deleteMany](#deletemany)
+    - [deleteAll](#deleteall)
+    - [countDocuments](#countdocuments)
+    - [id](#id)
+    - [isValidId](#isvalidid)
 
 
 ### createOne
