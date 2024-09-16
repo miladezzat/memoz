@@ -1,10 +1,17 @@
 /**
+ * Checks if the provided value is a non-null object with at least one property.
  *
- * @param doc this is an javascript object
- * @returns {Boolean}
+ * @param {unknown} value - The value to be checked.
+ * @returns {boolean} `true` if the value is a non-null object with at least one property; otherwise, `false`.
  *
- * @description this check if doc is an object or not
+ * @example
+ * console.log(isObject({})); // Output: false
+ * console.log(isObject({ key: 'value' })); // Output: true
+ * console.log(isObject(null)); // Output: false
+ * console.log(isObject([])); // Output: false
  */
-const isObject = (doc:any):boolean => typeof doc === 'object' && doc !== null && Object.keys(doc).length > 0;
+export const isObject = (value: unknown): boolean => typeof value === 'object'
+    && value !== null
+    && Object.keys(value as object).length > 0;
 
 export default isObject;

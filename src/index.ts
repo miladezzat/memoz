@@ -1,80 +1,77 @@
+/* eslint-disable class-methods-use-this */
+import fs from 'fs';
+import path from 'path';
 import uuid from './utils/uuid';
 import isObject from './utils/is-object';
 import isValidUUid from './utils/is-valid-uuid';
 import getOne from './utils/get-one';
 import getMany from './utils/get-many';
 
-/**
- * @description memoz is an in-memory database that persists on disk.
- * The data model is key-value, but many different kind of values are supported:
- * Strings, Lists, Sets, Sorted Sets, Hashes, Streams, HyperLogLogs, Bitmaps.
- */
 class Memoz {
-  private db: any;
+  private db: Map<string, any>;
 
-  /**
-   * @description initialization the db
-   */
-  constructor() {
+  private filePath?: string;
+
+  private persistToDisk: boolean;
+
+  constructor(filePath?: string, persistToDisk: boolean = false) {
     this.db = new Map();
+    this.filePath = filePath ? path.resolve(filePath) : './data.json'; // Use path.resolve for robust path handling
+    this.persistToDisk = persistToDisk;
+
+    if (this.persistToDisk && this.filePath) {
+      this.loadFromDisk();
+    }
   }
 
-  /**
-   *
-   * @param document must be a javascript object with keys value pair
-   * @returns {Object}
-   */
-  public createOne(document:any): any {
+  private saveToDisk() {
+    if (this.persistToDisk && this.filePath) {
+      const data = JSON.stringify(Array.from(this.db.entries()));
+      fs.writeFileSync(this.filePath, data, 'utf8');
+    }
+  }
+
+  private loadFromDisk() {
+    if (this.persistToDisk && this.filePath && fs.existsSync(this.filePath)) {
+      const data = fs.readFileSync(this.filePath, 'utf8');
+      const entries = JSON.parse(data) as [string, any][];
+      this.db = new Map(entries);
+    }
+  }
+
+  public createOne(document: any): any {
     if (!isObject(document)) {
-      throw new Error('the document must be a valid object');
+      throw new Error('The document must be a valid object');
     }
 
     const id = uuid();
-
     const dbDocument = { ...document, id };
 
     this.db.set(id, dbDocument);
+    this.saveToDisk(); // Save to disk if persistence is enabled
 
     return dbDocument;
   }
 
-  /**
-   *
-   * @param documents must be ant array of a javascript object with keys value pair
-   * @returns {Object}
-   */
-  public createMany(documents:any[]): any[] {
-    documents.map((document) => {
+  public createMany(documents: any[]): any[] {
+    documents.forEach((document) => {
       if (!isObject(document)) {
-        throw new Error('the document must be a valid object');
+        throw new Error('The document must be a valid object');
       }
-
-      return document;
     });
 
-    return documents.map((document) => this.createOne(document));
+    const createdDocuments = documents.map((document) => this.createOne(document));
+    return createdDocuments;
   }
 
-  /**
-   *
-   * @param id this must be a valid id
-   * @returns {Object}
-   */
   public getById(id: string): any {
     if (!isValidUUid(id)) {
-      throw new Error('the document must be a valid object');
+      throw new Error('The ID must be valid');
     }
 
     return this.db.get(id);
   }
 
-  /**
-   *
-   * @param query this a javascript object
-   * @returns {Object}
-   *
-   * @description get one document based on query conditions
-   */
   public getOne(query: any): any {
     if (!isObject(query)) {
       throw new Error('The query must be a valid object');
@@ -83,14 +80,7 @@ class Memoz {
     return getOne(query, [...this.db.values()]);
   }
 
-  /**
-   *
-   * @param query this is a javascript object
-   * @returns {Object}
-   *
-   * @description get all documents that match the query
-   */
-  public getMany(query: any): any {
+  public getMany(query: any): any[] {
     if (!isObject(query)) {
       throw new Error('The query must be a valid object');
     }
@@ -98,45 +88,29 @@ class Memoz {
     return getMany(query, [...this.db.values()]);
   }
 
-  /**
-   *
-   * @param id this must be a valid id
-   * @param newData this must be an object with key value pair
-   * @returns {Object}
-   *
-   * @description this update document by id
-   */
-  public updateById(id:string, newData:any): any {
+  public updateById(id: string, newData: any): any {
     if (!isValidUUid(id)) {
-      throw new Error('the document must be a valid object');
+      throw new Error('The ID must be valid');
     }
 
     if (!isObject(newData)) {
       throw new Error('The new data must be a valid object');
     }
 
-    const oneObject = this.getById(id);
+    const existingObject = this.getById(id);
 
-    if (!oneObject) {
-      throw new Error('This id not exists');
+    if (!existingObject) {
+      throw new Error('This ID does not exist');
     }
 
-    const newObject = { ...oneObject, ...newData };
+    const updatedObject = { ...existingObject, ...newData };
+    this.db.set(id, updatedObject);
+    this.saveToDisk(); // Save to disk if persistence is enabled
 
-    this.db.set(id, newObject);
-
-    return newObject;
+    return updatedObject;
   }
 
-  /**
- *
- * @param query must be a javascript object
- * @param newData must be a javascript object
- * @returns {Object}
- *
- * @description this update the first document thar match the query
- */
-  public updateOne(query:any, newData: any):any {
+  public updateOne(query: any, newData: any): any {
     if (!isObject(query)) {
       throw new Error('The query must be a valid object');
     }
@@ -145,28 +119,20 @@ class Memoz {
       throw new Error('The new data must be a valid object');
     }
 
-    const oneObject = this.getOne(query);
+    const existingObject = this.getOne(query);
 
-    if (!oneObject) {
-      throw new Error('This query not match anything');
+    if (!existingObject) {
+      throw new Error('No document matches the query');
     }
 
-    const newObject = { ...oneObject, ...newData };
+    const updatedObject = { ...existingObject, ...newData };
+    this.db.set(existingObject.id, updatedObject);
+    this.saveToDisk(); // Save to disk if persistence is enabled
 
-    this.db.set(oneObject.id, newObject);
-
-    return newObject;
+    return updatedObject;
   }
 
-  /**
-   *
-   * @param query must be a javascript object
-   * @param newData must be a javascript object
-   * @returns {Object}
-   *
-   * @description this update all documents that match the query
-   */
-  public updateMany(query:any, newData:any):any {
+  public updateMany(query: any, newData: any): any {
     if (!isObject(query)) {
       throw new Error('The query must be a valid object');
     }
@@ -175,130 +141,75 @@ class Memoz {
       throw new Error('The new data must be a valid object');
     }
 
-    let documents = this.getMany(query);
+    const documents = this.getMany(query);
 
-    documents = documents.map((document:any) => this.updateById(document.id, newData));
+    documents.forEach((document) => this.updateById(document.id, newData));
+    this.saveToDisk(); // Save to disk if persistence is enabled
 
     return { updated: true, n: documents.length, documents };
   }
 
-  /**
-   *
-   * @param id must be a valid id
-   * @returns {Object}
-   *
-   * @description this delete a documents by its id
-   */
   public deleteById(id: string): any {
     if (!isValidUUid(id)) {
-      throw new Error('the document must be a valid object');
+      throw new Error('The ID must be valid');
     }
 
-    const deletedObject: any = this.getById(id);
+    const deletedObject = this.getById(id);
     this.db.delete(id);
+    this.saveToDisk(); // Save to disk if persistence is enabled
 
     return deletedObject;
   }
 
-  /**
-   *
-   * @param query must be a javascript object
-   * @returns {Object}
-   *
-   * @description this must be delete the first document match the query
-   */
-  public deleteOne(query:any): any {
+  public deleteOne(query: any): any {
     if (!isObject(query)) {
       throw new Error('The query must be a valid object');
     }
 
-    const deletedObject: any = this.getOne(query);
-
+    const deletedObject = this.getOne(query);
     return this.deleteById(deletedObject.id);
   }
 
-  /**
-   *
-   * @param query must be a javascript object
-   * @returns {Object}
-   *
-   * @description this delete all documents that match the query
-   */
-  public deleteMany(query:any) :any {
+  public deleteMany(query: any): any {
     if (!isObject(query)) {
       throw new Error('The query must be a valid object');
     }
+
     const documents = this.getMany(query);
 
-    documents.map((document:any) => this.deleteById(document.id));
+    documents.forEach((document) => this.deleteById(document.id));
+    this.saveToDisk(); // Save to disk if persistence is enabled
 
     const sizeAfterDeleted = this.countDocuments(query);
-
-    if (sizeAfterDeleted) {
-      return { deleted: false };
-    }
-
-    return { deleted: true, n: documents.length };
+    return { deleted: sizeAfterDeleted === 0, n: documents.length };
   }
 
-  /**
-   *
-   * @returns {Object}
-   *
-   * @description this delete all documents
-   */
-  public deleteAll():any {
+  public deleteAll(): any {
     const size = this.countDocuments();
-
     this.db.clear();
+    this.saveToDisk(); // Save to disk if persistence is enabled
 
-    if (this.countDocuments()) {
-      return { deleted: false, n: size };
-    }
-
-    return { deleted: true, n: size };
+    return { deleted: this.countDocuments() === 0, n: size };
   }
 
-  /**
-   *
-   * @param query must be a javascript object, optional
-   * @returns {Number}
-   *
-   * @description this return the number of documents in database based on query or the whole size
-   */
-  public countDocuments(query?:any): number {
+  public countDocuments(query?: any): number {
     if (query && !isObject(query)) {
       throw new Error('The query must be a valid object');
     }
 
-    if (query && Object.keys(query)) {
-      const documents:any[] = this.getMany(query);
+    if (query && Object.keys(query).length) {
+      const documents = this.getMany(query);
       return documents.length;
     }
 
     return this.db.size;
   }
 
-  /**
-   *
-   * @returns {String}
-   *
-   * @description this create a unique id
-   */
-  // eslint-disable-next-line class-methods-use-this
-  public id():string {
+  public id(): string {
     return uuid();
   }
 
-  /**
-   *
-   * @param id string
-   * @returns {Boolean}
-   *
-   * @description this return true if id is valid id
-   */
-  // eslint-disable-next-line class-methods-use-this
-  public isValidId(id:string):boolean {
+  public isValidId(id: string): boolean {
     return isValidUUid(id);
   }
 }
