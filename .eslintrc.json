@@ -22,7 +22,7 @@
       "no-shadow": "off",
       "@typescript-eslint/no-shadow": ["error"],
       "@typescript-eslint/no-unused-vars": "error",
-      "max-len":["error",{"code":120}]
+      "max-len":["error",{"code":200}]
     },
     "settings": {
       "import/resolver": {
