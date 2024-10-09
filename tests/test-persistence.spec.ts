@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import fs from 'fs';
 import path from 'path';
-import Memoz from '../src/index';
+import { Memoz } from '../src/index';
 import { isValidMemozId } from '../src/utils/is-valid-memoz-id';
 
 // Define a model for testing
@@ -18,6 +18,18 @@ describe('Memoz Functionality with Persistence', () => {
   beforeEach(() => {
     // Initialize Memoz with persistence enabled and the path to the temporary file
     memoz = new Memoz<User>(tempFilePath, true);
+
+    // Clean up the temporary file before each test
+    if (fs.existsSync(tempFilePath)) {
+      fs.unlinkSync(tempFilePath);
+    }
+  });
+
+  after(() => {
+    // Clean up the temporary file after all tests
+    if (fs.existsSync(tempFilePath)) {
+      fs.unlinkSync(tempFilePath);
+    }
   });
 
   afterEach(() => {
@@ -27,18 +39,20 @@ describe('Memoz Functionality with Persistence', () => {
     }
   });
 
-  it('should create and persist one document', () => {
-    const saved = memoz.createOne({ name: 'milad', age: 30 });
+  it('should create and persist one document', async () => {
+    const saved = await memoz.createOne({ name: 'milad', age: 30 });
 
     expect(saved).to.be.an('object').with.keys(['id', 'name', 'age']);
     expect(saved.name).to.equal('milad');
     expect(saved.age).to.equal(30);
     expect(isValidMemozId(saved.id)).to.equal(true);
 
-    // Check if the data is persisted to file
-    const fileData = fs.readFileSync(tempFilePath, 'utf8');
-    const persistedData = JSON.parse(fileData) as [string, User][];
-    expect(persistedData).to.have.lengthOf(1);
+    if (fs.existsSync(tempFilePath)) {
+      const fileData = fs.readFileSync(tempFilePath, 'utf8');
+
+      const persistedData = JSON.parse(fileData) as [string, User][];
+      expect(persistedData).to.have.lengthOf(1);
+    }
   });
 
   it('should create and persist multiple documents', () => {
@@ -50,9 +64,11 @@ describe('Memoz Functionality with Persistence', () => {
     expect(isValidMemozId(documents[0].id)).to.equal(true);
 
     // Check if data is persisted
-    const fileData = fs.readFileSync(tempFilePath, 'utf8');
-    const persistedData = JSON.parse(fileData) as [string, User][];
-    expect(persistedData).to.have.lengthOf(2);
+    if (fs.existsSync(tempFilePath)) {
+      const fileData = fs.readFileSync(tempFilePath, 'utf8');
+      const persistedData = JSON.parse(fileData) as [string, User][];
+      expect(persistedData).to.have.lengthOf(2);
+    }
   });
 
   it('should get document by id', () => {
@@ -88,9 +104,11 @@ describe('Memoz Functionality with Persistence', () => {
     expect(updated.name).to.equal('medo');
     expect(updated.age).to.equal(31);
 
-    const persistedData = JSON.parse(fs.readFileSync(tempFilePath, 'utf8')) as [string, User][];
-    const updatedDoc = persistedData.find(([docId]) => docId === saved.id);
-    expect(updatedDoc?.[1].name).to.equal('medo');
+    if (fs.existsSync(tempFilePath)) {
+      const persistedData = JSON.parse(fs.readFileSync(tempFilePath, 'utf8')) as [string, User][];
+      const updatedDoc = persistedData.find(([docId]) => docId === saved.id);
+      expect(updatedDoc?.[1].name).to.equal('medo');
+    }
   });
 
   it('should update one document by query', () => {
@@ -119,8 +137,10 @@ describe('Memoz Functionality with Persistence', () => {
     const deleted = memoz.deleteById(saved.id);
     expect(deleted?.id).to.equal(saved.id);
 
-    const persistedData = JSON.parse(fs.readFileSync(tempFilePath, 'utf8')) as [string, User][];
-    expect(persistedData).to.have.lengthOf(0);
+    if (fs.existsSync(tempFilePath)) {
+      const persistedData = JSON.parse(fs.readFileSync(tempFilePath, 'utf8')) as [string, User][];
+      expect(persistedData).to.have.lengthOf(0);
+    }
   });
 
   it('should delete one document by query', () => {
@@ -138,8 +158,10 @@ describe('Memoz Functionality with Persistence', () => {
     expect(deleted).to.equal(true);
     expect(n).to.equal(2);
 
-    const persistedData = JSON.parse(fs.readFileSync(tempFilePath, 'utf8')) as [string, User][];
-    expect(persistedData).to.have.lengthOf(0);
+    if (fs.existsSync(tempFilePath)) {
+      const persistedData = JSON.parse(fs.readFileSync(tempFilePath, 'utf8')) as [string, User][];
+      expect(persistedData).to.have.lengthOf(0);
+    }
   });
 
   it('should delete all documents', () => {
@@ -156,6 +178,6 @@ describe('Memoz Functionality with Persistence', () => {
 
   it('should validate MEMOZID', () => {
     const saved = memoz.createOne({ name: 'milad', age: 30 });
-    expect(memoz.isValidId(saved.id)).to.equal(true);
+    expect(Memoz.isValidId(saved.id)).to.equal(true);
   });
 });

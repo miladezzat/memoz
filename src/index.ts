@@ -1,47 +1,62 @@
-import fs from 'fs';
-import path from 'path';
-import { MEMOZID, memozId } from './utils/memoz-id';
+import { memozId } from './utils/memoz-id';
 import { isObject } from './utils/is-object';
 import { isValidMemozId } from './utils/is-valid-memoz-id';
-import { getOne } from './utils/get-one';
-import { getMany } from './utils/get-many';
-import { ConditionNode } from './types';
+import { QueryCache } from './utils/query-cache';
+import { TransactionManager } from './utils/transaction-manager';
+import { PersistenceManager } from './utils/persistence-manager';
+import { IndexManager } from './utils/index-manager';
+import {
+  ConditionNode,
+  DocumentWithId, MEMOZID,
+  UpdateManyResult,
+} from './types';
+import getOne from './utils/get-one';
+import getMany from './utils/get-many';
 
-export type DocumentWithId<T> = T & { id: MEMOZID };
-export type UpdateManyResult<T> = { updated: boolean; n: number; documents: DocumentWithId<T>[] }
-class Memoz<T> {
-  private db: Map<MEMOZID, DocumentWithId<T>>;
+export class Memoz<T> {
+  private db: Map<MEMOZID, DocumentWithId<T>> = new Map();
 
-  private filePath?: string;
+  private transactionManager: TransactionManager<T>;
 
-  private persistToDisk: boolean;
+  private persistenceManager: PersistenceManager<T>;
+
+  private indexManager: IndexManager<T>;
+
+  private queryCache: QueryCache<T>;
 
   constructor(filePath?: string, persistToDisk: boolean = false) {
-    this.db = new Map();
-    this.filePath = filePath ? path.resolve(filePath) : './data.json';
-    this.persistToDisk = persistToDisk;
+    this.transactionManager = new TransactionManager(this.db);
+    this.persistenceManager = new PersistenceManager(filePath, this.db, persistToDisk);
+    this.indexManager = new IndexManager();
+    this.queryCache = new QueryCache();
 
-    if (this.persistToDisk && this.filePath) {
-      this.loadFromDisk();
+    if (persistToDisk) {
+      this.persistenceManager.loadFromDiskLazy();
+      this.persistenceManager.schedulePeriodicFlush();
     }
   }
 
-  private saveToDisk() {
-    if (this.persistToDisk && this.filePath) {
-      const data = JSON.stringify(Array.from(this.db.entries()));
-      fs.writeFileSync(this.filePath, data, 'utf8');
-    }
+  // Transaction Methods
+  public beginTransaction(): void {
+    this.transactionManager.beginTransaction();
   }
 
-  private loadFromDisk() {
-    if (this.persistToDisk && this.filePath && fs.existsSync(this.filePath)) {
-      const data = fs.readFileSync(this.filePath, 'utf8');
-      const entries = JSON.parse(data) as [MEMOZID, DocumentWithId<T>][];
-      this.db = new Map(entries);
-    }
+  public commitTransaction(): void {
+    this.transactionManager.commitTransaction();
+    this.persistenceManager.scheduleSaveToDisk();
+  }
+
+  public rollbackTransaction(): void {
+    this.transactionManager.rollbackTransaction();
+  }
+
+  public getFromIndex(query: any): DocumentWithId<T>[] {
+    return this.indexManager.getFromIndex(query, this.transactionManager.getCurrentDb());
   }
 
   public createOne(document: T): DocumentWithId<T> {
+    this.queryCache.invalidate();
+
     if (!isObject(document)) {
       throw new Error('The document must be a valid object');
     }
@@ -49,20 +64,36 @@ class Memoz<T> {
     const id = memozId();
     const dbDocument: DocumentWithId<T> = { ...document, id };
 
-    this.db.set(id, dbDocument);
-    this.saveToDisk();
+    const targetDb = this.transactionManager.getCurrentDb(); // Use transactional DB if active
+    targetDb.set(id, dbDocument);
+    this.indexManager.updateIndexes(dbDocument);
+    this.persistenceManager.scheduleSaveToDisk();
 
     return dbDocument;
   }
 
   public createMany(documents: T[]): DocumentWithId<T>[] {
+    this.queryCache.invalidate();
+
     documents.forEach((document) => {
       if (!isObject(document)) {
         throw new Error('The document must be a valid object');
       }
     });
 
-    const createdDocuments = documents.map((document) => this.createOne(document));
+    const createdDocuments = documents.map((document) => {
+      const id = memozId();
+      return { ...document, id };
+    });
+
+    const targetDb = this.transactionManager.getCurrentDb(); // Use transactional DB if active
+    createdDocuments.forEach((doc) => {
+      targetDb.set(doc.id, doc);
+      this.indexManager.updateIndexes(doc);
+    });
+
+    this.persistenceManager.scheduleSaveToDisk();
+
     return createdDocuments;
   }
 
@@ -71,26 +102,52 @@ class Memoz<T> {
       throw new Error('The ID must be valid');
     }
 
-    return this.db.get(id);
+    return this.transactionManager.getCurrentDb().get(id);
   }
 
   public getOne(query: ConditionNode<Partial<T>>): DocumentWithId<T> | undefined {
+    const queryKey = JSON.stringify(query);
+    const cachedResult = this.queryCache.get(queryKey);
+    if (cachedResult) {
+      return cachedResult[0];
+    }
+
     if (!isObject(query)) {
       throw new Error('The query must be a valid object');
     }
 
-    return getOne([...this.db.values()], query);
+    const indexedResults = this.getFromIndex(query);
+    const result = indexedResults.length > 0 ? indexedResults[0] : getOne([...this.transactionManager.getCurrentDb().values()], query);
+
+    if (result) {
+      this.queryCache.set(queryKey, [result]);
+    }
+    return result;
   }
+  // Other CRUD operations (getOne, updateById, deleteById, etc.) would follow similarly...
 
   public getMany(query: ConditionNode<Partial<T>>): DocumentWithId<T>[] {
+    const queryKey = JSON.stringify(query);
+    const cachedResults = this.queryCache.get(queryKey);
+    if (cachedResults) {
+      return cachedResults;
+    }
+
     if (!isObject(query)) {
       throw new Error('The query must be a valid object');
     }
 
-    return getMany([...this.db.values()], query);
+    const result = this.getFromIndex(query).length > 0
+      ? this.getFromIndex(query)
+      : getMany([...this.transactionManager.getCurrentDb().values()], query);
+
+    this.queryCache.set(queryKey, result);
+    return result;
   }
 
   public updateById(id: MEMOZID, newData: Partial<T>): DocumentWithId<T> {
+    this.queryCache.invalidate();
+
     if (!isValidMemozId(id)) {
       throw new Error('The ID must be valid');
     }
@@ -100,19 +157,21 @@ class Memoz<T> {
     }
 
     const existingObject = this.getById(id);
-
     if (!existingObject) {
       throw new Error('This ID does not exist');
     }
 
     const updatedObject = { ...existingObject, ...newData };
-    this.db.set(id, updatedObject);
-    this.saveToDisk();
+    this.transactionManager.getCurrentDb().set(id, updatedObject);
+    this.indexManager.updateIndexes(updatedObject);
+    this.persistenceManager.scheduleSaveToDisk();
 
     return updatedObject;
   }
 
   public updateOne(query: ConditionNode<Partial<T>>, newData: Partial<T>): DocumentWithId<T> {
+    this.queryCache.invalidate();
+
     if (!isObject(query)) {
       throw new Error('The query must be a valid object');
     }
@@ -128,69 +187,87 @@ class Memoz<T> {
     }
 
     const updatedObject = { ...existingObject, ...newData };
-    this.db.set(existingObject.id, updatedObject);
-    this.saveToDisk();
+    const targetDb = this.transactionManager.getCurrentDb();
+    targetDb.set(existingObject.id, updatedObject);
+    this.indexManager.updateIndexes(updatedObject); // Update indexes after modifying
+    this.persistenceManager.scheduleSaveToDisk();
 
     return updatedObject;
   }
 
   public updateMany(query: ConditionNode<Partial<T>>, newData: Partial<T>): UpdateManyResult<T> {
-    if (!isObject(query)) {
-      throw new Error('The query must be a valid object');
-    }
+    this.queryCache.invalidate();
 
-    if (!isObject(newData)) {
-      throw new Error('The new data must be a valid object');
+    if (!isObject(query) || !isObject(newData)) {
+      throw new Error('Both query and new data must be valid objects');
     }
 
     const documents = this.getMany(query);
-
     documents.forEach((document) => this.updateById(document.id, newData));
-    this.saveToDisk();
+    this.persistenceManager.scheduleSaveToDisk();
 
     return { updated: true, n: documents.length, documents };
   }
 
   public deleteById(id: MEMOZID): DocumentWithId<T> | undefined {
+    this.queryCache.invalidate();
+
     if (!isValidMemozId(id)) {
       throw new Error('The ID must be valid');
     }
 
-    const deletedObject = this.getById(id);
-    this.db.delete(id);
-    this.saveToDisk();
+    const targetDb = this.transactionManager.getCurrentDb();
+    const documentToDelete = targetDb.get(id);
 
-    return deletedObject;
+    if (documentToDelete) {
+      // Update indexes efficiently
+      this.indexManager.updateIndexes(documentToDelete);
+
+      // Remove the document from the main database
+      targetDb.delete(id);
+      this.persistenceManager.scheduleSaveToDisk();
+    }
+
+    return documentToDelete;
+  }
+
+  public deleteAll(): { deleted: boolean; n: number } {
+    const targetDb = this.transactionManager.getCurrentDb();
+    const { size } = targetDb;
+    targetDb.clear();
+    this.indexManager.clear();
+    this.persistenceManager.scheduleSaveToDisk();
+
+    return { deleted: true, n: size };
   }
 
   public deleteOne(query: ConditionNode<Partial<T>>): DocumentWithId<T> | undefined {
+    this.queryCache.invalidate();
+
     if (!isObject(query)) {
       throw new Error('The query must be a valid object');
     }
 
-    const deletedObject = this.getOne(query);
-    return deletedObject ? this.deleteById(deletedObject.id) : undefined;
+    const objectToDelete = this.getOne(query);
+    if (!objectToDelete) return undefined;
+
+    this.deleteById(objectToDelete.id);
+
+    return objectToDelete;
   }
 
   public deleteMany(query: ConditionNode<Partial<T>>): { deleted: boolean; n: number } {
+    this.queryCache.invalidate();
+
     if (!isObject(query)) {
       throw new Error('The query must be a valid object');
     }
 
     const documents = this.getMany(query);
-
-    documents.forEach((document) => this.deleteById(document.id));
-    this.saveToDisk();
+    documents.forEach((doc) => this.deleteById(doc.id));
+    this.persistenceManager.scheduleSaveToDisk();
 
     return { deleted: true, n: documents.length };
-  }
-
-  public deleteAll(): { deleted: boolean; n: number } {
-    const size = this.countDocuments();
-    this.db.clear();
-    this.saveToDisk();
-
-    return { deleted: this.countDocuments() === 0, n: size };
   }
 
   public countDocuments(query?: ConditionNode<Partial<T>>): number {
@@ -198,21 +275,14 @@ class Memoz<T> {
       throw new Error('The query must be a valid object');
     }
 
-    if (query && Object.keys(query).length) {
-      const documents = this.getMany(query);
-      return documents.length;
-    }
-
-    return this.db.size;
+    return query && Object.keys(query).length ? this.getMany(query).length : this.transactionManager.getCurrentDb().size;
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  public id(): MEMOZID {
+  public static id(): MEMOZID {
     return memozId();
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  public isValidId(id: MEMOZID): boolean {
+  public static isValidId(id: MEMOZID): boolean {
     return isValidMemozId(id);
   }
 }

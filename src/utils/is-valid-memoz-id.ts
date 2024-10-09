@@ -1,5 +1,5 @@
 import { MEMOZ_ID_PATTERN } from '../constants/memoz-id';
-import { MEMOZID } from './memoz-id';
+import { MEMOZID } from '../types';
 
 /**
  *
