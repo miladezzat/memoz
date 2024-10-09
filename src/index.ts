@@ -24,15 +24,19 @@ export class Memoz<T> {
 
   private queryCache: QueryCache<T>;
 
-  constructor(filePath?: string, persistToDisk: boolean = false) {
+  constructor(filePath?: string, persistToDisk: boolean = false, stayALive: boolean = false) {
     this.transactionManager = new TransactionManager(this.db);
     this.persistenceManager = new PersistenceManager(filePath, this.db, persistToDisk);
     this.indexManager = new IndexManager();
     this.queryCache = new QueryCache();
 
     if (persistToDisk) {
-      this.persistenceManager.loadFromDiskLazy();
-      this.persistenceManager.schedulePeriodicFlush();
+      this.persistenceManager.loadFromDiskLazy()
+        .then(() => {
+          if (stayALive) {
+            this.persistenceManager.schedulePeriodicFlush();
+          }
+        });
     }
   }
 
@@ -66,6 +70,7 @@ export class Memoz<T> {
 
     const targetDb = this.transactionManager.getCurrentDb(); // Use transactional DB if active
     targetDb.set(id, dbDocument);
+
     this.indexManager.updateIndexes(dbDocument);
     this.persistenceManager.scheduleSaveToDisk();
 
@@ -124,7 +129,6 @@ export class Memoz<T> {
     }
     return result;
   }
-  // Other CRUD operations (getOne, updateById, deleteById, etc.) would follow similarly...
 
   public getMany(query: ConditionNode<Partial<T>>): DocumentWithId<T>[] {
     const queryKey = JSON.stringify(query);

@@ -17,6 +17,11 @@ export class PersistenceManager<T> {
     this.db = db;
     this.filePath = filePath ? path.resolve(filePath) : './data.json';
     this.persistToDisk = persistToDisk;
+
+    // generate and init the file on disk if it doesn't exist
+    if (this.persistToDisk && !fs.existsSync(this.filePath)) {
+      fs.writeFileSync(this.filePath, JSON.stringify([]), 'utf8');
+    }
   }
 
   public async saveToDisk(): Promise<void> {
@@ -26,12 +31,17 @@ export class PersistenceManager<T> {
       const writeStream = fs.createWriteStream(this.filePath);
       writeStream.write(JSON.stringify(Array.from(this.db.entries())));
       writeStream.end();
+      if (this.saveTimeout) {
+        clearTimeout(this.saveTimeout);
+      }
     }
   }
 
   public scheduleSaveToDisk(delay = 3000): void {
     if (this.persistToDisk) {
-      if (this.saveTimeout) clearTimeout(this.saveTimeout);
+      if (this.saveTimeout) {
+        clearTimeout(this.saveTimeout);
+      }
       this.saveTimeout = setTimeout(() => this.saveToDisk(), delay);
     }
   }
