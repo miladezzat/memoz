@@ -1,6 +1,6 @@
 {
   "name": "memoz",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "description": "memoz is an in-memory database that persists on disk. The data model is key-value, but many different kind of values are supported: Strings, Lists, Sets, Sorted Sets, Hashes, Streams, HyperLogLogs, Bitmaps.",
   "main": "./build/index.js",
   "module": "./build/index.js",
@@ -20,6 +20,7 @@
     "prepublishOnly": "./node_modules/.bin/pinst --disable",
     "postpublish": "./node_modules/.bin/pinst --enable",
     "lint": "./node_modules/.bin/eslint",
+    "docs": "npx compodoc -p tsconfig.json -d docs",
     "release:major": "changelog -M && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version major",
     "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version minor",
     "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version patch"
@@ -40,7 +41,16 @@
     "ram",
     "simple",
     "storage",
-    "typescript"
+    "typescript",
+    "in-memory",
+    "disk",
+    "persist",
+    "key-value",
+    "string",
+    "list",
+    "set",
+    "sorted-set",
+    "hash"
   ],
   "author": "Milad E. Fahmy <miladezzat.f@gmail.com> (https://milad-ezzat.vercel.app)",
   "devDependencies": {

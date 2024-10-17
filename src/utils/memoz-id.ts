@@ -1,7 +1,6 @@
 import { MEMOZ_ID_TEMPLATE } from '../constants/memoz-id';
+import { MEMOZID } from '../types';
 import { isValidMemozId } from './is-valid-memoz-id';
-
-export type MEMOZID = string & { __brand__: 'MEMOZID' }; // You can enhance this with more strict MEMOZID typing if desired
 
 /**
  * Generates a MEMOZID string based on a template and current timestamp.
@@ -24,7 +23,7 @@ export function memozId(): MEMOZID {
     throw new Error('Generated MEMOZID is not valid');
   }
 
-  return id;
+  return id as MEMOZID;
 }
 
 export default memozId;

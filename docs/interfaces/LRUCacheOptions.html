@@ -1,0 +1,668 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>memoz documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">memoz documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  LRUCacheOptions</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/utils/lru-cache.ts</code>
+        </p>
+
+
+
+
+        <section data-compodoc="block-index">
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#evictionStrategy" 
+>
+                                            evictionStrategy
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#maxSize" 
+>
+                                            maxSize
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#onEvict" 
+>
+                                            onEvict
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#stayAlive" 
+>
+                                            stayAlive
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#ttl" 
+>
+                                            ttl
+                                        </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section data-compodoc="block-properties">
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="evictionStrategy"></a>
+                                        <span class="name "><b>evictionStrategy</b>
+                                            <a href="#evictionStrategy">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>evictionStrategy:         <code><a href="../miscellaneous/typealiases.html#EvictionStrategy" target="_self" >EvictionStrategy</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#EvictionStrategy" target="_self" >EvictionStrategy</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="maxSize"></a>
+                                        <span class="name "><b>maxSize</b>
+                                            <a href="#maxSize">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>maxSize:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="onEvict"></a>
+                                        <span class="name "><b>onEvict</b>
+                                            <a href="#onEvict">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>onEvict:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="stayAlive"></a>
+                                        <span class="name "><b>stayAlive</b>
+                                            <a href="#stayAlive">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>stayAlive:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="ttl"></a>
+                                        <span class="name "><b>ttl</b>
+                                            <a href="#ttl">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>ttl:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">type EvictionStrategy &#x3D; &#x27;LRU&#x27; | &#x27;FIFO&#x27;;
+
+export interface LRUCacheOptions&lt;K, V&gt; {
+    maxSize: number;
+    ttl?: number;
+    onEvict?: (key: K, value: V) &#x3D;&gt; void;
+    evictionStrategy?: EvictionStrategy;
+    stayAlive?: boolean;
+}
+export class LRUCache&lt;K, V&gt; {
+  private cache: Map&lt;K, { value: V; expiry?: number }&gt; &#x3D; new Map();
+
+  private maxSize: number;
+
+  private ttl?: number;
+
+  private onEvict?: (key: K, value: V) &#x3D;&gt; void;
+
+  private evictionStrategy: EvictionStrategy;
+
+  private stayAlive?: boolean;
+
+  private hitCount: number &#x3D; 0;
+
+  private missCount: number &#x3D; 0;
+
+  private cleanupInterval: number &#x3D; 60000; // 1 minute cleanup interval
+
+  // eslint-disable-next-line no-undef
+  private cleanupTimer?: NodeJS.Timeout;
+
+  constructor(options: LRUCacheOptions&lt;K, V&gt;) {
+    const {
+      maxSize,
+      ttl, onEvict,
+      evictionStrategy &#x3D; &#x27;LRU&#x27;,
+      stayAlive &#x3D; false,
+    } &#x3D; options;
+
+    if (maxSize &lt;&#x3D; 0) {
+      throw new Error(&#x27;maxSize must be greater than 0&#x27;);
+    }
+    this.maxSize &#x3D; maxSize;
+    this.ttl &#x3D; ttl;
+    this.onEvict &#x3D; onEvict;
+    this.evictionStrategy &#x3D; evictionStrategy;
+    if (stayAlive) {
+      this.startCleanup();
+    }
+  }
+
+  private reorder(key: K): void {
+    if (this.evictionStrategy &#x3D;&#x3D;&#x3D; &#x27;LRU&#x27;) {
+      const entry &#x3D; this.cache.get(key);
+      if (!entry) return;
+      this.cache.delete(key); // Remove the entry
+      this.cache.set(key, entry); // Re-insert to update the position
+    }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private isExpired(entry: { value: V; expiry?: number }): boolean {
+    if (entry.expiry &#x3D;&#x3D;&#x3D; undefined) return false;
+    return performance.now() &gt; entry.expiry;
+  }
+
+  private cleanupExpiredEntries(): void {
+    const now &#x3D; performance.now();
+    Array.from(this.cache.entries()).forEach(([key, entry]) &#x3D;&gt; {
+      if (entry.expiry !&#x3D;&#x3D; undefined &amp;&amp; now &gt; entry.expiry) {
+        this.cache.delete(key);
+        if (this.onEvict) {
+          this.onEvict(key, entry.value);
+        }
+      }
+    });
+  }
+
+  private startCleanup(): void {
+    if (this.cleanupInterval) {
+      this.cleanupTimer &#x3D; setInterval(() &#x3D;&gt; this.cleanupExpiredEntries(), this.cleanupInterval);
+    }
+  }
+
+  stopCleanup(): void {
+    if (this.cleanupTimer) {
+      clearInterval(this.cleanupTimer);
+    }
+  }
+
+  get(key: K): V | undefined {
+    const entry &#x3D; this.cache.get(key);
+    if (!entry) {
+      this.missCount +&#x3D; 1;
+      return undefined;
+    }
+
+    if (this.isExpired(entry)) {
+      this.cache.delete(key);
+      this.missCount +&#x3D; 1;
+      return undefined;
+    }
+
+    this.hitCount +&#x3D; 1;
+    this.reorder(key);
+    return entry.value;
+  }
+
+  set(key: K, value: V, ttl?: number): void {
+    if (this.cache.has(key)) {
+      this.reorder(key);
+    } else if (this.cache.size &#x3D;&#x3D;&#x3D; this.maxSize) {
+      let oldestKey: K | undefined;
+
+      if (this.evictionStrategy &#x3D;&#x3D;&#x3D; &#x27;LRU&#x27;) {
+        // Get the first key for LRU strategy
+        oldestKey &#x3D; this.cache.keys().next().value;
+      } else if (this.evictionStrategy &#x3D;&#x3D;&#x3D; &#x27;FIFO&#x27;) {
+        // Get the oldest key for FIFO strategy
+        oldestKey &#x3D; [...this.cache.keys()].shift();
+      }
+
+      if (oldestKey !&#x3D;&#x3D; undefined) {
+        const oldestEntry &#x3D; this.cache.get(oldestKey);
+        this.cache.delete(oldestKey);
+        if (this.onEvict &amp;&amp; oldestEntry) {
+          this.onEvict(oldestKey, oldestEntry.value);
+        }
+      }
+    }
+
+    // Avoid nested ternaries by using simple conditionals
+    let expiry: number | undefined;
+    if (ttl !&#x3D;&#x3D; undefined) {
+      expiry &#x3D; performance.now() + ttl;
+    } else if (this.ttl !&#x3D;&#x3D; undefined) {
+      expiry &#x3D; performance.now() + this.ttl;
+    }
+
+    this.cache.set(key, { value, expiry });
+  }
+
+  delete(key: K): boolean {
+    return this.cache.delete(key);
+  }
+
+  clear(): void {
+    this.cache.clear();
+  }
+
+  get size(): number {
+    return this.cache.size;
+  }
+
+  has(key: K): boolean {
+    const entry &#x3D; this.cache.get(key);
+    if (!entry) return false;
+
+    if (this.isExpired(entry)) {
+      this.cache.delete(key);
+      return false;
+    }
+
+    return true;
+  }
+
+  entries(): Array&lt;[K, V]&gt; {
+    return Array.from(this.cache.entries())
+      .filter(([, entry]) &#x3D;&gt; !this.isExpired(entry))
+      .map(([key, entry]) &#x3D;&gt; [key, entry.value]);
+  }
+
+  serialize(): string {
+    const entries &#x3D; this.entries();
+    return JSON.stringify(entries);
+  }
+
+  deserialize(serializedCache: string): void {
+    const entries: [K, V][] &#x3D; JSON.parse(serializedCache);
+    this.cache.clear();
+    entries.forEach(([key, value]) &#x3D;&gt; {
+      this.set(key, value);
+    });
+  }
+
+  get hitRate(): number {
+    const total &#x3D; this.hitCount + this.missCount;
+    return total &#x3D;&#x3D;&#x3D; 0 ? 0 : this.hitCount / total;
+  }
+
+  get missRate(): number {
+    const total &#x3D; this.hitCount + this.missCount;
+    return total &#x3D;&#x3D;&#x3D; 0 ? 0 : this.missCount / total;
+  }
+
+  async getAsync(key: K, fetchFn: () &#x3D;&gt; Promise&lt;V&gt;): Promise&lt;V&gt; {
+    const cached &#x3D; this.get(key);
+    if (cached) {
+      return cached;
+    }
+
+    const result &#x3D; await fetchFn();
+    this.set(key, result);
+    return result;
+  }
+}
+
+export default LRUCache;
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'LRUCacheOptions.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
