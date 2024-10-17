@@ -1,5 +1,5 @@
 // Shard.ts
-
+// this not used in the final version of the project
 import { DocumentWithId } from '../types';
 
 export class Shard<T> {

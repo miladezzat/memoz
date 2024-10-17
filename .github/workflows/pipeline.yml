@@ -55,7 +55,7 @@ jobs:
 
       - run: npm install
       - run: npm run build
-      - run: npm run release:minor
+      - run: npm run release:patch
 
       - name: Push changes to master branch
         run: |

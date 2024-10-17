@@ -1,0 +1,301 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>memoz documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">memoz documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h3>3.1.0 (2024-10-08)</h3>
+<h2>3.0.0 (2024-10-08)</h2>
+<h3>2.2.0 (2024-09-16)</h3>
+<h5>Continuous Integration</h5>
+<ul>
+<li>resolve pipeline (<a href="https://github.com/miladezzat/memoz/commit/de8a28fac41657db95ab3b873a05b867a944edf9">de8a28fa</a>)</li>
+</ul>
+<h4>2.1.2 (2022-02-19)</h4>
+<h5>Chores</h5>
+<ul>
+<li>update deps (<a href="https://github.com/miladezzat/memoz/commit/e81eee88c536ab426a1c818b1fff581a49ee2d52">e81eee88</a>)</li>
+</ul>
+<h5>Bug Fixes</h5>
+<ul>
+<li>update docs (<a href="https://github.com/miladezzat/memoz/commit/ac42869a6e4022d81f614a1e71d8e947fc156338">ac42869a</a>)</li>
+</ul>
+<h5>Other Changes</h5>
+<ul>
+<li>miladezzat/memoz into gh-pages (<a href="https://github.com/miladezzat/memoz/commit/ae7913f140b726f42614abc492c1715be2fc845d">ae7913f1</a>)</li>
+</ul>
+<h4>2.1.1 (2022-02-11)</h4>
+<h5>Chores</h5>
+<ul>
+<li>update deps (<a href="https://github.com/miladezzat/memoz/commit/75a1f4f1c636a805cf10a73044e51f48a1af20db">75a1f4f1</a>)</li>
+</ul>
+<h5>Documentation Changes</h5>
+<ul>
+<li>update docs (<a href="https://github.com/miladezzat/memoz/commit/4e9d17182e82ae778068fc531cd6d98e354ffc76">4e9d1718</a>)</li>
+</ul>
+<h3>2.1.0 (2022-02-09)</h3>
+<h5>Chores</h5>
+<ul>
+<li>update docs (<a href="https://github.com/miladezzat/memoz/commit/2886b3722d15afb11918ebad028740ee71119195">2886b372</a>)</li>
+</ul>
+<h5>New Features</h5>
+<ul>
+<li>setup docs (<a href="https://github.com/miladezzat/memoz/commit/69b61d8a741982a3058ee5b3e266058b93c89fe7">69b61d8a</a>)</li>
+</ul>
+<h4>2.0.1 (2021-08-04)</h4>
+<h5>Chores</h5>
+<ul>
+<li>update dpes (<a href="https://github.com/miladezzat/memoz/commit/dd121257dfc9f683757224bcedb8a8f4f4cf6edc">dd121257</a>)</li>
+<li>update deps (<a href="https://github.com/miladezzat/memoz/commit/c411d80582e04f31d67f85f00512aefed619ccad">c411d805</a>)</li>
+<li>update deps (<a href="https://github.com/miladezzat/memoz/commit/4173ee67b1c3a38ce5df9d673014ff8d42ee7ace">4173ee67</a>)</li>
+</ul>
+<h5>Documentation Changes</h5>
+<ul>
+<li>update js docs (<a href="https://github.com/miladezzat/memoz/commit/d687504c68e4852f63575c15a1d3bfc948a96cfd">d687504c</a>)</li>
+<li>update docs (<a href="https://github.com/miladezzat/memoz/commit/75a86338805b1de73ef27fc9a5cef173089c598c">75a86338</a>)</li>
+</ul>
+<h2>2.0.0 (2021-07-30)</h2>
+<h5>New Features</h5>
+<ul>
+<li>update create method (<a href="https://github.com/miladezzat/memoz/commit/5d244251625b3e6e39de56b618902b71e774588c">5d244251</a>)</li>
+</ul>
+<h4>1.1.3 (2021-07-28)</h4>
+<h5>Chores</h5>
+<ul>
+<li>update package  json and add husky (<a href="https://github.com/miladezzat/memoz/commit/e9322431c8696e3c454960b60790052b21aa51ad">e9322431</a>)</li>
+</ul>
+<h5>Continuous Integration</h5>
+<ul>
+<li>update ci (<a href="https://github.com/miladezzat/memoz/commit/c0bab78db3f014dd80daf52caaf272bf30091f07">c0bab78d</a>)</li>
+</ul>
+<h5>Refactors</h5>
+<ul>
+<li>setup environment (<a href="https://github.com/miladezzat/memoz/commit/95dd6d1eca5f5b01ab5289bade89fe8fca066a46">95dd6d1e</a>)</li>
+<li>update some codes (<a href="https://github.com/miladezzat/memoz/commit/9b8d080d93f2d1464f858d9a448d34cd90473957">9b8d080d</a>)</li>
+</ul>
+<h4>1.1.3 (2021-07-28)</h4>
+<h5>Chores</h5>
+<ul>
+<li>update package  json and add husky (<a href="https://github.com/miladezzat/memoz/commit/e9322431c8696e3c454960b60790052b21aa51ad">e9322431</a>)</li>
+</ul>
+<h5>Continuous Integration</h5>
+<ul>
+<li>update ci (<a href="https://github.com/miladezzat/memoz/commit/c0bab78db3f014dd80daf52caaf272bf30091f07">c0bab78d</a>)</li>
+</ul>
+<h5>Refactors</h5>
+<ul>
+<li>setup environment (<a href="https://github.com/miladezzat/memoz/commit/95dd6d1eca5f5b01ab5289bade89fe8fca066a46">95dd6d1e</a>)</li>
+<li>update some codes (<a href="https://github.com/miladezzat/memoz/commit/9b8d080d93f2d1464f858d9a448d34cd90473957">9b8d080d</a>)</li>
+</ul>
+<h4>1.1.2 (2021-07-28)</h4>
+<h5>Documentation Changes</h5>
+<ul>
+<li>update docs (<a href="https://github.com/miladezzat/memoz/commit/5bfdc44a0becf825a7d3082d2e50392086c625df">5bfdc44a</a>)</li>
+</ul>
+<h4>1.1.1 (2021-07-28)</h4>
+<h5>Bug Fixes</h5>
+<ul>
+<li>solve package (<a href="https://github.com/miladezzat/memoz/commit/5eef46c09f17054bcc493ab568943efae4eeac4b">5eef46c0</a>)</li>
+</ul>
+<h3>1.1.0 (2021-07-27)</h3>
+<h5>Chores</h5>
+<ul>
+<li>update package json (<a href="https://github.com/miladezzat/encrypt-rsa/commit/029ad1fada107c14f17d7ffb3c54e051cf35886a">029ad1fa</a>)</li>
+</ul>
+<h5>Documentation Changes</h5>
+<ul>
+<li>update docs (<a href="https://github.com/miladezzat/encrypt-rsa/commit/276f3b47a675b0a3becc7db3450d9d259711bb94">276f3b47</a>)</li>
+</ul>
+<h5>New Features</h5>
+<ul>
+<li>add deleteone function (<a href="https://github.com/miladezzat/encrypt-rsa/commit/deae21e080bf25e12877fdc4d25e7ecf46b3860e">deae21e0</a>)</li>
+</ul>
+<h2>1.0.0 (2021-07-26)</h2>
+<h5>Documentation Changes</h5>
+<ul>
+<li>update docs (<a href="https://github.com/miladezzat/encrypt-rsa/commit/76398cb011c98c73935b57b75196e89a0993972b">76398cb0</a>)</li>
+</ul>
+<h5>New Features</h5>
+<ul>
+<li>update memoz methods (<a href="https://github.com/miladezzat/encrypt-rsa/commit/85fb8dafbeb2c585253e3bc94171ec863f675dde">85fb8daf</a>)</li>
+<li>setup (<a href="https://github.com/miladezzat/encrypt-rsa/commit/6d760f532eeb20473c0b04d604cf52e10d0bcba1">6d760f53</a>)</li>
+</ul>
+<h5>Bug Fixes</h5>
+<ul>
+<li>solve some bugs (<a href="https://github.com/miladezzat/encrypt-rsa/commit/4079a95a0d477c7d492fea62e61a42a407018610">4079a95a</a>)</li>
+</ul>
+<h5>Tests</h5>
+<ul>
+<li>add unit testing (<a href="https://github.com/miladezzat/encrypt-rsa/commit/39424c771416d7c0f68f31099f9d28d583dc3840">39424c77</a>)</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_URL = 'changelog.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+
+       <script src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

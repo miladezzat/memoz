@@ -19,4 +19,5 @@ export type UpdateManyResult<T> = { updated: boolean; n: number; documents: Docu
 export interface MemozOptions {
     storagePath?: string;
     persistToDisk?: boolean;
+    useMutex?: boolean;
 }

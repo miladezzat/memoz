@@ -1,3 +1,9 @@
+## 4.0.0 (2024-10-17)
+
+##### New Features
+
+*  add new features like (transaction, presist on disk, etc) ([4642966f](https://github.com/miladezzat/memoz/commit/4642966f8a9ed3e139ffce7113f41a3e2f51509a))
+
 ### 3.1.0 (2024-10-08)
 
 ## 3.0.0 (2024-10-08)

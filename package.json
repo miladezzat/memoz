@@ -20,6 +20,7 @@
     "prepublishOnly": "./node_modules/.bin/pinst --disable",
     "postpublish": "./node_modules/.bin/pinst --enable",
     "lint": "./node_modules/.bin/eslint",
+    "docs": "npx compodoc -p tsconfig.json -d docs",
     "release:major": "changelog -M && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version major",
     "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version minor",
     "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version patch"
@@ -40,7 +41,16 @@
     "ram",
     "simple",
     "storage",
-    "typescript"
+    "typescript",
+    "in-memory",
+    "disk",
+    "persist",
+    "key-value",
+    "string",
+    "list",
+    "set",
+    "sorted-set",
+    "hash"
   ],
   "author": "Milad E. Fahmy <miladezzat.f@gmail.com> (https://milad-ezzat.vercel.app)",
   "devDependencies": {

@@ -1,0 +1,2771 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>memoz documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">memoz documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Classes</li>
+  <li class="breadcrumb-item" >Memoz</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/memoz.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>The Memoz class is an in-memory document store with optional persistence to disk.
+It supports transactional operations, querying, indexing, and caching.</p>
+
+            </p>
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#db" >db</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#indexManager" >indexManager</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#mutex" >mutex</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#persistenceManager" >persistenceManager</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#queryCache" >queryCache</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#ready" >ready</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#transactionManager" >transactionManager</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#beginTransaction" >beginTransaction</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#commitTransaction" >commitTransaction</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#countDocuments" >countDocuments</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#createMany" >createMany</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#createOne" >createOne</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteAll" >deleteAll</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteById" >deleteById</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteMany" >deleteMany</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteOne" >deleteOne</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getById" >getById</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#getFromIndex" >getFromIndex</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getMany" >getMany</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getOne" >getOne</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#id" >id</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#isValidId" >isValidId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#rollbackTransaction" >rollbackTransaction</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateById" >updateById</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateMany" >updateMany</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateOne" >updateOne</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(memozOptions: <a href="../interfaces/MemozOptions.html" target="_self">MemozOptions</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/memoz.ts:70</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>memozOptions</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/MemozOptions.html" target="_self" >MemozOptions</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Options for the Memoz instance</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="db"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>db</b></span>
+                        <a href="#db"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Map&lt;MEMOZID | DocumentWithId&lt;T&gt;&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Map()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/memoz.ts:33</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>In-memory database storing documents keyed by MEMOZID.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="indexManager"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>indexManager</b></span>
+                        <a href="#indexManager"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/IndexManager.html" target="_self" >IndexManager&lt;T&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/memoz.ts:54</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Manages indexing for efficient querying.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mutex"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>mutex</b></span>
+                        <a href="#mutex"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Mutex.html" target="_self" >Mutex | null</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/memoz.ts:70</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="persistenceManager"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>persistenceManager</b></span>
+                        <a href="#persistenceManager"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/PersistenceManager.html" target="_self" >PersistenceManager&lt;T&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/memoz.ts:47</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Manages persistence of the database to disk.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="queryCache"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>queryCache</b></span>
+                        <a href="#queryCache"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/QueryCache.html" target="_self" >QueryCache&lt;DocumentWithId&lt;T&gt;&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/memoz.ts:61</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Caches query results for performance optimization.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ready"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>ready</b></span>
+                        <a href="#ready"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Promise&lt;void&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/memoz.ts:68</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>A promise that resolves when the database is ready for use.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="transactionManager"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>transactionManager</b></span>
+                        <a href="#transactionManager"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/TransactionManager.html" target="_self" >TransactionManager&lt;T&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/memoz.ts:40</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Manages transactions for the database.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="beginTransaction"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>beginTransaction</b></span>
+                        <a href="#beginTransaction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>beginTransaction()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="93"
+                                    class="link-to-prism">src/memoz.ts:93</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="commitTransaction"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>commitTransaction</b></span>
+                        <a href="#commitTransaction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>commitTransaction()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="98"
+                                    class="link-to-prism">src/memoz.ts:98</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="countDocuments"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>countDocuments</b></span>
+                        <a href="#countDocuments"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>countDocuments(query?: <a href="../undefineds/ConditionNode.html" target="_self">ConditionNode&lt;Partial&lt;T&gt;&gt;</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="572"
+                                    class="link-to-prism">src/memoz.ts:572</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Counts the number of documents in the database, optionally filtered by a query.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>query</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#ConditionNode" target="_self" >ConditionNode&lt;Partial&lt;T&gt;&gt;</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>An optional query to filter the documents to count. Must be a valid object if provided.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;number&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves to the number of documents matching the query, or the total number of documents if no query is provided.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMany"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>createMany</b></span>
+                        <a href="#createMany"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createMany(documents: T[], batchSize: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="179"
+                                    class="link-to-prism">src/memoz.ts:179</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Inserts multiple documents into the database in batches, assigning each one a unique ID,
+and updating relevant indexes and cache. This method handles transactional operations
+and ensures that documents are saved persistently to disk in chunks to avoid performance issues.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">const newDocuments = await db.createMany([{ name: &#39;Doc 1&#39; }, { name: &#39;Doc 2&#39; }], 50);</code></pre></div><p>This method processes documents in batches to avoid performance bottlenecks.
+The batch size is configurable, with a default of 100 documents per batch.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>documents</td>
+                                            <td>
+                                                        <code>T[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                            <td>
+                                                    <ul>
+<li>The array of documents to insert into the database.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>batchSize</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>100</code>
+                                            </td>
+
+                                            <td>
+                                                    <ul>
+<li>The maximum number of documents to process in each batch.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#DocumentWithId" target="_self" >Promise&lt;DocumentWithId[]&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves to an array of documents, each with a unique ID assigned.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createOne"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>createOne</b></span>
+                        <a href="#createOne"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createOne(document: T)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="126"
+                                    class="link-to-prism">src/memoz.ts:126</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Inserts a new document into the database, assigning it a unique ID, and updating relevant indexes and cache.
+This method handles transactional operations and ensures that the document is saved persistently to disk.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">const newDocument = await db.createOne({ name: &#39;Sample Document&#39; });</code></pre></div><p>This method uses a mutex to prevent race conditions in concurrent environments.
+If a transaction is active, the document is inserted into the transactional database.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>document</td>
+                                            <td>
+                                                        <code>T</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The document to insert into the database.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#DocumentWithId" target="_self" >Promise&lt;DocumentWithId&lt;T&gt;&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves to the document with an added unique ID.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteAll"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteAll</b></span>
+                        <a href="#deleteAll"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteAll()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="502"
+                                    class="link-to-prism">src/memoz.ts:502</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Deletes all documents from the database.</p>
+<ul>
+<li><code>deleted</code>: A boolean indicating that the deletion was successful.</li>
+<li><code>n</code>: The number of documents that were deleted.</li>
+</ul>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves to an object containing:</li>
+<li><code>deleted</code>: A boolean indicating that the deletion was successful.</li>
+<li><code>n</code>: The number of documents that were deleted.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteById"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteById</b></span>
+                        <a href="#deleteById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteById(id: <a href="../undefineds/MEMOZID.html" target="_self">MEMOZID</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="469"
+                                    class="link-to-prism">src/memoz.ts:469</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Deletes a document from the database based on the provided ID.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#MEMOZID" target="_self" >MEMOZID</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The ID of the document to be deleted. Must be a valid ID.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#DocumentWithId" target="_self" >Promise&lt;DocumentWithId | undefined&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves to the deleted document, or undefined if no document was found with the given ID.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteMany"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteMany</b></span>
+                        <a href="#deleteMany"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteMany(query: <a href="../undefineds/ConditionNode.html" target="_self">ConditionNode&lt;Partial&lt;T&gt;&gt;</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="550"
+                                    class="link-to-prism">src/memoz.ts:550</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Deletes multiple documents from the database based on the provided query.</p>
+<ul>
+<li><code>deleted</code>: A boolean indicating that the deletion was successful.</li>
+<li><code>n</code>: The number of documents that were deleted.</li>
+</ul>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>query</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#ConditionNode" target="_self" >ConditionNode&lt;Partial&lt;T&gt;&gt;</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The query used to find the documents to delete. Must be a valid object.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves to an object containing:</li>
+<li><code>deleted</code>: A boolean indicating that the deletion was successful.</li>
+<li><code>n</code>: The number of documents that were deleted.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteOne"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteOne</b></span>
+                        <a href="#deleteOne"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteOne(query: <a href="../undefineds/ConditionNode.html" target="_self">ConditionNode&lt;Partial&lt;T&gt;&gt;</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="524"
+                                    class="link-to-prism">src/memoz.ts:524</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Deletes a single document from the database based on the provided query.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>query</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#ConditionNode" target="_self" >ConditionNode&lt;Partial&lt;T&gt;&gt;</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The query used to find the document to delete. Must be a valid object.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#DocumentWithId" target="_self" >Promise&lt;DocumentWithId | undefined&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves to the deleted document, or undefined if no document was found matching the query.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getById"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>getById</b></span>
+                        <a href="#getById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getById(id: <a href="../undefineds/MEMOZID.html" target="_self">MEMOZID</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="250"
+                                    class="link-to-prism">src/memoz.ts:250</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Retrieves a document from the database using its unique identifier (MEMOZID).</p>
+<p>document with the specified ID if found, or undefined if no document matches the ID.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">const document = await db.getById(&#39;some-valid-id&#39;);
+if (document) {
+  console.log(&#39;Document found:&#39;, document);
+} else {
+  console.log(&#39;No document found with that ID.&#39;);
+}</code></pre></div><p>Ensure that the provided ID follows the expected MEMOZID format.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#MEMOZID" target="_self" >MEMOZID</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The unique identifier of the document to retrieve.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#DocumentWithId" target="_self" >Promise&lt;DocumentWithId | undefined&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves to the
+document with the specified ID if found, or undefined if no document matches the ID.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getFromIndex"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>getFromIndex</b></span>
+                        <a href="#getFromIndex"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getFromIndex(query: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="601"
+                                    class="link-to-prism">src/memoz.ts:601</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>query</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#DocumentWithId" target="_self" >DocumentWithId[]</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getMany"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>getMany</b></span>
+                        <a href="#getMany"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getMany(query: <a href="../undefineds/ConditionNode.html" target="_self">ConditionNode&lt;Partial&lt;T&gt;&gt;</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="317"
+                                    class="link-to-prism">src/memoz.ts:317</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Retrieves multiple documents from the database that match the provided query.
+Supports sorting, pagination, and caching with chainable methods.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>query</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#ConditionNode" target="_self" >ConditionNode&lt;Partial&lt;T&gt;&gt;</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The query condition to match documents.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/QueryBuilder.html" target="_self" >QueryBuilder&lt;DocumentWithId&lt;T&gt;&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A QueryBuilder instance with chaining support.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOne"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>getOne</b></span>
+                        <a href="#getOne"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getOne(query: <a href="../undefineds/ConditionNode.html" target="_self">ConditionNode&lt;Partial&lt;T&gt;&gt;</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="287"
+                                    class="link-to-prism">src/memoz.ts:287</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Retrieves a single document from the database that matches the provided query.</p>
+<p>This method first checks the query cache for a result. If a cached result is found, it returns that.
+If no cached result exists, it checks the index for matching documents. If none are found,
+it retrieves the document directly from the database.</p>
+<p>or undefined if no document is found.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">const document = await db.getOne({ name: &#39;Example Document&#39; });
+if (document) {
+  console.log(&#39;Document found:&#39;, document);
+} else {
+  console.log(&#39;No document found matching the query.&#39;);
+}</code></pre></div><p>Ensure that the provided query object is structured correctly to match documents in the database.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>query</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#ConditionNode" target="_self" >ConditionNode&lt;Partial&lt;T&gt;&gt;</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The query condition used to find the document.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#DocumentWithId" target="_self" >Promise&lt;DocumentWithId | undefined&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves to the document that matches the query,
+or undefined if no document is found.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="id"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>id</b></span>
+                        <a href="#id"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>id()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="587"
+                                    class="link-to-prism">src/memoz.ts:587</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Generates and returns a new unique identifier (MEMOZID).</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#MEMOZID" target="_self" >MEMOZID</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A newly generated unique identifier.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isValidId"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>isValidId</b></span>
+                        <a href="#isValidId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isValidId(id: <a href="../undefineds/MEMOZID.html" target="_self">MEMOZID</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="597"
+                                    class="link-to-prism">src/memoz.ts:597</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Validates whether the provided ID is a valid MEMOZID.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#MEMOZID" target="_self" >MEMOZID</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The ID to validate.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>Returns true if the ID is valid, otherwise false.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rollbackTransaction"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>rollbackTransaction</b></span>
+                        <a href="#rollbackTransaction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>rollbackTransaction()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="104"
+                                    class="link-to-prism">src/memoz.ts:104</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateById"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>updateById</b></span>
+                        <a href="#updateById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateById(id: <a href="../undefineds/MEMOZID.html" target="_self">MEMOZID</a>, newData: Partial<T>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="364"
+                                    class="link-to-prism">src/memoz.ts:364</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Updates an existing object by its ID with the provided new data.</p>
+<p>This method retrieves the object associated with the given ID, merges it with the
+new data, updates the database, reindexes the object, and persists the changes to disk.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">const updatedObject = await updateById(&#39;someId&#39;, { name: &#39;Updated Name&#39; });
+console.log(updatedObject);</code></pre></div></div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#MEMOZID" target="_self" >MEMOZID</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The unique identifier of the object to update.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>newData</td>
+                                            <td>
+                                                        <code>Partial&lt;T&gt;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The partial object containing the new data to update the object with.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#DocumentWithId" target="_self" >Promise&lt;DocumentWithId&lt;T&gt;&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves to the updated object with its ID.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateMany"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>updateMany</b></span>
+                        <a href="#updateMany"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateMany(query: <a href="../undefineds/ConditionNode.html" target="_self">ConditionNode&lt;Partial&lt;T&gt;&gt;</a>, newData: Partial<T>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="443"
+                                    class="link-to-prism">src/memoz.ts:443</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Updates multiple documents in the database based on the provided query and new data.</p>
+<ul>
+<li><code>updated</code>: A boolean indicating if the update was successful.</li>
+<li><code>n</code>: The number of documents that were updated.</li>
+<li><code>documents</code>: An array of the updated documents.</li>
+</ul>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>query</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#ConditionNode" target="_self" >ConditionNode&lt;Partial&lt;T&gt;&gt;</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The query used to find the documents to update.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>newData</td>
+                                            <td>
+                                                        <code>Partial&lt;T&gt;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The new data to merge with the existing documents.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#UpdateManyResult" target="_self" >Promise&lt;UpdateManyResult&lt;T&gt;&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves to an object containing update results, including:</li>
+<li><code>updated</code>: A boolean indicating if the update was successful.</li>
+<li><code>n</code>: The number of documents that were updated.</li>
+<li><code>documents</code>: An array of the updated documents.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateOne"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>updateOne</b></span>
+                        <a href="#updateOne"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateOne(query: <a href="../undefineds/ConditionNode.html" target="_self">ConditionNode&lt;Partial&lt;T&gt;&gt;</a>, newData: Partial<T>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="401"
+                                    class="link-to-prism">src/memoz.ts:401</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Updates a single document in the database based on the provided query and new data.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>query</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#ConditionNode" target="_self" >ConditionNode&lt;Partial&lt;T&gt;&gt;</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The query used to find the document to update.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>newData</td>
+                                            <td>
+                                                        <code>Partial&lt;T&gt;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The new data to merge with the existing document.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#DocumentWithId" target="_self" >Promise&lt;DocumentWithId&lt;T&gt;&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves to the updated document.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { memozId } from &#x27;./utils/memoz-id&#x27;;
+import { isObject } from &#x27;./utils/is-object&#x27;;
+import { isValidMemozId } from &#x27;./utils/is-valid-memoz-id&#x27;;
+import { QueryCache } from &#x27;./utils/query-cache&#x27;;
+import { TransactionManager } from &#x27;./utils/transaction-manager&#x27;;
+import { PersistenceManager } from &#x27;./utils/persistence-manager&#x27;;
+import { IndexManager } from &#x27;./utils/index-manager&#x27;;
+import {
+  ConditionNode,
+  DocumentWithId,
+  MEMOZID,
+  MemozOptions,
+  UpdateManyResult,
+} from &#x27;./types&#x27;;
+import getOne from &#x27;./utils/get-one&#x27;;
+import getMany from &#x27;./utils/get-many&#x27;;
+import Mutex from &#x27;./utils/mutex&#x27;;
+import chunkArray from &#x27;./utils/helper&#x27;;
+import { createQueryBuilderProxy, QueryBuilder } from &#x27;./utils/get-many-query-builder&#x27;;
+
+/**
+ * The Memoz class is an in-memory document store with optional persistence to disk.
+ * It supports transactional operations, querying, indexing, and caching.
+ *
+ * @template T - The type of documents being stored.
+ */
+export class Memoz&lt;T&gt; {
+  /**
+   * In-memory database storing documents keyed by MEMOZID.
+   * @private
+   * @type {Map&lt;MEMOZID, DocumentWithId&lt;T&gt;&gt;}
+   */
+  private db: Map&lt;MEMOZID, DocumentWithId&lt;T&gt;&gt; &#x3D; new Map();
+
+  /**
+   * Manages transactions for the database.
+   * @private
+   * @type {TransactionManager&lt;T&gt;}
+   */
+  private transactionManager: TransactionManager&lt;T&gt;;
+
+  /**
+   * Manages persistence of the database to disk.
+   * @private
+   * @type {PersistenceManager&lt;T&gt;}
+   */
+  private persistenceManager: PersistenceManager&lt;T&gt;;
+
+  /**
+   * Manages indexing for efficient querying.
+   * @private
+   * @type {IndexManager&lt;T&gt;}
+   */
+  private indexManager: IndexManager&lt;T&gt;;
+
+  /**
+   * Caches query results for performance optimization.
+   * @private
+   * @type {QueryCache&lt;DocumentWithId&lt;T&gt;&gt;}
+   */
+  private queryCache: QueryCache&lt;DocumentWithId&lt;T&gt;&gt;;
+
+  /**
+   * A promise that resolves when the database is ready for use.
+   * @public
+   * @type {Promise&lt;void&gt;}
+   */
+  public ready: Promise&lt;void&gt;;
+
+  private mutex: Mutex | null &#x3D; null; // Nullable mutex (null if not used)
+
+  /**
+     *
+     * @param memozOptions - Options for the Memoz instance
+     * @param memozOptions.filePath - The file path to save the database to -default is in-memory
+     * @param memozOptions.persistToDisk - Whether to persist the database to disk - default is false
+     * @param memozOptions.useMutex - Whether to use a mutex for thread safety - default is false
+     */
+  constructor(memozOptions: MemozOptions &#x3D; {}) {
+    const { storagePath, useMutex &#x3D; false, persistToDisk &#x3D; false } &#x3D; memozOptions;
+    if (useMutex) {
+      this.mutex &#x3D; new Mutex(); // Only initialize mutex if enabled
+    }
+
+    this.transactionManager &#x3D; new TransactionManager(this.db);
+    this.persistenceManager &#x3D; new PersistenceManager(this.db, storagePath, persistToDisk);
+    this.indexManager &#x3D; new IndexManager();
+    this.queryCache &#x3D; new QueryCache();
+
+    this.ready &#x3D; persistToDisk ? this.persistenceManager.loadFromDisk() : Promise.resolve();
+  }
+
+  public async beginTransaction(): Promise&lt;void&gt; {
+    await this.ready;
+    this.transactionManager.beginTransaction();
+  }
+
+  public async commitTransaction(): Promise&lt;void&gt; {
+    await this.ready;
+    this.transactionManager.commitTransaction();
+    await this.persistenceManager.saveToDisk();
+  }
+
+  public async rollbackTransaction(): Promise&lt;void&gt; {
+    await this.ready;
+    this.transactionManager.rollbackTransaction();
+  }
+
+  /**
+   * Inserts a new document into the database, assigning it a unique ID, and updating relevant indexes and cache.
+   * This method handles transactional operations and ensures that the document is saved persistently to disk.
+   *
+   * @template T - The type of the document being inserted.
+   * @param {T} document - The document to insert into the database.
+   * @returns {Promise&lt;DocumentWithId&lt;T&gt;&gt;} - A promise that resolves to the document with an added unique ID.
+   *
+   * @throws {Error} If the provided document is not a valid object.
+   *
+   * @example
+   * const newDocument &#x3D; await db.createOne({ name: &#x27;Sample Document&#x27; });
+   *
+   * @remarks
+   * This method uses a mutex to prevent race conditions in concurrent environments.
+   * If a transaction is active, the document is inserted into the transactional database.
+   */
+  public async createOne(document: T): Promise&lt;DocumentWithId&lt;T&gt;&gt; {
+    const operation &#x3D; async () &#x3D;&gt; {
+      await this.ready;
+
+      // Invalidate cache before inserting the document
+      this.queryCache.invalidate();
+
+      // Ensure the document is a valid object
+      if (!isObject(document)) {
+        throw new Error(&#x27;The document must be a valid object&#x27;);
+      }
+
+      // Generate a unique ID for the document
+      const id &#x3D; memozId();
+      const dbDocument: DocumentWithId&lt;T&gt; &#x3D; { ...document, id };
+
+      // Use transactional database if available
+      const targetDb &#x3D; this.transactionManager.getCurrentDb();
+      targetDb.set(id, dbDocument);
+
+      // Update indexes for the new document
+      this.indexManager.updateIndexes(dbDocument);
+
+      // Persist the document to disk
+      await this.persistenceManager.saveToDisk();
+
+      // Return the newly created document with its ID
+      return dbDocument;
+    };
+
+    // Execute the operation with mutex lock if available
+    return this.mutex ? this.mutex.lock(operation) : operation();
+  }
+
+  /**
+ * Inserts multiple documents into the database in batches, assigning each one a unique ID,
+ * and updating relevant indexes and cache. This method handles transactional operations
+ * and ensures that documents are saved persistently to disk in chunks to avoid performance issues.
+ *
+ * @template T - The type of the documents being inserted.
+ * @param {T[]} documents - The array of documents to insert into the database.
+ * @param {number} [batchSize&#x3D;100] - The maximum number of documents to process in each batch.
+ * @returns {Promise&lt;DocumentWithId&lt;T&gt;[]&gt;} - A promise that resolves to an array of documents, each with a unique ID assigned.
+ *
+ * @throws {Error} If any document in the provided array is not a valid object.
+ *
+ * @example
+ * const newDocuments &#x3D; await db.createMany([{ name: &#x27;Doc 1&#x27; }, { name: &#x27;Doc 2&#x27; }], 50);
+ *
+ * @remarks
+ * This method processes documents in batches to avoid performance bottlenecks.
+ * The batch size is configurable, with a default of 100 documents per batch.
+ */
+  public async createMany(documents: T[], batchSize: number &#x3D; 100): Promise&lt;DocumentWithId&lt;T&gt;[]&gt; {
+    const operation &#x3D; async () &#x3D;&gt; {
+      await this.ready;
+
+      // Invalidate cache before inserting the documents
+      this.queryCache.invalidate();
+
+      // Validate all documents first to avoid partial batch processing
+      documents.forEach((document) &#x3D;&gt; {
+        if (!isObject(document)) {
+          throw new Error(&#x27;Each document must be a valid object&#x27;);
+        }
+      });
+
+      // Chunk documents into batches and process each batch
+      const allCreatedDocuments: DocumentWithId&lt;T&gt;[] &#x3D; [];
+
+      const chunks &#x3D; chunkArray(documents, batchSize);
+
+      // Process each chunk with async/await in sequence
+      await chunks.reduce(async (prevPromise, chunk) &#x3D;&gt; {
+        await prevPromise; // Ensure sequential execution of batches
+
+        const createdDocuments &#x3D; chunk.map((document) &#x3D;&gt; {
+          const id &#x3D; memozId(); // Generate unique ID for each document
+          return { ...document, id };
+        });
+
+        // Insert each document in the current chunk into the database
+        createdDocuments.forEach((doc) &#x3D;&gt; {
+          const targetDb &#x3D; this.transactionManager.getCurrentDb();
+          targetDb.set(doc.id, doc); // Set document in DB
+          this.indexManager.updateIndexes(doc); // Update index for each document
+        });
+
+        // Persist chunk to disk
+        await this.persistenceManager.saveToDisk();
+
+        // Collect all created documents
+        allCreatedDocuments.push(...createdDocuments);
+      }, Promise.resolve()); // Start the chain with an immediately resolved Promise
+
+      // Return all the created documents with IDs
+      return allCreatedDocuments;
+    };
+
+    // Execute the operation with mutex lock if available
+    return this.mutex ? this.mutex.lock(operation) : operation();
+  }
+
+  /**
+   * Retrieves a document from the database using its unique identifier (MEMOZID).
+   *
+   * @template T - The type of the document being retrieved.
+   * @param {MEMOZID} id - The unique identifier of the document to retrieve.
+   * @returns {Promise&lt;DocumentWithId&lt;T&gt; | undefined&gt;} - A promise that resolves to the
+   * document with the specified ID if found, or undefined if no document matches the ID.
+   *
+   * @throws {Error} If the provided ID is not valid.
+   *
+   * @example
+   * const document &#x3D; await db.getById(&#x27;some-valid-id&#x27;);
+   * if (document) {
+   *   console.log(&#x27;Document found:&#x27;, document);
+   * } else {
+   *   console.log(&#x27;No document found with that ID.&#x27;);
+   * }
+   *
+   * @remarks
+   * Ensure that the provided ID follows the expected MEMOZID format.
+   */
+  public async getById(id: MEMOZID): Promise&lt;DocumentWithId&lt;T&gt; | undefined&gt; {
+    await this.ready;
+
+    // Validate the provided ID
+    if (!isValidMemozId(id)) {
+      throw new Error(&#x27;The ID must be valid&#x27;);
+    }
+
+    // Retrieve the document from the current database
+    return this.transactionManager.getCurrentDb().get(id);
+  }
+
+  /**
+ * Retrieves a single document from the database that matches the provided query.
+ *
+ * This method first checks the query cache for a result. If a cached result is found, it returns that.
+ * If no cached result exists, it checks the index for matching documents. If none are found,
+ * it retrieves the document directly from the database.
+ *
+ * @template T - The type of the document being retrieved.
+ * @param {ConditionNode&lt;Partial&lt;T&gt;&gt;} query - The query condition used to find the document.
+ * @returns {Promise&lt;DocumentWithId&lt;T&gt; | undefined&gt;} - A promise that resolves to the document that matches the query,
+ * or undefined if no document is found.
+ *
+ * @throws {Error} If the query is not a valid object.
+ *
+ * @example
+ * const document &#x3D; await db.getOne({ name: &#x27;Example Document&#x27; });
+ * if (document) {
+ *   console.log(&#x27;Document found:&#x27;, document);
+ * } else {
+ *   console.log(&#x27;No document found matching the query.&#x27;);
+ * }
+ *
+ * @remarks
+ * Ensure that the provided query object is structured correctly to match documents in the database.
+ */
+  public async getOne(query: ConditionNode&lt;Partial&lt;T&gt;&gt;): Promise&lt;DocumentWithId&lt;T&gt; | undefined&gt; {
+    await this.ready;
+
+    const queryKey &#x3D; JSON.stringify(query);
+    const cachedResult &#x3D; this.queryCache.get(queryKey);
+    if (cachedResult) {
+      return cachedResult[0]; // Return the first cached result if available
+    }
+
+    // Validate the provided query
+    if (!isObject(query)) {
+      throw new Error(&#x27;Invalid query: The query must be a valid object&#x27;);
+    }
+
+    const indexedResults &#x3D; this.getFromIndex(query);
+    const result &#x3D; indexedResults.length &gt; 0 ? indexedResults[0] : getOne([...this.transactionManager.getCurrentDb().values()], query);
+
+    if (result) {
+      this.queryCache.set(queryKey, [result]); // Cache the result for future use
+    }
+    return result; // Return the retrieved document or undefined if not found
+  }
+
+  /**
+ * Retrieves multiple documents from the database that match the provided query.
+ * Supports sorting, pagination, and caching with chainable methods.
+ *
+ * @param {ConditionNode&lt;Partial&lt;T&gt;&gt;} query - The query condition to match documents.
+ * @returns {QueryBuilder&lt;DocumentWithId&lt;T&gt;&gt;} - A QueryBuilder instance with chaining support.
+ */
+  public getMany(query: ConditionNode&lt;Partial&lt;T&gt;&gt;): QueryBuilder&lt;DocumentWithId&lt;T&gt;&gt; {
+    const operation &#x3D; async (): Promise&lt;DocumentWithId&lt;T&gt;[]&gt; &#x3D;&gt; {
+      await this.ready;
+
+      const queryKey &#x3D; JSON.stringify(query);
+      const cachedResults &#x3D; this.queryCache.get(queryKey);
+
+      if (cachedResults) {
+        return cachedResults;
+      }
+
+      if (!isObject(query)) {
+        throw new Error(&#x27;Invalid query: The query must be a valid object&#x27;);
+      }
+
+      const initialResult &#x3D; this.getFromIndex(query).length &gt; 0
+        ? this.getFromIndex(query)
+        : getMany([...this.transactionManager.getCurrentDb().values()], query);
+
+      this.queryCache.set(queryKey, initialResult);
+      return initialResult;
+    };
+
+    const resultsPromise &#x3D; operation();
+
+    // Return the QueryBuilder with the promise result
+    return createQueryBuilderProxy(new QueryBuilder&lt;DocumentWithId&lt;T&gt;&gt;(resultsPromise, this.queryCache, JSON.stringify(query)));
+  }
+
+  /**
+ * Updates an existing object by its ID with the provided new data.
+ *
+ * This method retrieves the object associated with the given ID, merges it with the
+ * new data, updates the database, reindexes the object, and persists the changes to disk.
+ *
+ * @template T - The type of the object being updated.
+ * @param {MEMOZID} id - The unique identifier of the object to update.
+ * @param {Partial&lt;T&gt;} newData - The partial object containing the new data to update the object with.
+ * @returns {Promise&lt;DocumentWithId&lt;T&gt;&gt;} - A promise that resolves to the updated object with its ID.
+ * @throws {Error} If the provided ID is not valid.
+ * @throws {Error} If the new data is not a valid object.
+ * @throws {Error} If the object with the provided ID does not exist.
+ *
+ * @example
+ * const updatedObject &#x3D; await updateById(&#x27;someId&#x27;, { name: &#x27;Updated Name&#x27; });
+ * console.log(updatedObject);
+ */
+  public async updateById(id: MEMOZID, newData: Partial&lt;T&gt;): Promise&lt;DocumentWithId&lt;T&gt;&gt; {
+    const operation &#x3D; async () &#x3D;&gt; {
+      await this.ready;
+      this.queryCache.invalidate();
+
+      if (!isValidMemozId(id)) {
+        throw new Error(&#x27;The ID must be valid&#x27;);
+      }
+
+      if (!isObject(newData)) {
+        throw new Error(&#x27;The new data must be a valid object&#x27;);
+      }
+
+      const existingObject &#x3D; await this.getById(id);
+      if (!existingObject) {
+        throw new Error(&#x27;This ID does not exist&#x27;);
+      }
+
+      const updatedObject &#x3D; { ...existingObject, ...newData };
+      this.transactionManager.getCurrentDb().set(id, updatedObject);
+      this.indexManager.updateIndexes(updatedObject);
+      await this.persistenceManager.saveToDisk();
+
+      return updatedObject;
+    };
+
+    return this.mutex ? this.mutex.lock(operation) : operation();
+  }
+
+  /**
+ * Updates a single document in the database based on the provided query and new data.
+ *
+ * @param {ConditionNode&lt;Partial&lt;T&gt;&gt;} query - The query used to find the document to update.
+ * @param {Partial&lt;T&gt;} newData - The new data to merge with the existing document.
+ * @returns {Promise&lt;DocumentWithId&lt;T&gt;&gt;} - A promise that resolves to the updated document.
+ * @throws {Error} - Throws an error if the query or newData is not a valid object, or if no document matches the query.
+ */
+  public async updateOne(query: ConditionNode&lt;Partial&lt;T&gt;&gt;, newData: Partial&lt;T&gt;): Promise&lt;DocumentWithId&lt;T&gt;&gt; {
+    const operation &#x3D; async () &#x3D;&gt; {
+      await this.ready;
+      this.queryCache.invalidate();
+
+      if (!isObject(query)) {
+        throw new Error(&#x27;The query must be a valid object&#x27;);
+      }
+
+      if (!isObject(newData)) {
+        throw new Error(&#x27;The new data must be a valid object&#x27;);
+      }
+
+      const existingObject &#x3D; await this.getOne(query);
+
+      if (!existingObject) {
+        throw new Error(&#x27;No document matches the query&#x27;);
+      }
+
+      const updatedObject &#x3D; { ...existingObject, ...newData };
+      const targetDb &#x3D; this.transactionManager.getCurrentDb();
+      targetDb.set(existingObject.id, updatedObject);
+      this.indexManager.updateIndexes(updatedObject); // Update indexes after modifying
+      await this.persistenceManager.saveToDisk();
+
+      return updatedObject;
+    };
+
+    return this.mutex ? this.mutex.lock(operation) : operation();
+  }
+
+  /**
+ * Updates multiple documents in the database based on the provided query and new data.
+ *
+ * @param {ConditionNode&lt;Partial&lt;T&gt;&gt;} query - The query used to find the documents to update.
+ * @param {Partial&lt;T&gt;} newData - The new data to merge with the existing documents.
+ * @returns {Promise&lt;UpdateManyResult&lt;T&gt;&gt;} - A promise that resolves to an object containing update results, including:
+ *   - &#x60;updated&#x60;: A boolean indicating if the update was successful.
+ *   - &#x60;n&#x60;: The number of documents that were updated.
+ *   - &#x60;documents&#x60;: An array of the updated documents.
+ * @throws {Error} - Throws an error if either the query or newData is not a valid object.
+ */
+  public async updateMany(query: ConditionNode&lt;Partial&lt;T&gt;&gt;, newData: Partial&lt;T&gt;): Promise&lt;UpdateManyResult&lt;T&gt;&gt; {
+    const operation &#x3D; async () &#x3D;&gt; {
+      await this.ready;
+      this.queryCache.invalidate();
+
+      if (!isObject(query) || !isObject(newData)) {
+        throw new Error(&#x27;Both query and new data must be valid objects&#x27;);
+      }
+
+      const documents &#x3D; await this.getMany(query);
+      documents.forEach((document) &#x3D;&gt; this.updateById(document.id, newData));
+      await this.persistenceManager.saveToDisk();
+
+      return { updated: true, n: documents.length, documents };
+    };
+
+    return this.mutex ? this.mutex.lock(operation) : operation();
+  }
+
+  /**
+ * Deletes a document from the database based on the provided ID.
+ *
+ * @param {MEMOZID} id - The ID of the document to be deleted. Must be a valid ID.
+ * @returns {Promise&lt;DocumentWithId&lt;T&gt; | undefined&gt;} - A promise that resolves to the deleted document, or undefined if no document was found with the given ID.
+ * @throws {Error} - Throws an error if the provided ID is not valid.
+ */
+  public async deleteById(id: MEMOZID): Promise&lt;DocumentWithId&lt;T&gt; | undefined&gt; {
+    const operation &#x3D; async () &#x3D;&gt; {
+      await this.ready;
+      this.queryCache.invalidate();
+
+      if (!isValidMemozId(id)) {
+        throw new Error(&#x27;The ID must be valid&#x27;);
+      }
+
+      const targetDb &#x3D; this.transactionManager.getCurrentDb();
+      const documentToDelete &#x3D; targetDb.get(id);
+
+      if (documentToDelete) {
+        // Update indexes efficiently
+        this.indexManager.updateIndexes(documentToDelete);
+
+        // Remove the document from the main database
+        targetDb.delete(id);
+        await this.persistenceManager.saveToDisk();
+      }
+
+      return documentToDelete;
+    };
+    return this.mutex ? this.mutex.lock(operation) : operation();
+  }
+
+  /**
+     * Deletes all documents from the database.
+     *
+     * @returns {Promise&lt;{ deleted: boolean; n: number; }&gt;} - A promise that resolves to an object containing:
+     *   - &#x60;deleted&#x60;: A boolean indicating that the deletion was successful.
+     *   - &#x60;n&#x60;: The number of documents that were deleted.
+     */
+  public async deleteAll(): Promise&lt;{ deleted: boolean; n: number; }&gt; {
+    const operation &#x3D; async () &#x3D;&gt; {
+      await this.ready;
+      const targetDb &#x3D; this.transactionManager.getCurrentDb();
+      const { size } &#x3D; targetDb;
+      targetDb.clear();
+      this.indexManager.clear();
+      await this.persistenceManager.saveToDisk();
+
+      return { deleted: true, n: size };
+    };
+
+    return this.mutex ? this.mutex.lock(operation) : operation();
+  }
+
+  /**
+ * Deletes a single document from the database based on the provided query.
+ *
+ * @param {ConditionNode&lt;Partial&lt;T&gt;&gt;} query - The query used to find the document to delete. Must be a valid object.
+ * @returns {Promise&lt;DocumentWithId&lt;T&gt; | undefined&gt;} - A promise that resolves to the deleted document, or undefined if no document was found matching the query.
+ * @throws {Error} - Throws an error if the query is not a valid object.
+ */
+  public async deleteOne(query: ConditionNode&lt;Partial&lt;T&gt;&gt;): Promise&lt;DocumentWithId&lt;T&gt; | undefined&gt; {
+    await this.ready;
+    this.queryCache.invalidate();
+
+    if (!isObject(query)) {
+      throw new Error(&#x27;The query must be a valid object&#x27;);
+    }
+
+    const objectToDelete &#x3D; await this.getOne(query);
+    if (!objectToDelete) return undefined;
+
+    this.deleteById(objectToDelete.id);
+    await this.persistenceManager.saveToDisk();
+
+    return objectToDelete;
+  }
+
+  /**
+ * Deletes multiple documents from the database based on the provided query.
+ *
+ * @param {ConditionNode&lt;Partial&lt;T&gt;&gt;} query - The query used to find the documents to delete. Must be a valid object.
+ * @returns {Promise&lt;{ deleted: boolean; n: number; }&gt;} - A promise that resolves to an object containing:
+ *   - &#x60;deleted&#x60;: A boolean indicating that the deletion was successful.
+ *   - &#x60;n&#x60;: The number of documents that were deleted.
+ * @throws {Error} - Throws an error if the query is not a valid object.
+ */
+  public async deleteMany(query: ConditionNode&lt;Partial&lt;T&gt;&gt;): Promise&lt;{ deleted: boolean; n: number; }&gt; {
+    await this.ready;
+    this.queryCache.invalidate();
+
+    if (!isObject(query)) {
+      throw new Error(&#x27;The query must be a valid object&#x27;);
+    }
+
+    const documents &#x3D; await this.getMany(query);
+    documents.forEach((doc) &#x3D;&gt; this.deleteById(doc.id));
+    await this.persistenceManager.saveToDisk();
+
+    return { deleted: true, n: documents.length };
+  }
+
+  /**
+ * Counts the number of documents in the database, optionally filtered by a query.
+ *
+ * @param {ConditionNode&lt;Partial&lt;T&gt;&gt;} [query] - An optional query to filter the documents to count. Must be a valid object if provided.
+ * @returns {Promise&lt;number&gt;} - A promise that resolves to the number of documents matching the query, or the total number of documents if no query is provided.
+ * @throws {Error} - Throws an error if the query is provided and is not a valid object.
+ */
+  public async countDocuments(query?: ConditionNode&lt;Partial&lt;T&gt;&gt;): Promise&lt;number&gt; {
+    await this.ready;
+
+    if (query &amp;&amp; !isObject(query)) {
+      throw new Error(&#x27;The query must be a valid object&#x27;);
+    }
+
+    return query &amp;&amp; Object.keys(query).length ? (await this.getMany(query)).length : this.transactionManager.getCurrentDb().size;
+  }
+
+  /**
+ * Generates and returns a new unique identifier (MEMOZID).
+ *
+ * @returns {MEMOZID} - A newly generated unique identifier.
+ */
+  public static id(): MEMOZID {
+    return memozId();
+  }
+
+  /**
+ * Validates whether the provided ID is a valid MEMOZID.
+ *
+ * @param {MEMOZID} id - The ID to validate.
+ * @returns {boolean} - Returns true if the ID is valid, otherwise false.
+ */
+  public static isValidId(id: MEMOZID): boolean {
+    return isValidMemozId(id);
+  }
+
+  private getFromIndex(query: any): DocumentWithId&lt;T&gt;[] {
+    return this.indexManager.getFromIndex(query, this.transactionManager.getCurrentDb());
+  }
+}
+
+export default Memoz;
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'Memoz.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
