@@ -1,3 +1,9 @@
+#### 4.0.1 (2024-10-18)
+
+##### Continuous Integration
+
+*  remove docs from pipeline ([be1b5db1](https://github.com/miladezzat/memoz/commit/be1b5db1a13c9c674ed12dd51add4ffa069e53ac))
+
 #### 4.0.1 (2024-10-17)
 
 ## 4.0.0 (2024-10-17)
