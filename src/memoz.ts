@@ -70,12 +70,12 @@ export class Memoz<T> {
   private mutex: Mutex | null = null; // Nullable mutex (null if not used)
 
   /**
-     *
-     * @param memozOptions - Options for the Memoz instance
-     * @param memozOptions.filePath - The file path to save the database to -default is in-memory
-     * @param memozOptions.persistToDisk - Whether to persist the database to disk - default is false
-     * @param memozOptions.useMutex - Whether to use a mutex for thread safety - default is false
-     */
+ *
+ * @param memozOptions - Options for the Memoz instance
+ * @param memozOptions.filePath - The file path to save the database to -default is in-memory
+ * @param memozOptions.persistToDisk - Whether to persist the database to disk - default is false
+ * @param memozOptions.useMutex - Whether to use a mutex for thread safety - default is false
+ */
   constructor(memozOptions: MemozOptions = {}) {
     const { storagePath, useMutex = false, persistToDisk = false } = memozOptions;
     if (useMutex) {
@@ -289,6 +289,7 @@ export class Memoz<T> {
 
     const queryKey = JSON.stringify(query);
     const cachedResult = this.queryCache.get(queryKey);
+
     if (cachedResult) {
       return cachedResult[0]; // Return the first cached result if available
     }

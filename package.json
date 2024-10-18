@@ -1,98 +1,96 @@
 {
-  "name": "memoz",
-  "version": "4.0.1",
-  "description": "memoz is an in-memory database that persists on disk. The data model is key-value, but many different kind of values are supported: Strings, Lists, Sets, Sorted Sets, Hashes, Streams, HyperLogLogs, Bitmaps.",
-  "main": "./build/index.js",
-  "module": "./build/index.js",
-  "files": [
-    "build"
-  ],
-  "types": "./build/index.d.ts",
-  "source": "./src/index.ts",
-  "scripts": {
-    "test": "./node_modules/.bin/mocha -r ts-node/register tests/**/*.spec.ts",
-    "build": "rollup -c",
-    "depcheck": "./node_modules/.bin/npm-check -u",
-    "commit": "./node_modules/.bin/git-cz",
-    "husky": "./node_modules/.bin/husky init",
-    "docs:serve": "docsify serve docs",
-    "postinstall": "husky install",
-    "prepublishOnly": "./node_modules/.bin/pinst --disable",
-    "postpublish": "./node_modules/.bin/pinst --enable",
-    "lint": "./node_modules/.bin/eslint",
-    "docs": "npx compodoc -p tsconfig.json -d docs",
-    "release:major": "changelog -M && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version major",
-    "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version minor",
-    "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version patch"
-  },
-  "keywords": [
-    "data",
-    "structure",
-    "database",
-    "redis",
-    "transaction",
-    "pipelining",
-    "performance",
-    "queue",
-    "nodejs",
-    "pubsub",
-    "backpressure",
-    "cache",
-    "ram",
-    "simple",
-    "storage",
-    "typescript",
-    "in-memory",
-    "disk",
-    "persist",
-    "key-value",
-    "string",
-    "list",
-    "set",
-    "sorted-set",
-    "hash"
-  ],
-  "author": "Milad E. Fahmy <miladezzat.f@gmail.com> (https://milad-ezzat.vercel.app)",
-  "devDependencies": {
-    "@rollup/plugin-typescript": "^8.3.0",
-    "@types/chai": "^4.3.0",
-    "@types/mocha": "^9.1.0",
-    "@typescript-eslint/eslint-plugin": "^5.12.0",
-    "@typescript-eslint/parser": "^5.12.0",
-    "chai": "^4.3.6",
-    "commitizen": "^4.2.3",
-    "cz-conventional-changelog": "^3.3.0",
-    "docsify-cli": "^4.4.3",
-    "eslint": "^8.9.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.4",
-    "generate-changelog": "^1.8.0",
-    "husky": "^7.0.4",
-    "mocha": "^9.2.0",
-    "npm-check": "^5.9.2",
-    "pinst": "^2.1.6",
-    "rollup": "^2.67.3",
-    "ts-node": "^10.5.0",
-    "tslib": "^2.3.1",
-    "typescript": "^4.5.5"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm test && npm run lint",
-      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
+    "name": "memoz",
+    "version": "4.0.0",
+    "description": "Memoz is an in-memory database that persists on disk. The data model is key-value, but it supports many data types: Strings, Lists, Sets, Sorted Sets, Hashes, Streams, HyperLogLogs, and Bitmaps.",
+    "main": "./build/index.js",
+    "module": "./build/index.js",
+    "types": "./build/index.d.ts",
+    "source": "./src/index.ts",
+    "files": [
+        "build"
+    ],
+    "scripts": {
+        "test": "mocha -r ts-node/register tests/**/*.spec.ts",
+        "lint": "eslint .",
+        "build": "rollup -c",
+        "depcheck": "npm-check -u",
+        "docs": "npx compodoc -p tsconfig.json -d docs && git add . && git commit -m 'docs: update documentation'",
+        "commit": "git-cz",
+        "release:major": "changelog -M && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version major",
+        "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version minor",
+        "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version patch",
+        "husky": "husky init",
+        "postinstall": "husky install",
+        "prepublishOnly": "pinst --disable",
+        "postpublish": "pinst --enable"
+    },
+    "keywords": [
+        "data",
+        "structure",
+        "database",
+        "redis",
+        "transaction",
+        "pipelining",
+        "performance",
+        "queue",
+        "nodejs",
+        "pubsub",
+        "backpressure",
+        "cache",
+        "ram",
+        "simple",
+        "storage",
+        "typescript",
+        "in-memory",
+        "disk",
+        "persist",
+        "key-value",
+        "string",
+        "list",
+        "set",
+        "sorted-set",
+        "hash"
+    ],
+    "author": "Milad E. Fahmy <miladezzat.f@gmail.com> (https://milad-ezzat.vercel.app)",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/miladezzat/memoz.git"
+    },
+    "bugs": {
+        "url": "https://github.com/miladezzat/memoz/issues"
+    },
+    "homepage": "https://memoz.js.org",
+    "husky": {
+        "hooks": {
+            "pre-commit": "npm test && npm run lint",
+            "prepare-commit-msg": "git cz --hook || true"
+        }
+    },
+    "config": {
+        "commitizen": {
+            "path": "cz-conventional-changelog"
+        }
+    },
+    "devDependencies": {
+        "@rollup/plugin-typescript": "^8.3.0",
+        "@types/chai": "^4.3.0",
+        "@types/mocha": "^9.1.0",
+        "@typescript-eslint/eslint-plugin": "^5.12.0",
+        "@typescript-eslint/parser": "^5.12.0",
+        "chai": "^4.3.6",
+        "commitizen": "^4.3.1",
+        "cz-conventional-changelog": "^3.3.0",
+        "eslint": "^8.9.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-plugin-import": "^2.31.0",
+        "generate-changelog": "^1.8.0",
+        "husky": "^7.0.4",
+        "mocha": "^9.2.0",
+        "npm-check": "^5.9.2",
+        "pinst": "^2.1.6",
+        "rollup": "^2.67.3",
+        "ts-node": "^10.9.2",
+        "tslib": "^2.8.0",
+        "typescript": "^4.5.5"
     }
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/miladezzat/memoz.git"
-  },
-  "bugs": {
-    "url": "https://github.com/miladezzat/memoz/issues"
-  },
-  "homepage": "https://60-min-code.github.io/memoz"
 }

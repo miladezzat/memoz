@@ -17,19 +17,37 @@
         "@typescript-eslint"
     ],
     "rules": {
-      "import/extensions": "off",
-      "no-unused-vars": "off",
-      "no-shadow": "off",
-      "@typescript-eslint/no-shadow": ["error"],
-      "@typescript-eslint/no-unused-vars": "error",
-      "max-len":["error",{"code":200}]
+        "import/extensions": "off",
+        "no-unused-vars": "off",
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": [
+            "error",
+            {
+                "hoist": "all"
+            }
+        ],
+        "@typescript-eslint/no-unused-vars": "error",
+        "max-len": [
+            "error",
+            {
+                "code": 200
+            }
+        ]
     },
     "settings": {
-      "import/resolver": {
-          "node": {
-              "extensions": [".js", ".jsx", ".ts", ".tsx"]
-          }
-      }
-  },
-"ignorePatterns": ["./build/*"]
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".jsx",
+                    ".ts",
+                    ".tsx"
+                ]
+            }
+        }
+    },
+    "ignorePatterns": [
+        "build/",
+        "docs/"
+    ]
 }

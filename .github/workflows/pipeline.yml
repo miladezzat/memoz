@@ -56,6 +56,7 @@ jobs:
       - run: npm install
       - run: npm run build
       - run: npm run release:patch
+      - run: npm run docs
 
       - name: Push changes to master branch
         run: |
@@ -71,14 +72,8 @@ jobs:
       - name: Handle development branch
         run: |
           git fetch origin
-          if git show-ref --verify --quiet refs/remotes/origin/development; then
-            echo "Development branch exists"
-            git checkout development
-            git pull origin development
-            git merge master --no-edit
-            git push origin development
-          else
-            echo "Development branch does not exist on remote, creating new branch"
-            git checkout -b development
-            git push origin development
-          fi
+          git checkout development
+          git pull origin development
+          git reset --hard origin/master
+          git push origin development
+          
