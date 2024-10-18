@@ -1,3 +1,9 @@
+#### 4.0.2 (2024-10-18)
+
+##### Documentation Changes
+
+*  update description ([42415f3b](https://github.com/miladezzat/memoz/commit/42415f3bc4646fcabf5d182214797b82f58d73e0))
+
 #### 4.0.1 (2024-10-18)
 
 ##### Continuous Integration
