@@ -1,6 +1,6 @@
 {
     "name": "memoz",
-    "version": "4.0.1",
+    "version": "4.0.2",
     "description": "Memoz is an in-memory database that persists on disk. The data model is key-value",
     "main": "./build/index.js",
     "module": "./build/index.js",
