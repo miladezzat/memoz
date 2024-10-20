@@ -55,7 +55,9 @@ jobs:
 
       - run: npm install
       - run: npm run build
-      - run: npm run release:patch
+      - run: npm run release -- --release-as ${{ env.RELEASE_TYPE }}
+        env:
+          RELEASE_TYPE: ${{ secrets.RELEASE_TYPE }}
       
       - name: Push changes to master branch
         run: |
