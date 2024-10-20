@@ -696,8 +696,8 @@ It supports transactional operations, querying, indexing, and caching.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="584"
-                                    class="link-to-prism">src/memoz.ts:584</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="593"
+                                    class="link-to-prism">src/memoz.ts:593</a></div>
                         </td>
                     </tr>
 
@@ -973,8 +973,8 @@ If a transaction is active, the document is inserted into the transactional data
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="514"
-                                    class="link-to-prism">src/memoz.ts:514</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="523"
+                                    class="link-to-prism">src/memoz.ts:523</a></div>
                         </td>
                     </tr>
 
@@ -1027,8 +1027,8 @@ If a transaction is active, the document is inserted into the transactional data
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="481"
-                                    class="link-to-prism">src/memoz.ts:481</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="490"
+                                    class="link-to-prism">src/memoz.ts:490</a></div>
                         </td>
                     </tr>
 
@@ -1109,8 +1109,8 @@ If a transaction is active, the document is inserted into the transactional data
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="562"
-                                    class="link-to-prism">src/memoz.ts:562</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="571"
+                                    class="link-to-prism">src/memoz.ts:571</a></div>
                         </td>
                     </tr>
 
@@ -1197,8 +1197,8 @@ If a transaction is active, the document is inserted into the transactional data
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="536"
-                                    class="link-to-prism">src/memoz.ts:536</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="545"
+                                    class="link-to-prism">src/memoz.ts:545</a></div>
                         </td>
                     </tr>
 
@@ -1368,8 +1368,8 @@ document with the specified ID if found, or undefined if no document matches the
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="613"
-                                    class="link-to-prism">src/memoz.ts:613</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="622"
+                                    class="link-to-prism">src/memoz.ts:622</a></div>
                         </td>
                     </tr>
 
@@ -1437,8 +1437,8 @@ document with the specified ID if found, or undefined if no document matches the
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="325"
-                                    class="link-to-prism">src/memoz.ts:325</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="335"
+                                    class="link-to-prism">src/memoz.ts:335</a></div>
                         </td>
                     </tr>
 
@@ -1513,15 +1513,15 @@ Supports sorting, pagination, and caching with chainable methods.</p>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getOne(query: <a href="../undefineds/ConditionNode.html" target="_self">ConditionNode&lt;Partial&lt;T&gt;&gt;</a>)</code>
+                    <code>getOne(query?: <a href="../undefineds/ConditionNode.html" target="_self">ConditionNode&lt;Partial&lt;T&gt;&gt;</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="287"
-                                    class="link-to-prism">src/memoz.ts:287</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="290"
+                                    class="link-to-prism">src/memoz.ts:290</a></div>
                         </td>
                     </tr>
 
@@ -1532,13 +1532,16 @@ Supports sorting, pagination, and caching with chainable methods.</p>
 <p>This method first checks the query cache for a result. If a cached result is found, it returns that.
 If no cached result exists, it checks the index for matching documents. If none are found,
 it retrieves the document directly from the database.</p>
-<p>or undefined if no document is found.</p>
+<p>If not provided, the first document from the current database is returned.
+or undefined if no document is found.</p>
 <b>Example :</b><div><pre class="line-numbers"><code class="language-html">const document = await db.getOne({ name: &#39;Example Document&#39; });
 if (document) {
   console.log(&#39;Document found:&#39;, document);
 } else {
   console.log(&#39;No document found matching the query.&#39;);
-}</code></pre></div><p>Ensure that the provided query object is structured correctly to match documents in the database.</p>
+}</code></pre></div><p>Ensure that the provided query object is structured correctly to match documents in the database.
+If no query is provided, the method will return the first document in the database or undefined
+if the database is empty. Caching is utilized to optimize subsequent retrievals of the same document.</p>
 </div>
 
                             <div class="io-description">
@@ -1561,13 +1564,14 @@ if (document) {
                                             </td>
 
                                             <td>
-                                                    No
+                                                    Yes
                                             </td>
 
 
                                             <td>
                                                     <ul>
-<li>The query condition used to find the document.</li>
+<li>The optional query condition used to find the document.
+If not provided, the first document from the current database is returned.</li>
 </ul>
 
                                             </td>
@@ -1612,8 +1616,8 @@ or undefined if no document is found.</li>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="599"
-                                    class="link-to-prism">src/memoz.ts:599</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="608"
+                                    class="link-to-prism">src/memoz.ts:608</a></div>
                         </td>
                     </tr>
 
@@ -1659,8 +1663,8 @@ or undefined if no document is found.</li>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="609"
-                                    class="link-to-prism">src/memoz.ts:609</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="618"
+                                    class="link-to-prism">src/memoz.ts:618</a></div>
                         </td>
                     </tr>
 
@@ -1781,8 +1785,8 @@ or undefined if no document is found.</li>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="376"
-                                    class="link-to-prism">src/memoz.ts:376</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="385"
+                                    class="link-to-prism">src/memoz.ts:385</a></div>
                         </td>
                     </tr>
 
@@ -1884,8 +1888,8 @@ console.log(updatedObject);</code></pre></div></div>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="455"
-                                    class="link-to-prism">src/memoz.ts:455</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="464"
+                                    class="link-to-prism">src/memoz.ts:464</a></div>
                         </td>
                     </tr>
 
@@ -1992,8 +1996,8 @@ console.log(updatedObject);</code></pre></div></div>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="413"
-                                    class="link-to-prism">src/memoz.ts:413</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="422"
+                                    class="link-to-prism">src/memoz.ts:422</a></div>
                         </td>
                     </tr>
 
@@ -2348,11 +2352,12 @@ export class Memoz&lt;T&gt; {
  * it retrieves the document directly from the database.
  *
  * @template T - The type of the document being retrieved.
- * @param {ConditionNode&lt;Partial&lt;T&gt;&gt;} query - The query condition used to find the document.
+ * @param {ConditionNode&lt;Partial&lt;T&gt;&gt;} [query] - The optional query condition used to find the document.
+ * If not provided, the first document from the current database is returned.
  * @returns {Promise&lt;DocumentWithId&lt;T&gt; | undefined&gt;} - A promise that resolves to the document that matches the query,
  * or undefined if no document is found.
  *
- * @throws {Error} If the query is not a valid object.
+ * @throws {Error} If the provided query is not a valid object.
  *
  * @example
  * const document &#x3D; await db.getOne({ name: &#x27;Example Document&#x27; });
@@ -2364,9 +2369,18 @@ export class Memoz&lt;T&gt; {
  *
  * @remarks
  * Ensure that the provided query object is structured correctly to match documents in the database.
+ * If no query is provided, the method will return the first document in the database or undefined
+ * if the database is empty. Caching is utilized to optimize subsequent retrievals of the same document.
  */
-  public async getOne(query: ConditionNode&lt;Partial&lt;T&gt;&gt;): Promise&lt;DocumentWithId&lt;T&gt; | undefined&gt; {
+  public async getOne(query?: ConditionNode&lt;Partial&lt;T&gt;&gt;): Promise&lt;DocumentWithId&lt;T&gt; | undefined&gt; {
     await this.ready;
+
+    // Handle optional query
+    if (query &#x3D;&#x3D;&#x3D; undefined) {
+      // If no query is provided, return the first document or undefined if not found
+      const firstDocument &#x3D; this.transactionManager.getCurrentDb().values().next().value; // Adjust based on your data structure
+      return firstDocument || undefined; // Return the first document or undefined if not found
+    }
 
     const queryKey &#x3D; JSON.stringify(query);
     const cachedResult &#x3D; this.queryCache.get(queryKey);
@@ -2396,25 +2410,25 @@ export class Memoz&lt;T&gt; {
  * @param {ConditionNode&lt;Partial&lt;T&gt;&gt;} query - The query condition to match documents.
  * @returns {QueryBuilder&lt;DocumentWithId&lt;T&gt;&gt;} - A QueryBuilder instance with chaining support.
  */
-/**
+  /**
  * Retrieves multiple documents from the database that match the provided query.
  * Supports sorting, pagination, and caching with chainable methods.
  *
  * @param {ConditionNode&lt;Partial&lt;T&gt;&gt;} [query] - The optional query condition to match documents.
  * @returns {QueryBuilder&lt;DocumentWithId&lt;T&gt;&gt;} - A QueryBuilder instance with chaining support.
  */
-public getMany(query?: ConditionNode&lt;Partial&lt;T&gt;&gt;): QueryBuilder&lt;DocumentWithId&lt;T&gt;&gt; {
+  public getMany(query?: ConditionNode&lt;Partial&lt;T&gt;&gt;): QueryBuilder&lt;DocumentWithId&lt;T&gt;&gt; {
     const operation &#x3D; async (): Promise&lt;DocumentWithId&lt;T&gt;[]&gt; &#x3D;&gt; {
       await this.ready;
-  
+
       const queryKey &#x3D; query ? JSON.stringify(query) : &#x27;default-query-key&#x27;;
-  
+
       if (query &amp;&amp; !isObject(query)) {
         throw new Error(&#x27;Invalid query: The query must be a valid object&#x27;);
       }
-  
+
       let initialResult: DocumentWithId&lt;T&gt;[];
-  
+
       // If query is provided, use it, otherwise return all documents
       if (query) {
         initialResult &#x3D; this.getFromIndex(query).length &gt; 0
@@ -2424,17 +2438,16 @@ public getMany(query?: ConditionNode&lt;Partial&lt;T&gt;&gt;): QueryBuilder&lt;D
         // Fetch all documents if no query is provided
         initialResult &#x3D; [...this.transactionManager.getCurrentDb().values()];
       }
-  
+
       this.queryCache.set(queryKey, initialResult);
       return initialResult;
     };
-  
+
     const resultsPromise &#x3D; operation();
-  
+
     // Return the QueryBuilder with the promise result
     return createQueryBuilderProxy(new QueryBuilder&lt;DocumentWithId&lt;T&gt;&gt;(resultsPromise, this.queryCache, query ? JSON.stringify(query) : &#x27;default-query-key&#x27;));
   }
-  
 
   /**
  * Updates an existing object by its ID with the provided new data.
