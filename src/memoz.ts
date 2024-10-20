@@ -267,11 +267,12 @@ export class Memoz<T> {
  * it retrieves the document directly from the database.
  *
  * @template T - The type of the document being retrieved.
- * @param {ConditionNode<Partial<T>>} query - The query condition used to find the document.
+ * @param {ConditionNode<Partial<T>>} [query] - The optional query condition used to find the document.
+ * If not provided, the first document from the current database is returned.
  * @returns {Promise<DocumentWithId<T> | undefined>} - A promise that resolves to the document that matches the query,
  * or undefined if no document is found.
  *
- * @throws {Error} If the query is not a valid object.
+ * @throws {Error} If the provided query is not a valid object.
  *
  * @example
  * const document = await db.getOne({ name: 'Example Document' });
@@ -283,9 +284,18 @@ export class Memoz<T> {
  *
  * @remarks
  * Ensure that the provided query object is structured correctly to match documents in the database.
+ * If no query is provided, the method will return the first document in the database or undefined
+ * if the database is empty. Caching is utilized to optimize subsequent retrievals of the same document.
  */
-  public async getOne(query: ConditionNode<Partial<T>>): Promise<DocumentWithId<T> | undefined> {
+  public async getOne(query?: ConditionNode<Partial<T>>): Promise<DocumentWithId<T> | undefined> {
     await this.ready;
+
+    // Handle optional query
+    if (query === undefined) {
+      // If no query is provided, return the first document or undefined if not found
+      const firstDocument = this.transactionManager.getCurrentDb().values().next().value; // Adjust based on your data structure
+      return firstDocument || undefined; // Return the first document or undefined if not found
+    }
 
     const queryKey = JSON.stringify(query);
     const cachedResult = this.queryCache.get(queryKey);
@@ -315,25 +325,25 @@ export class Memoz<T> {
  * @param {ConditionNode<Partial<T>>} query - The query condition to match documents.
  * @returns {QueryBuilder<DocumentWithId<T>>} - A QueryBuilder instance with chaining support.
  */
-/**
+  /**
  * Retrieves multiple documents from the database that match the provided query.
  * Supports sorting, pagination, and caching with chainable methods.
  *
  * @param {ConditionNode<Partial<T>>} [query] - The optional query condition to match documents.
  * @returns {QueryBuilder<DocumentWithId<T>>} - A QueryBuilder instance with chaining support.
  */
-public getMany(query?: ConditionNode<Partial<T>>): QueryBuilder<DocumentWithId<T>> {
+  public getMany(query?: ConditionNode<Partial<T>>): QueryBuilder<DocumentWithId<T>> {
     const operation = async (): Promise<DocumentWithId<T>[]> => {
       await this.ready;
-  
+
       const queryKey = query ? JSON.stringify(query) : 'default-query-key';
-  
+
       if (query && !isObject(query)) {
         throw new Error('Invalid query: The query must be a valid object');
       }
-  
+
       let initialResult: DocumentWithId<T>[];
-  
+
       // If query is provided, use it, otherwise return all documents
       if (query) {
         initialResult = this.getFromIndex(query).length > 0
@@ -343,17 +353,16 @@ public getMany(query?: ConditionNode<Partial<T>>): QueryBuilder<DocumentWithId<T
         // Fetch all documents if no query is provided
         initialResult = [...this.transactionManager.getCurrentDb().values()];
       }
-  
+
       this.queryCache.set(queryKey, initialResult);
       return initialResult;
     };
-  
+
     const resultsPromise = operation();
-  
+
     // Return the QueryBuilder with the promise result
     return createQueryBuilderProxy(new QueryBuilder<DocumentWithId<T>>(resultsPromise, this.queryCache, query ? JSON.stringify(query) : 'default-query-key'));
   }
-  
 
   /**
  * Updates an existing object by its ID with the provided new data.

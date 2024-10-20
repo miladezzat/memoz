@@ -20,6 +20,8 @@ yarn add memoz
 ## Usage
 
 ```ts
+import { Memoz } from "memoz";
+
 interface IUser {
     readonly id?: string;
     name: string;
