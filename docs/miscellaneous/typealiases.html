@@ -127,7 +127,16 @@
                             <a href="#MEMOZID" title="src/types.ts" ><b>MEMOZID</b>&nbsp;&nbsp;&nbsp;(src/.../types.ts)</a>
                         </li>
                         <li>
+                            <a href="#RegexCondition" title="src/types.ts" ><b>RegexCondition</b>&nbsp;&nbsp;&nbsp;(src/.../types.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#RegexOptions" title="src/types.ts" ><b>RegexOptions</b>&nbsp;&nbsp;&nbsp;(src/.../types.ts)</a>
+                        </li>
+                        <li>
                             <a href="#UpdateManyResult" title="src/types.ts" ><b>UpdateManyResult</b>&nbsp;&nbsp;&nbsp;(src/.../types.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ValueTypes" title="src/types.ts" ><b>ValueTypes</b>&nbsp;&nbsp;&nbsp;(src/.../types.ts)</a>
                         </li>
                     </ul>
                 </td>
@@ -148,7 +157,17 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <code>    <code>&quot;$eq&quot; | &quot;$neq&quot; | &quot;$gt&quot; | &quot;$gte&quot; | &quot;$lt&quot; | &quot;$lte&quot; | &quot;$in&quot; | &quot;$nin&quot; | &quot;custom&quot;</code>
+                    <div class="io-description"><p>Defines comparison operators for query conditions.
+Supported operators include equality, inequality,
+greater than, greater than or equal to, less than,
+less than or equal to, inclusion in a set,
+exclusion from a set, custom comparisons, and regex matching.</p>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>&quot;$eq&quot; | &quot;$neq&quot; | &quot;$gt&quot; | &quot;$gte&quot; | &quot;$lt&quot; | &quot;$lte&quot; | &quot;$in&quot; | &quot;$nin&quot; | &quot;custom&quot; | &quot;$regex&quot;</code>
 </code>
                 </td>
             </tr>
@@ -160,6 +179,13 @@
                 <td class="col-md-4">
                     <a name="ConditionNode"></a>
                     <span class="name "><b>ConditionNode</b><a href="#ConditionNode"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Defines a node structure for logical conditions.
+Nodes can be composed of AND/OR logic or simple conditions.</p>
+</div>
                 </td>
             </tr>
             <tr>
@@ -180,6 +206,13 @@
             </tr>
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Represents a document with an associated unique identifier.
+The document type is extended with an id of type MEMOZID and can include additional properties.</p>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
                     <code>    <code></code>
 </code>
                 </td>
@@ -196,7 +229,68 @@
             </tr>
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Represents a unique identifier for a MEMOZ object.
+This type can be enhanced with stricter typing rules if desired.</p>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
                     <code>    <code></code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="RegexCondition"></a>
+                    <span class="name "><b>RegexCondition</b><a href="#RegexCondition"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Represents a condition using a regular expression.
+The condition includes a regex pattern and optional flags.</p>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>literal type</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="RegexOptions"></a>
+                    <span class="name "><b>RegexOptions</b><a href="#RegexOptions"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Defines valid regex options for regex operations.
+Supported options include:</p>
+<ul>
+<li>&#39;i&#39;: Case-insensitive matching</li>
+<li>&#39;g&#39;: Global search</li>
+<li>&#39;m&#39;: Multiline mode</li>
+<li>&#39;s&#39;: Dot all (dot matches newline)</li>
+<li>&#39;u&#39;: Unicode matching</li>
+<li>&#39;y&#39;: Sticky matching</li>
+</ul>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>&quot;i&quot; | &quot;g&quot; | &quot;m&quot; | &quot;s&quot; | &quot;u&quot; | &quot;y&quot;</code>
 </code>
                 </td>
             </tr>
@@ -212,7 +306,37 @@
             </tr>
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Represents the result of an update operation affecting multiple documents.
+It includes a success flag, the number of documents updated, and the documents themselves.</p>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
                     <code>    <code>literal type</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ValueTypes"></a>
+                    <span class="name "><b>ValueTypes</b><a href="#ValueTypes"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Defines the valid types that can be used as values in conditions.
+This includes primitive types, arrays, objects, and RegexCondition.</p>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>        <code><a href="../miscellaneous/typealiases.html#RegexCondition" target="_self" >string | number | boolean | Date | any[] | object | RegexCondition | Record&lt;string | any&gt;</a></code>
 </code>
                 </td>
             </tr>

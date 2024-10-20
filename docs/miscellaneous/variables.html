@@ -159,9 +159,13 @@
                     <td class="col-md-4">
                         <i>Default value : </i><code>&lt;T&gt;(datum: T, condition: SimpleCondition&lt;T&gt;): boolean &#x3D;&gt; {
   const {
-    field, operator, value, customCompare,
+    field,
+    operator,
+    value,
+    customCompare,
   } &#x3D; condition;
 
+  // If a custom comparison function is provided, use it.
   if (customCompare) {
     return customCompare(datum[field], value);
   }
@@ -183,13 +187,37 @@
       return Array.isArray(value) &amp;&amp; value.includes(datum[field]);
     case &#x27;$nin&#x27;:
       return Array.isArray(value) &amp;&amp; !value.includes(datum[field]);
+
+    case &#x27;$regex&#x27;: {
+      if (value &amp;&amp; typeof value &#x3D;&#x3D;&#x3D; &#x27;object&#x27; &amp;&amp; (&#x27;$regex&#x27; in value)) {
+        const regexCondition &#x3D; value as RegexCondition; // Cast value to RegexCondition
+        const regex &#x3D; regexCondition.$regex instanceof RegExp
+          ? regexCondition.$regex
+          : new RegExp(regexCondition.$regex, regexCondition.$options || &#x27;&#x27;); // Apply options if $regex is a string
+
+        // Check if the field is a string before testing
+        const fieldValue &#x3D; datum[field];
+        return typeof fieldValue &#x3D;&#x3D;&#x3D; &#x27;string&#x27; ? regex.test(fieldValue) : false;
+      }
+      return false; // Invalid regex condition
+    }
+
     default:
-      return false;
+      return false; // Unsupported operator
   }
 }</code>
                     </td>
                 </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Evaluates a condition against a given datum (data object).</p>
+<p>This function supports various comparison operators including equality,
+inequality, greater than, less than, inclusion/exclusion in a set,
+and regular expression matching.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -224,6 +252,18 @@
                     </td>
                 </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Evaluates a logical condition node against a given datum (data object).</p>
+<p>This function supports both AND and OR logical operations:</p>
+<ul>
+<li>For AND (<code>$and</code>), all conditions must evaluate to true.</li>
+<li>For OR (<code>$or</code>), at least one condition must evaluate to true.
+If the node is a simple condition, it will be evaluated directly.</li>
+</ul>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>

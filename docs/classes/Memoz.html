@@ -173,6 +173,10 @@ It supports transactional operations, querying, indexing, and caching.</p>
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
+                                <a href="#searchEngine" >searchEngine</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
                                 <a href="#transactionManager" >transactionManager</a>
                             </li>
                         </ul>
@@ -231,6 +235,11 @@ It supports transactional operations, querying, indexing, and caching.</p>
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Async</span>
                                 <a href="#deleteOne" >deleteOne</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#fuzzySearch" >fuzzySearch</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -301,7 +310,7 @@ It supports transactional operations, querying, indexing, and caching.</p>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/memoz.ts:70</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/memoz.ts:74</a></div>
                             </td>
                         </tr>
 
@@ -376,7 +385,7 @@ It supports transactional operations, querying, indexing, and caching.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/memoz.ts:33</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/memoz.ts:35</a></div>
                         </td>
                     </tr>
 
@@ -409,7 +418,7 @@ It supports transactional operations, querying, indexing, and caching.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/memoz.ts:54</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/memoz.ts:56</a></div>
                         </td>
                     </tr>
 
@@ -447,7 +456,7 @@ It supports transactional operations, querying, indexing, and caching.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/memoz.ts:70</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">src/memoz.ts:72</a></div>
                         </td>
                     </tr>
 
@@ -474,7 +483,7 @@ It supports transactional operations, querying, indexing, and caching.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/memoz.ts:47</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/memoz.ts:49</a></div>
                         </td>
                     </tr>
 
@@ -507,7 +516,7 @@ It supports transactional operations, querying, indexing, and caching.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/memoz.ts:61</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/memoz.ts:63</a></div>
                         </td>
                     </tr>
 
@@ -540,7 +549,7 @@ It supports transactional operations, querying, indexing, and caching.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/memoz.ts:68</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/memoz.ts:70</a></div>
                         </td>
                     </tr>
 
@@ -550,6 +559,33 @@ It supports transactional operations, querying, indexing, and caching.</p>
 </div>
                 </td>
             </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="searchEngine"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>searchEngine</b></span>
+                        <a href="#searchEngine"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/SearchEngine.html" target="_self" >SearchEngine&lt;DocumentWithId&lt;T&gt;&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/memoz.ts:74</a></div>
+                        </td>
+                    </tr>
+
 
         </tbody>
     </table>
@@ -573,7 +609,7 @@ It supports transactional operations, querying, indexing, and caching.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/memoz.ts:40</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/memoz.ts:42</a></div>
                         </td>
                     </tr>
 
@@ -616,8 +652,8 @@ It supports transactional operations, querying, indexing, and caching.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="93"
-                                    class="link-to-prism">src/memoz.ts:93</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="100"
+                                    class="link-to-prism">src/memoz.ts:100</a></div>
                         </td>
                     </tr>
 
@@ -656,8 +692,8 @@ It supports transactional operations, querying, indexing, and caching.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="98"
-                                    class="link-to-prism">src/memoz.ts:98</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="105"
+                                    class="link-to-prism">src/memoz.ts:105</a></div>
                         </td>
                     </tr>
 
@@ -696,8 +732,8 @@ It supports transactional operations, querying, indexing, and caching.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="593"
-                                    class="link-to-prism">src/memoz.ts:593</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="618"
+                                    class="link-to-prism">src/memoz.ts:618</a></div>
                         </td>
                     </tr>
 
@@ -778,8 +814,8 @@ It supports transactional operations, querying, indexing, and caching.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="179"
-                                    class="link-to-prism">src/memoz.ts:179</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="204"
+                                    class="link-to-prism">src/memoz.ts:204</a></div>
                         </td>
                     </tr>
 
@@ -888,8 +924,8 @@ The batch size is configurable, with a default of 100 documents per batch.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="126"
-                                    class="link-to-prism">src/memoz.ts:126</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="151"
+                                    class="link-to-prism">src/memoz.ts:151</a></div>
                         </td>
                     </tr>
 
@@ -973,8 +1009,8 @@ If a transaction is active, the document is inserted into the transactional data
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="523"
-                                    class="link-to-prism">src/memoz.ts:523</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="548"
+                                    class="link-to-prism">src/memoz.ts:548</a></div>
                         </td>
                     </tr>
 
@@ -1027,8 +1063,8 @@ If a transaction is active, the document is inserted into the transactional data
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="490"
-                                    class="link-to-prism">src/memoz.ts:490</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="515"
+                                    class="link-to-prism">src/memoz.ts:515</a></div>
                         </td>
                     </tr>
 
@@ -1109,8 +1145,8 @@ If a transaction is active, the document is inserted into the transactional data
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="571"
-                                    class="link-to-prism">src/memoz.ts:571</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="596"
+                                    class="link-to-prism">src/memoz.ts:596</a></div>
                         </td>
                     </tr>
 
@@ -1197,8 +1233,8 @@ If a transaction is active, the document is inserted into the transactional data
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="545"
-                                    class="link-to-prism">src/memoz.ts:545</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="570"
+                                    class="link-to-prism">src/memoz.ts:570</a></div>
                         </td>
                     </tr>
 
@@ -1260,6 +1296,150 @@ If a transaction is active, the document is inserted into the transactional data
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="fuzzySearch"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>fuzzySearch</b></span>
+                        <a href="#fuzzySearch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>fuzzySearch(searchTerm: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, fields: ()[], options: <a href="../interfaces/FuzzySearchOptions.html" target="_self">FuzzySearchOptions</a>, limit: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="124"
+                                    class="link-to-prism">src/memoz.ts:124</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Performs a fuzzy search on the documents in the database.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>searchTerm</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                            <td>
+                                                    <ul>
+<li>The term to search for.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>fields</td>
+                                            <td>
+                                                        <code>()[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                            <td>
+                                                    <ul>
+<li>The fields to search within the documents.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>options</td>
+                                            <td>
+                                                            <code><a href="../interfaces/FuzzySearchOptions.html" target="_self" >FuzzySearchOptions</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                            <td>
+                                                    <ul>
+<li>Options to configure max distance, field weights, etc.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>limit</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>Number.MAX_SAFE_INTEGER</code>
+                                            </td>
+
+                                            <td>
+                                                    <ul>
+<li>The maximum number of results to return.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Array of results with relevance score.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="getById"></a>
                     <span class="name">
                             <span class="modifier">Public</span>
@@ -1279,8 +1459,8 @@ If a transaction is active, the document is inserted into the transactional data
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="250"
-                                    class="link-to-prism">src/memoz.ts:250</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="275"
+                                    class="link-to-prism">src/memoz.ts:275</a></div>
                         </td>
                     </tr>
 
@@ -1368,8 +1548,8 @@ document with the specified ID if found, or undefined if no document matches the
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="622"
-                                    class="link-to-prism">src/memoz.ts:622</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="647"
+                                    class="link-to-prism">src/memoz.ts:647</a></div>
                         </td>
                     </tr>
 
@@ -1437,8 +1617,8 @@ document with the specified ID if found, or undefined if no document matches the
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="335"
-                                    class="link-to-prism">src/memoz.ts:335</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="360"
+                                    class="link-to-prism">src/memoz.ts:360</a></div>
                         </td>
                     </tr>
 
@@ -1520,8 +1700,8 @@ Supports sorting, pagination, and caching with chainable methods.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="290"
-                                    class="link-to-prism">src/memoz.ts:290</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="315"
+                                    class="link-to-prism">src/memoz.ts:315</a></div>
                         </td>
                     </tr>
 
@@ -1616,8 +1796,8 @@ or undefined if no document is found.</li>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="608"
-                                    class="link-to-prism">src/memoz.ts:608</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="633"
+                                    class="link-to-prism">src/memoz.ts:633</a></div>
                         </td>
                     </tr>
 
@@ -1663,8 +1843,8 @@ or undefined if no document is found.</li>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="618"
-                                    class="link-to-prism">src/memoz.ts:618</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="643"
+                                    class="link-to-prism">src/memoz.ts:643</a></div>
                         </td>
                     </tr>
 
@@ -1745,8 +1925,8 @@ or undefined if no document is found.</li>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="104"
-                                    class="link-to-prism">src/memoz.ts:104</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="111"
+                                    class="link-to-prism">src/memoz.ts:111</a></div>
                         </td>
                     </tr>
 
@@ -1785,8 +1965,8 @@ or undefined if no document is found.</li>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="385"
-                                    class="link-to-prism">src/memoz.ts:385</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="410"
+                                    class="link-to-prism">src/memoz.ts:410</a></div>
                         </td>
                     </tr>
 
@@ -1888,8 +2068,8 @@ console.log(updatedObject);</code></pre></div></div>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="464"
-                                    class="link-to-prism">src/memoz.ts:464</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="489"
+                                    class="link-to-prism">src/memoz.ts:489</a></div>
                         </td>
                     </tr>
 
@@ -1996,8 +2176,8 @@ console.log(updatedObject);</code></pre></div></div>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="422"
-                                    class="link-to-prism">src/memoz.ts:422</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="447"
+                                    class="link-to-prism">src/memoz.ts:447</a></div>
                         </td>
                     </tr>
 
@@ -2093,6 +2273,7 @@ import { IndexManager } from &#x27;./utils/index-manager&#x27;;
 import {
   ConditionNode,
   DocumentWithId,
+  FuzzySearchOptions,
   MEMOZID,
   MemozOptions,
   UpdateManyResult,
@@ -2102,6 +2283,7 @@ import getMany from &#x27;./utils/get-many&#x27;;
 import Mutex from &#x27;./utils/mutex&#x27;;
 import chunkArray from &#x27;./utils/helper&#x27;;
 import { createQueryBuilderProxy, QueryBuilder } from &#x27;./utils/get-many-query-builder&#x27;;
+import SearchEngine from &#x27;./utils/search-engine&#x27;;
 
 /**
  * The Memoz class is an in-memory document store with optional persistence to disk.
@@ -2154,6 +2336,8 @@ export class Memoz&lt;T&gt; {
 
   private mutex: Mutex | null &#x3D; null; // Nullable mutex (null if not used)
 
+  private searchEngine: SearchEngine&lt;DocumentWithId&lt;T&gt;&gt;; // Add a search engine instance
+
   /**
  *
  * @param memozOptions - Options for the Memoz instance
@@ -2172,6 +2356,9 @@ export class Memoz&lt;T&gt; {
     this.indexManager &#x3D; new IndexManager();
     this.queryCache &#x3D; new QueryCache();
 
+    // Initialize the search engine with the db
+    this.searchEngine &#x3D; new SearchEngine(this.db);
+
     this.ready &#x3D; persistToDisk ? this.persistenceManager.loadFromDisk() : Promise.resolve();
   }
 
@@ -2189,6 +2376,24 @@ export class Memoz&lt;T&gt; {
   public async rollbackTransaction(): Promise&lt;void&gt; {
     await this.ready;
     this.transactionManager.rollbackTransaction();
+  }
+
+  /**
+   * Performs a fuzzy search on the documents in the database.
+   * @param searchTerm - The term to search for.
+   * @param fields - The fields to search within the documents.
+   * @param options - Options to configure max distance, field weights, etc.
+   * @param limit - The maximum number of results to return.
+   * @returns Array of results with relevance score.
+   */
+  public async fuzzySearch(
+    searchTerm: string,
+    fields: (keyof T)[],
+    options: FuzzySearchOptions,
+    limit: number &#x3D; Number.MAX_SAFE_INTEGER,
+  ): Promise&lt;{ item: DocumentWithId&lt;T&gt;; score: number; }[]&gt; {
+    await this.ready;
+    return this.searchEngine.limit(limit).search(searchTerm, fields, options);
   }
 
   /**

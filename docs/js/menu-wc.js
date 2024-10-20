@@ -83,6 +83,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/QueryCache.html" data-type="entity-link" >QueryCache</a>
                             </li>
                             <li class="link">
+                                <a href="classes/SearchEngine.html" data-type="entity-link" >SearchEngine</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/Shard.html" data-type="entity-link" >Shard</a>
                             </li>
                             <li class="link">
@@ -98,6 +101,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             <span class="icon ion-ios-arrow-down"></span>
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? ' id="interfaces-links"' : 'id="xs-interfaces-links"' }>
+                            <li class="link">
+                                <a href="interfaces/FuzzySearchOptions.html" data-type="entity-link" >FuzzySearchOptions</a>
+                            </li>
                             <li class="link">
                                 <a href="interfaces/LRUCacheOptions.html" data-type="entity-link" >LRUCacheOptions</a>
                             </li>
