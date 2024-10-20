@@ -1,3 +1,9 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### 4.0.3 (2024-10-20)
+
 #### 4.0.2 (2024-10-18)
 
 ##### Documentation Changes
@@ -155,4 +161,3 @@
 ##### Tests
 
 *  add unit testing ([39424c77](https://github.com/miladezzat/encrypt-rsa/commit/39424c771416d7c0f68f31099f9d28d583dc3840))
-
