@@ -6,16 +6,16 @@
  * exclusion from a set, custom comparisons, and regex matching.
  */
 export type ComparisonOperator =
-  | '$eq'
-  | '$neq'
-  | '$gt'
-  | '$gte'
-  | '$lt'
-  | '$lte'
-  | '$in'
-  | '$nin'
-  | 'custom'
-  | '$regex';
+    | '$eq'
+    | '$neq'
+    | '$gt'
+    | '$gte'
+    | '$lt'
+    | '$lte'
+    | '$in'
+    | '$nin'
+    | 'custom'
+    | '$regex';
 
 /**
  * Represents a unique identifier for a MEMOZ object.
@@ -40,15 +40,15 @@ export type RegexOptions = 'i' | 'g' | 'm' | 's' | 'u' | 'y';
  * The condition includes a regex pattern and optional flags.
  */
 export type RegexCondition = {
-  /**
-   * The regex pattern, which can be a string or a RegExp object.
-   */
-  $regex: string | RegExp;
+    /**
+     * The regex pattern, which can be a string or a RegExp object.
+     */
+    $regex: string | RegExp;
 
-  /**
-   * Optional regex options to modify the regex behavior.
-   */
-  $options?: RegexOptions;
+    /**
+     * Optional regex options to modify the regex behavior.
+     */
+    $options?: RegexOptions;
 };
 
 /**
@@ -62,26 +62,26 @@ export type ValueTypes = string | number | boolean | Date | any[] | object | Reg
  * It includes a field, an operator, a value, and an optional custom comparison function.
  */
 export interface SimpleCondition<T> {
-  /**
-   * The field in the object to evaluate.
-   */
-  field: keyof T;
+    /**
+     * The field in the object to evaluate.
+     */
+    field: keyof T;
 
-  /**
-   * The operator used for the comparison.
-   */
-  operator: ComparisonOperator;
+    /**
+     * The operator used for the comparison.
+     */
+    operator: ComparisonOperator;
 
-  /**
-   * The value to compare against the field.
-   */
-  value: ValueTypes;
+    /**
+     * The value to compare against the field.
+     */
+    value: ValueTypes;
 
-  /**
-   * An optional custom comparison function for more complex comparisons.
-   * Takes two arguments and returns a boolean.
-   */
-  customCompare?: (a: any, b: any) => boolean;
+    /**
+     * An optional custom comparison function for more complex comparisons.
+     * Takes two arguments and returns a boolean.
+     */
+    customCompare?: (a: any, b: any) => boolean;
 }
 
 /**
@@ -89,9 +89,9 @@ export interface SimpleCondition<T> {
  * Nodes can be composed of AND/OR logic or simple conditions.
  */
 export type ConditionNode<T> =
-  | { $and: ConditionNode<T>[] } // All conditions must be true.
-  | { $or: ConditionNode<T>[] } // At least one condition must be true.
-  | SimpleCondition<T>; // A simple condition.
+    | { $and: ConditionNode<T>[] } // All conditions must be true.
+    | { $or: ConditionNode<T>[] } // At least one condition must be true.
+    | SimpleCondition<T>; // A simple condition.
 
 /**
  * Represents a document with an associated unique identifier.
@@ -104,27 +104,42 @@ export type DocumentWithId<T> = T & { id: MEMOZID; } & { [key: string]: any; };
  * It includes a success flag, the number of documents updated, and the documents themselves.
  */
 export type UpdateManyResult<T> = {
-  updated: boolean; // Indicates if the update was successful.
-  n: number; // The number of documents updated.
-  documents: DocumentWithId<T>[]; // The updated documents.
+    updated: boolean; // Indicates if the update was successful.
+    n: number; // The number of documents updated.
+    documents: DocumentWithId<T>[]; // The updated documents.
 };
 
 /**
  * Options for configuring the Memoz storage and behavior.
  */
 export interface MemozOptions {
-  /**
-   * Optional path for storing data on disk.
-   */
-  storagePath?: string;
+    /**
+     * Optional path for storing data on disk.
+     */
+    storagePath?: string;
 
-  /**
-   * Flag indicating if data should persist to disk.
-   */
-  persistToDisk?: boolean;
+    /**
+     * Flag indicating if data should persist to disk.
+     */
+    persistToDisk?: boolean;
 
-  /**
-   * Flag indicating if mutex should be used for concurrent access.
-   */
-  useMutex?: boolean;
+    /**
+     * Flag indicating if mutex should be used for concurrent access.
+     */
+    useMutex?: boolean;
 }
+
+// Modify the FuzzySearchOptions to include custom scoring logic
+export interface FuzzySearchOptions {
+    maxDistance?: number;
+    nGramSize?: number;
+    fieldWeights?: { [key in string]?: number }; // Optional weights for fields
+    scoringStrategy?: 'default' | 'tokenCount' | 'custom'; // Strategy for scoring
+    customScoringFn?: (
+      token: string,
+      fieldToken: string,
+      distance: number,
+      fieldWeight: number,
+      options: FuzzySearchOptions
+    ) => number; // Custom scoring function
+  }

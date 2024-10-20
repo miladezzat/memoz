@@ -3,18 +3,25 @@ import QueryCache from './query-cache';
 
 export class QueryBuilder<T> implements PromiseLike<DocumentWithId<T>[]> {
   private result: DocumentWithId<T>[] = [];
+
   private resultPromise?: Promise<DocumentWithId<T>[]>;
+
   private queryCache: QueryCache<T>;
+
   private queryKey: string;
+
   private sortConditions: Array<Record<string, 'asc' | 'desc'>> = [];
+
   private skipCount: number = 0;
+
   private limitCount: number = Number.MAX_SAFE_INTEGER;
+
   private isResolved: boolean = false;
 
   constructor(
     result: DocumentWithId<T>[] | Promise<DocumentWithId<T>[]>,
     queryCache: QueryCache<T>,
-    queryKey: string
+    queryKey: string,
   ) {
     if (result instanceof Promise) {
       this.resultPromise = result;
@@ -42,7 +49,6 @@ export class QueryBuilder<T> implements PromiseLike<DocumentWithId<T>[]> {
     }
     return this;
   }
-  
 
   public skip(skipCount: number): this {
     this.skipCount = skipCount;
@@ -61,19 +67,33 @@ export class QueryBuilder<T> implements PromiseLike<DocumentWithId<T>[]> {
     // Apply sorting if needed
     if (this.sortConditions.length > 0) {
       resolvedResult.sort((a, b) => {
-        for (const sortObj of this.sortConditions) {
-          for (const [key, order] of Object.entries(sortObj)) {
+        let comparisonResult = 0;
+
+        this.sortConditions.forEach((sortObj) => {
+          Object.entries(sortObj).forEach(([key, order]) => {
             const aValue = a[key];
             const bValue = b[key];
-            
+
             // Skip undefined values
-            if (aValue === undefined || bValue === undefined) continue;
-            
-            if (aValue < bValue) return order === 'asc' ? -1 : 1;
-            if (aValue > bValue) return order === 'asc' ? 1 : -1;
+            if (aValue === undefined || bValue === undefined) return;
+
+            if (aValue < bValue) {
+              comparisonResult = order === 'asc' ? -1 : 1;
+              return; // Exit inner loop after determining order
+            }
+            if (aValue > bValue) {
+              comparisonResult = order === 'asc' ? 1 : -1;
+              // Exit inner loop after determining order
+            }
+          });
+
+          // If a comparison has already been made, stop further comparisons
+          if (comparisonResult !== 0) {
+            // Exit outer loop if already determined
           }
-        }
-        return 0;
+        });
+
+        return comparisonResult;
       });
     }
 
@@ -90,13 +110,13 @@ export class QueryBuilder<T> implements PromiseLike<DocumentWithId<T>[]> {
 
   public then<TResult1 = DocumentWithId<T>[], TResult2 = never>(
     onfulfilled?: (value: DocumentWithId<T>[]) => TResult1 | PromiseLike<TResult1>,
-    onrejected?: (reason: any) => TResult2 | PromiseLike<TResult2>
+    onrejected?: (reason: any) => TResult2 | PromiseLike<TResult2>,
   ): Promise<TResult1 | TResult2> {
     return this.exec().then(onfulfilled, onrejected);
   }
 
   public catch<TResult = never>(
-    onrejected?: (reason: any) => TResult | PromiseLike<TResult>
+    onrejected?: (reason: any) => TResult | PromiseLike<TResult>,
   ): Promise<DocumentWithId<T>[] | TResult> {
     return this.exec().catch(onrejected);
   }
@@ -106,6 +126,7 @@ export class QueryBuilder<T> implements PromiseLike<DocumentWithId<T>[]> {
   }
 
   // Mark the class as Promise-like for chaining purposes
+  // eslint-disable-next-line class-methods-use-this
   get [Symbol.toStringTag](): string {
     return 'Promise';
   }

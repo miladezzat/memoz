@@ -8,6 +8,7 @@ import { IndexManager } from './utils/index-manager';
 import {
   ConditionNode,
   DocumentWithId,
+  FuzzySearchOptions,
   MEMOZID,
   MemozOptions,
   UpdateManyResult,
@@ -17,6 +18,7 @@ import getMany from './utils/get-many';
 import Mutex from './utils/mutex';
 import chunkArray from './utils/helper';
 import { createQueryBuilderProxy, QueryBuilder } from './utils/get-many-query-builder';
+import SearchEngine from './utils/search-engine';
 
 /**
  * The Memoz class is an in-memory document store with optional persistence to disk.
@@ -69,6 +71,8 @@ export class Memoz<T> {
 
   private mutex: Mutex | null = null; // Nullable mutex (null if not used)
 
+  private searchEngine: SearchEngine<DocumentWithId<T>>; // Add a search engine instance
+
   /**
  *
  * @param memozOptions - Options for the Memoz instance
@@ -87,6 +91,9 @@ export class Memoz<T> {
     this.indexManager = new IndexManager();
     this.queryCache = new QueryCache();
 
+    // Initialize the search engine with the db
+    this.searchEngine = new SearchEngine(this.db);
+
     this.ready = persistToDisk ? this.persistenceManager.loadFromDisk() : Promise.resolve();
   }
 
@@ -104,6 +111,24 @@ export class Memoz<T> {
   public async rollbackTransaction(): Promise<void> {
     await this.ready;
     this.transactionManager.rollbackTransaction();
+  }
+
+  /**
+   * Performs a fuzzy search on the documents in the database.
+   * @param searchTerm - The term to search for.
+   * @param fields - The fields to search within the documents.
+   * @param options - Options to configure max distance, field weights, etc.
+   * @param limit - The maximum number of results to return.
+   * @returns Array of results with relevance score.
+   */
+  public async fuzzySearch(
+    searchTerm: string,
+    fields: (keyof T)[],
+    options: FuzzySearchOptions,
+    limit: number = Number.MAX_SAFE_INTEGER,
+  ): Promise<{ item: DocumentWithId<T>; score: number; }[]> {
+    await this.ready;
+    return this.searchEngine.limit(limit).search(searchTerm, fields, options);
   }
 
   /**
