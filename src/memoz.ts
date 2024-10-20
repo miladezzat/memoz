@@ -315,34 +315,45 @@ export class Memoz<T> {
  * @param {ConditionNode<Partial<T>>} query - The query condition to match documents.
  * @returns {QueryBuilder<DocumentWithId<T>>} - A QueryBuilder instance with chaining support.
  */
-  public getMany(query: ConditionNode<Partial<T>>): QueryBuilder<DocumentWithId<T>> {
+/**
+ * Retrieves multiple documents from the database that match the provided query.
+ * Supports sorting, pagination, and caching with chainable methods.
+ *
+ * @param {ConditionNode<Partial<T>>} [query] - The optional query condition to match documents.
+ * @returns {QueryBuilder<DocumentWithId<T>>} - A QueryBuilder instance with chaining support.
+ */
+public getMany(query?: ConditionNode<Partial<T>>): QueryBuilder<DocumentWithId<T>> {
     const operation = async (): Promise<DocumentWithId<T>[]> => {
       await this.ready;
-
-      const queryKey = JSON.stringify(query);
-      const cachedResults = this.queryCache.get(queryKey);
-
-      if (cachedResults) {
-        return cachedResults;
-      }
-
-      if (!isObject(query)) {
+  
+      const queryKey = query ? JSON.stringify(query) : 'default-query-key';
+  
+      if (query && !isObject(query)) {
         throw new Error('Invalid query: The query must be a valid object');
       }
-
-      const initialResult = this.getFromIndex(query).length > 0
-        ? this.getFromIndex(query)
-        : getMany([...this.transactionManager.getCurrentDb().values()], query);
-
+  
+      let initialResult: DocumentWithId<T>[];
+  
+      // If query is provided, use it, otherwise return all documents
+      if (query) {
+        initialResult = this.getFromIndex(query).length > 0
+          ? this.getFromIndex(query)
+          : getMany([...this.transactionManager.getCurrentDb().values()], query);
+      } else {
+        // Fetch all documents if no query is provided
+        initialResult = [...this.transactionManager.getCurrentDb().values()];
+      }
+  
       this.queryCache.set(queryKey, initialResult);
       return initialResult;
     };
-
+  
     const resultsPromise = operation();
-
+  
     // Return the QueryBuilder with the promise result
-    return createQueryBuilderProxy(new QueryBuilder<DocumentWithId<T>>(resultsPromise, this.queryCache, JSON.stringify(query)));
+    return createQueryBuilderProxy(new QueryBuilder<DocumentWithId<T>>(resultsPromise, this.queryCache, query ? JSON.stringify(query) : 'default-query-key'));
   }
+  
 
   /**
  * Updates an existing object by its ID with the provided new data.

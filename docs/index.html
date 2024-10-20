@@ -97,18 +97,45 @@
 <b>Example :</b><div><pre class="line-numbers"><code class="language-bash">npm i memoz
 # or
 yarn add memoz</code></pre></div><h2>Usage</h2>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">import {Memoz} from &#39;memoz&#39;;
-
-interface IDocument {
+<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">interface IUser {
+    readonly id?: string;
     name: string;
-    age?: string;
+    age: number;
 }
 
-const memo = new Memoz&lt;IDocument&gt;({
-        persistToDisk: true,  // to allow persist data on disk - default false
-        storagePath: &#39;./data&#39; // the location to persist data - default &#39;./data&#39;
-        useMutex: true, //  Whether to use a mutex for thread safety - default false
-    });</code></pre></div>
+const memoz = new Memoz&lt;IUser&gt;({
+    persistToDisk: true,  // to allow persist data on disk - default false
+    storagePath: &#39;./data&#39;, // the location to persist data - default &#39;./data&#39;
+    useMutex: true, //  Whether to use a mutex for thread safety - default false
+});
+
+
+async function boot() {
+    // Uncomment to create and store users in the database
+    const docs = Array.from({ length: 1000 }, (_, i) =&gt; ({ name: `User ${i}`, age: i }));
+    await memoz.createMany(docs);
+
+    // Loop to get users with pagination and sorting to test caching
+    const totalPages = 2; // Define the total number of pages to iterate over
+    const usersPerPage = 10; // Number of users per page
+
+    for (let index = 0; index &lt; totalPages; index++) {
+        try {
+            const users = await memoz
+                .getMany() // Retrieve all users
+                .sort([{ name: &#39;asc&#39; }]) // Sort users by name in ascending order
+                .skip(index * usersPerPage) // Calculate the correct offset for pagination
+                .limit(usersPerPage); // Limit the number of users retrieved
+
+            console.log(`Page ${index + 1}:`, users); // Log the users for the current page
+        } catch (error) {
+            console.error(`Error retrieving users for page ${index + 1}:`, error); // Handle any errors
+        }
+    }
+}
+
+// Start the boot process
+boot();</code></pre></div>
 
 
 

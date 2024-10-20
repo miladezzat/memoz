@@ -3,44 +3,46 @@ import QueryCache from './query-cache';
 
 export class QueryBuilder<T> implements PromiseLike<DocumentWithId<T>[]> {
   private result: DocumentWithId<T>[] = [];
-
   private resultPromise?: Promise<DocumentWithId<T>[]>;
-
   private queryCache: QueryCache<T>;
-
   private queryKey: string;
-
-  private sortConditions: Array<{ [key: string]: 'asc' | 'desc' }> = [];
-
+  private sortConditions: Array<Record<string, 'asc' | 'desc'>> = [];
   private skipCount: number = 0;
-
   private limitCount: number = Number.MAX_SAFE_INTEGER;
+  private isResolved: boolean = false;
 
-  constructor(result: DocumentWithId<T>[] | Promise<DocumentWithId<T>[]>, queryCache: QueryCache<T>, queryKey: string) {
-    // Handle both resolved arrays and promises
+  constructor(
+    result: DocumentWithId<T>[] | Promise<DocumentWithId<T>[]>,
+    queryCache: QueryCache<T>,
+    queryKey: string
+  ) {
     if (result instanceof Promise) {
       this.resultPromise = result;
     } else {
       this.result = result;
+      this.isResolved = true;
     }
     this.queryCache = queryCache;
     this.queryKey = queryKey;
   }
 
-  // This function resolves the result whether it's a promise or already an array
+  // Resolves the result if it's a promise, otherwise returns the result
   private async resolveResult(): Promise<DocumentWithId<T>[]> {
-    if (this.resultPromise) {
+    if (!this.isResolved && this.resultPromise) {
       this.result = await this.resultPromise;
+      this.isResolved = true;
     }
     return this.result;
   }
 
-  public sort(sortConditions?: { [key: string]: 'asc' | 'desc' }[]): this {
+  public sort(sortConditions?: Record<keyof T, 'asc' | 'desc'> | Record<keyof T, 'asc' | 'desc'>[]): this {
     if (sortConditions) {
-      this.sortConditions = sortConditions;
+      // If sortConditions is an array, use it as is, otherwise wrap it in an array
+      this.sortConditions = Array.isArray(sortConditions) ? sortConditions : [sortConditions];
     }
     return this;
   }
+  
 
   public skip(skipCount: number): this {
     this.skipCount = skipCount;
@@ -52,39 +54,49 @@ export class QueryBuilder<T> implements PromiseLike<DocumentWithId<T>[]> {
     return this;
   }
 
-  // Execute the query and return the results
+  // Executes the query and returns the sorted and paginated results
   public async exec(): Promise<DocumentWithId<T>[]> {
-    await this.resolveResult(); // Wait for the result if it's a promise
+    const resolvedResult = await this.resolveResult();
 
+    // Apply sorting if needed
     if (this.sortConditions.length > 0) {
-      this.result.sort((a, b) => this.sortConditions.reduce((acc, sortObj) => {
-        if (acc !== 0) return acc;
-
-        return Object.entries(sortObj).reduce((innerAcc, [key, order]) => {
-          if (innerAcc !== 0) return innerAcc;
-
-          if (a[key] < b[key]) return order === 'asc' ? -1 : 1;
-          if (a[key] > b[key]) return order === 'asc' ? 1 : -1;
-
-          return 0;
-        }, 0);
-      }, 0));
+      resolvedResult.sort((a, b) => {
+        for (const sortObj of this.sortConditions) {
+          for (const [key, order] of Object.entries(sortObj)) {
+            const aValue = a[key];
+            const bValue = b[key];
+            
+            // Skip undefined values
+            if (aValue === undefined || bValue === undefined) continue;
+            
+            if (aValue < bValue) return order === 'asc' ? -1 : 1;
+            if (aValue > bValue) return order === 'asc' ? 1 : -1;
+          }
+        }
+        return 0;
+      });
     }
 
-    const paginatedResult = this.result.slice(this.skipCount, this.skipCount + this.limitCount);
-    this.queryCache.set(this.queryKey, paginatedResult);
+    // Apply pagination
+    const paginatedResult = resolvedResult.slice(this.skipCount, this.skipCount + this.limitCount);
+
+    // Cache the result only if it's different
+    if (JSON.stringify(this.result) !== JSON.stringify(paginatedResult)) {
+      this.queryCache.set(this.queryKey, paginatedResult);
+    }
+
     return paginatedResult;
   }
 
   public then<TResult1 = DocumentWithId<T>[], TResult2 = never>(
     onfulfilled?: (value: DocumentWithId<T>[]) => TResult1 | PromiseLike<TResult1>,
-    onrejected?: (reason: any) => TResult2 | PromiseLike<TResult2>,
+    onrejected?: (reason: any) => TResult2 | PromiseLike<TResult2>
   ): Promise<TResult1 | TResult2> {
     return this.exec().then(onfulfilled, onrejected);
   }
 
   public catch<TResult = never>(
-    onrejected?: (reason: any) => TResult | PromiseLike<TResult>,
+    onrejected?: (reason: any) => TResult | PromiseLike<TResult>
   ): Promise<DocumentWithId<T>[] | TResult> {
     return this.exec().catch(onrejected);
   }
@@ -93,29 +105,25 @@ export class QueryBuilder<T> implements PromiseLike<DocumentWithId<T>[]> {
     return this.exec().finally(onfinally);
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  get [Symbol.toStringTag]() {
+  // Mark the class as Promise-like for chaining purposes
+  get [Symbol.toStringTag](): string {
     return 'Promise';
   }
 }
 
+// Proxy to enable chaining and ensure correct promise-like behavior
 export function createQueryBuilderProxy<T>(builder: QueryBuilder<T>): QueryBuilder<T> {
   return new Proxy(builder, {
     get(target, prop, receiver) {
-      // If accessing a function (like sort, skip, limit) or a known property, return it as normal
       const value = Reflect.get(target, prop, receiver);
+
       if (typeof value === 'function') {
         return (...args: any[]) => {
           const result = value.apply(target, args);
-          // If the function returns the QueryBuilder itself (for chaining), continue chaining
-          if (result instanceof QueryBuilder) {
-            return createQueryBuilderProxy(result); // Ensure chaining works with the proxy
-          }
-          return result;
+          return result instanceof QueryBuilder ? createQueryBuilderProxy(result) : result;
         };
       }
 
-      // Handle promise-like behavior
       if (prop === 'then') {
         return (...args: any[]) => builder.then(...args);
       }
@@ -123,7 +131,6 @@ export function createQueryBuilderProxy<T>(builder: QueryBuilder<T>): QueryBuild
         return (onrejected: (reason: any) => any) => builder.exec().catch(onrejected);
       }
 
-      // Fallback to exec if accessing unrecognized property
       return builder.exec();
     },
   });
