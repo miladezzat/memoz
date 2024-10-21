@@ -97,7 +97,7 @@ export type ConditionNode<T> =
  * Represents a document with an associated unique identifier.
  * The document type is extended with an id of type MEMOZID and can include additional properties.
  */
-export type DocumentWithId<T> = T & { id: MEMOZID; } & { [key: string]: any; };
+export type DocumentWithId<T> = T & { id: MEMOZID; };
 
 /**
  * Represents the result of an update operation affecting multiple documents.
@@ -143,3 +143,18 @@ export interface FuzzySearchOptions {
       options: FuzzySearchOptions
     ) => number; // Custom scoring function
   }
+
+export type EvictionStrategy = 'LRU' | 'FIFO';
+
+export interface LRUCacheOptions<K, V> {
+    maxSize: number;
+    ttl?: number;
+    onEvict?: (key: K, value: V) => void;
+    evictionStrategy?: EvictionStrategy;
+    stayAlive?: boolean;
+}
+
+export interface QueryCacheOptions<T> extends LRUCacheOptions<string, DocumentWithId<T>[]> {
+    ttl?: number;
+    evictionStrategy?: 'LRU' | 'FIFO';
+}

@@ -1,10 +1,5 @@
-import { LRUCache, LRUCacheOptions } from './lru-cache';
-import { DocumentWithId } from '../types';
-
-export interface QueryCacheOptions<T> extends LRUCacheOptions<string, DocumentWithId<T>[]> {
-    ttl?: number;
-    evictionStrategy?: 'LRU' | 'FIFO';
-}
+import { LRUCache } from './lru-cache';
+import { DocumentWithId, QueryCacheOptions } from '../types';
 
 export class QueryCache<T> {
   // Create an LRUCache instance that stores string keys and arrays of DocumentWithId<T> as values

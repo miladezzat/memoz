@@ -1,12 +1,5 @@
-type EvictionStrategy = 'LRU' | 'FIFO';
+import { EvictionStrategy, LRUCacheOptions } from '../types';
 
-export interface LRUCacheOptions<K, V> {
-    maxSize: number;
-    ttl?: number;
-    onEvict?: (key: K, value: V) => void;
-    evictionStrategy?: EvictionStrategy;
-    stayAlive?: boolean;
-}
 export class LRUCache<K, V> {
   private cache: Map<K, { value: V; expiry?: number }> = new Map();
 

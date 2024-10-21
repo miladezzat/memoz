@@ -1,5 +1,5 @@
 import { DocumentWithId } from '../types';
-import QueryCache from './query-cache';
+import { QueryCache } from './query-cache';
 
 export class QueryBuilder<T> implements PromiseLike<DocumentWithId<T>[]> {
   private result: DocumentWithId<T>[] = [];
@@ -10,7 +10,7 @@ export class QueryBuilder<T> implements PromiseLike<DocumentWithId<T>[]> {
 
   private queryKey: string;
 
-  private sortConditions: Array<Record<string, 'asc' | 'desc'>> = [];
+  private sortConditions: Array<Record<keyof T, 'asc' | 'desc'>> = [];
 
   private skipCount: number = 0;
 
@@ -60,7 +60,6 @@ export class QueryBuilder<T> implements PromiseLike<DocumentWithId<T>[]> {
     return this;
   }
 
-  // Executes the query and returns the sorted and paginated results
   public async exec(): Promise<DocumentWithId<T>[]> {
     const resolvedResult = await this.resolveResult();
 
@@ -71,11 +70,12 @@ export class QueryBuilder<T> implements PromiseLike<DocumentWithId<T>[]> {
 
         this.sortConditions.forEach((sortObj) => {
           Object.entries(sortObj).forEach(([key, order]) => {
-            const aValue = a[key];
-            const bValue = b[key];
+            const typedKey = key as keyof T; // Ensure the key is treated as keyof T
+            const aValue = a[typedKey];
+            const bValue = b[typedKey];
 
-            // Skip undefined values
-            if (aValue === undefined || bValue === undefined) return;
+            // Skip undefined or null values
+            if (aValue === undefined || bValue === undefined || aValue === null || bValue === null) return;
 
             if (aValue < bValue) {
               comparisonResult = order === 'asc' ? -1 : 1;
