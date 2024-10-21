@@ -123,6 +123,15 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>The <code>IndexManager</code> class manages indexing for documents of type <code>T</code>.
+It provides functionalities to update indexes with new documents,
+retrieve indexes based on fields, query documents using indexes, and clear all indexes.</p>
+
+            </p>
 
 
 
@@ -214,10 +223,17 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/utils/index-manager.ts:6</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/utils/index-manager.ts:17</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>A map that stores indexes by field names.
+The key is a string formed by joining field names with an underscore.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -250,19 +266,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="31"
-                                    class="link-to-prism">src/utils/index-manager.ts:31</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="66"
+                                    class="link-to-prism">src/utils/index-manager.ts:66</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Clears all indexes managed by the <code>IndexManager</code>.</p>
+</div>
 
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -282,21 +303,24 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getFromIndex(query: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, db: Map<MEMOZID | DocumentWithId<T>>)</code>
+                    <code>getFromIndex(query: <a href="../undefineds/ConditionNode.html" target="_self">ConditionNode&lt;Partial&lt;T&gt;&gt;</a>, db: Map<MEMOZID | DocumentWithId<T>>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="18"
-                                    class="link-to-prism">src/utils/index-manager.ts:18</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="48"
+                                    class="link-to-prism">src/utils/index-manager.ts:48</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Retrieves documents from the index based on the query object.
+If an index exists for the query fields, it uses that index to fetch documents from the database.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -307,13 +331,14 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                                 <td>query</td>
                                             <td>
-                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                                            <code><a href="../miscellaneous/typealiases.html#ConditionNode" target="_self" >ConditionNode&lt;Partial&lt;T&gt;&gt;</a></code>
                                             </td>
 
                                             <td>
@@ -321,6 +346,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>The query object containing conditions for fields and values to search for.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>db</td>
@@ -333,6 +364,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>A Map representing the database of documents.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -342,7 +379,10 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <ul>
+<li>An array of documents that match the query.</li>
+</ul>
+
                             </div>
                 </td>
             </tr>
@@ -370,14 +410,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="14"
-                                    class="link-to-prism">src/utils/index-manager.ts:14</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="36"
+                                    class="link-to-prism">src/utils/index-manager.ts:36</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Retrieves an index based on the specified fields.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -388,6 +430,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -402,6 +445,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>The array of field names used to identify the index.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -411,7 +460,10 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <ul>
+<li>The index for the specified fields, or undefined if not found.</li>
+</ul>
+
                             </div>
                 </td>
             </tr>
@@ -439,14 +491,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="8"
-                                    class="link-to-prism">src/utils/index-manager.ts:8</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="24"
+                                    class="link-to-prism">src/utils/index-manager.ts:24</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Updates all existing indexes by adding the provided document.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -457,6 +511,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -471,6 +526,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>The document to add to the indexes.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -496,23 +557,53 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { DocumentWithId, MEMOZID } from &#x27;../types&#x27;;
-import Indexing from &#x27;./indexing&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ConditionNode, DocumentWithId, MEMOZID } from &#x27;../types&#x27;;
+import { Indexing } from &#x27;./indexing&#x27;;
 
+/**
+ * The &#x60;IndexManager&#x60; class manages indexing for documents of type &#x60;T&#x60;.
+ * It provides functionalities to update indexes with new documents,
+ * retrieve indexes based on fields, query documents using indexes, and clear all indexes.
+ *
+ * @template T - The document type.
+ */
 export class IndexManager&lt;T&gt; {
+  /**
+     * A map that stores indexes by field names.
+     * The key is a string formed by joining field names with an underscore.
+     */
   private indexes: Map&lt;string, Indexing&lt;T&gt;&gt; &#x3D; new Map();
 
+  /**
+     * Updates all existing indexes by adding the provided document.
+     *
+     * @param {DocumentWithId&lt;T&gt;} doc - The document to add to the indexes.
+     */
   public updateIndexes(doc: DocumentWithId&lt;T&gt;): void {
     this.indexes.forEach((index) &#x3D;&gt; {
       index.addDocument(doc);
     });
   }
 
+  /**
+     * Retrieves an index based on the specified fields.
+     *
+     * @param {string[]} fields - The array of field names used to identify the index.
+     * @returns {Indexing&lt;T&gt; | undefined} - The index for the specified fields, or undefined if not found.
+     */
   public getIndex(fields: string[]): Indexing&lt;T&gt; | undefined {
     return this.indexes.get(fields.join(&#x27;_&#x27;));
   }
 
-  public getFromIndex(query: any, db: Map&lt;MEMOZID, DocumentWithId&lt;T&gt;&gt;): DocumentWithId&lt;T&gt;[] {
+  /**
+    * Retrieves documents from the index based on the query object.
+    * If an index exists for the query fields, it uses that index to fetch documents from the database.
+    *
+    * @param {ConditionNode&lt;Partial&lt;T&gt;&gt;} query - The query object containing conditions for fields and values to search for.
+    * @param {Map&lt;MEMOZID, DocumentWithId&lt;T&gt;&gt;} db - A Map representing the database of documents.
+    * @returns {DocumentWithId&lt;T&gt;[]} - An array of documents that match the query.
+    */
+  public getFromIndex(query: ConditionNode&lt;Partial&lt;T&gt;&gt;, db: Map&lt;MEMOZID, DocumentWithId&lt;T&gt;&gt;): DocumentWithId&lt;T&gt;[] {
     const results: Set&lt;DocumentWithId&lt;T&gt;&gt; &#x3D; new Set();
     const index &#x3D; this.getIndex(Object.keys(query));
     if (index) {
@@ -525,7 +616,12 @@ export class IndexManager&lt;T&gt; {
     return [...results];
   }
 
-  public clear() {
+  /**
+     * Clears all indexes managed by the &#x60;IndexManager&#x60;.
+     *
+     * @returns {void}
+     */
+  public clear(): void {
     return this.indexes.clear();
   }
 }

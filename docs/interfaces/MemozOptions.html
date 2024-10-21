@@ -408,7 +408,7 @@ export type ConditionNode&lt;T&gt; &#x3D;
  * Represents a document with an associated unique identifier.
  * The document type is extended with an id of type MEMOZID and can include additional properties.
  */
-export type DocumentWithId&lt;T&gt; &#x3D; T &amp; { id: MEMOZID; } &amp; { [key: string]: any; };
+export type DocumentWithId&lt;T&gt; &#x3D; T &amp; { id: MEMOZID; };
 
 /**
  * Represents the result of an update operation affecting multiple documents.
@@ -454,6 +454,21 @@ export interface FuzzySearchOptions {
       options: FuzzySearchOptions
     ) &#x3D;&gt; number; // Custom scoring function
   }
+
+export type EvictionStrategy &#x3D; &#x27;LRU&#x27; | &#x27;FIFO&#x27;;
+
+export interface LRUCacheOptions&lt;K, V&gt; {
+    maxSize: number;
+    ttl?: number;
+    onEvict?: (key: K, value: V) &#x3D;&gt; void;
+    evictionStrategy?: EvictionStrategy;
+    stayAlive?: boolean;
+}
+
+export interface QueryCacheOptions&lt;T&gt; extends LRUCacheOptions&lt;string, DocumentWithId&lt;T&gt;[]&gt; {
+    ttl?: number;
+    evictionStrategy?: &#x27;LRU&#x27; | &#x27;FIFO&#x27;;
+}
 </code></pre>
     </div>
 </div>

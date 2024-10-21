@@ -122,7 +122,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/utils/query-cache.ts</code>
+            <code>src/types.ts</code>
         </p>
 
 
@@ -252,88 +252,159 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { LRUCache, LRUCacheOptions } from &#x27;./lru-cache&#x27;;
-import { DocumentWithId } from &#x27;../types&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export type ComparisonOperator &#x3D;
+    | &#x27;$eq&#x27;
+    | &#x27;$neq&#x27;
+    | &#x27;$gt&#x27;
+    | &#x27;$gte&#x27;
+    | &#x27;$lt&#x27;
+    | &#x27;$lte&#x27;
+    | &#x27;$in&#x27;
+    | &#x27;$nin&#x27;
+    | &#x27;custom&#x27;
+    | &#x27;$regex&#x27;;
+
+/**
+ * Represents a unique identifier for a MEMOZ object.
+ * This type can be enhanced with stricter typing rules if desired.
+ */
+export type MEMOZID &#x3D; string &amp; { __brand__: &#x27;MEMOZID&#x27; };
+
+/**
+ * Defines valid regex options for regex operations.
+ * Supported options include:
+ * - &#x27;i&#x27;: Case-insensitive matching
+ * - &#x27;g&#x27;: Global search
+ * - &#x27;m&#x27;: Multiline mode
+ * - &#x27;s&#x27;: Dot all (dot matches newline)
+ * - &#x27;u&#x27;: Unicode matching
+ * - &#x27;y&#x27;: Sticky matching
+ */
+export type RegexOptions &#x3D; &#x27;i&#x27; | &#x27;g&#x27; | &#x27;m&#x27; | &#x27;s&#x27; | &#x27;u&#x27; | &#x27;y&#x27;;
+
+/**
+ * Represents a condition using a regular expression.
+ * The condition includes a regex pattern and optional flags.
+ */
+export type RegexCondition &#x3D; {
+    /**
+     * The regex pattern, which can be a string or a RegExp object.
+     */
+    $regex: string | RegExp;
+
+    /**
+     * Optional regex options to modify the regex behavior.
+     */
+    $options?: RegexOptions;
+};
+
+/**
+ * Defines the valid types that can be used as values in conditions.
+ * This includes primitive types, arrays, objects, and RegexCondition.
+ */
+export type ValueTypes &#x3D; string | number | boolean | Date | any[] | object | RegexCondition | Record&lt;string, any&gt;;
+
+/**
+ * Represents a simple condition for filtering data.
+ * It includes a field, an operator, a value, and an optional custom comparison function.
+ */
+export interface SimpleCondition&lt;T&gt; {
+    /**
+     * The field in the object to evaluate.
+     */
+    field: keyof T;
+
+    /**
+     * The operator used for the comparison.
+     */
+    operator: ComparisonOperator;
+
+    /**
+     * The value to compare against the field.
+     */
+    value: ValueTypes;
+
+    /**
+     * An optional custom comparison function for more complex comparisons.
+     * Takes two arguments and returns a boolean.
+     */
+    customCompare?: (a: any, b: any) &#x3D;&gt; boolean;
+}
+
+/**
+ * Defines a node structure for logical conditions.
+ * Nodes can be composed of AND/OR logic or simple conditions.
+ */
+export type ConditionNode&lt;T&gt; &#x3D;
+    | { $and: ConditionNode&lt;T&gt;[] } // All conditions must be true.
+    | { $or: ConditionNode&lt;T&gt;[] } // At least one condition must be true.
+    | SimpleCondition&lt;T&gt;; // A simple condition.
+
+/**
+ * Represents a document with an associated unique identifier.
+ * The document type is extended with an id of type MEMOZID and can include additional properties.
+ */
+export type DocumentWithId&lt;T&gt; &#x3D; T &amp; { id: MEMOZID; };
+
+/**
+ * Represents the result of an update operation affecting multiple documents.
+ * It includes a success flag, the number of documents updated, and the documents themselves.
+ */
+export type UpdateManyResult&lt;T&gt; &#x3D; {
+    updated: boolean; // Indicates if the update was successful.
+    n: number; // The number of documents updated.
+    documents: DocumentWithId&lt;T&gt;[]; // The updated documents.
+};
+
+/**
+ * Options for configuring the Memoz storage and behavior.
+ */
+export interface MemozOptions {
+    /**
+     * Optional path for storing data on disk.
+     */
+    storagePath?: string;
+
+    /**
+     * Flag indicating if data should persist to disk.
+     */
+    persistToDisk?: boolean;
+
+    /**
+     * Flag indicating if mutex should be used for concurrent access.
+     */
+    useMutex?: boolean;
+}
+
+// Modify the FuzzySearchOptions to include custom scoring logic
+export interface FuzzySearchOptions {
+    maxDistance?: number;
+    nGramSize?: number;
+    fieldWeights?: { [key in string]?: number }; // Optional weights for fields
+    scoringStrategy?: &#x27;default&#x27; | &#x27;tokenCount&#x27; | &#x27;custom&#x27;; // Strategy for scoring
+    customScoringFn?: (
+      token: string,
+      fieldToken: string,
+      distance: number,
+      fieldWeight: number,
+      options: FuzzySearchOptions
+    ) &#x3D;&gt; number; // Custom scoring function
+  }
+
+export type EvictionStrategy &#x3D; &#x27;LRU&#x27; | &#x27;FIFO&#x27;;
+
+export interface LRUCacheOptions&lt;K, V&gt; {
+    maxSize: number;
+    ttl?: number;
+    onEvict?: (key: K, value: V) &#x3D;&gt; void;
+    evictionStrategy?: EvictionStrategy;
+    stayAlive?: boolean;
+}
 
 export interface QueryCacheOptions&lt;T&gt; extends LRUCacheOptions&lt;string, DocumentWithId&lt;T&gt;[]&gt; {
     ttl?: number;
     evictionStrategy?: &#x27;LRU&#x27; | &#x27;FIFO&#x27;;
 }
-
-export class QueryCache&lt;T&gt; {
-  // Create an LRUCache instance that stores string keys and arrays of DocumentWithId&lt;T&gt; as values
-  private cache: LRUCache&lt;string, DocumentWithId&lt;T&gt;[]&gt;;
-
-  // Metrics for cache hits and misses
-  private cacheHits: number &#x3D; 0;
-
-  private cacheMisses: number &#x3D; 0;
-
-  /**
-     * Initializes the QueryCache with optional maxSize, TTL, and eviction strategy.
-     * @param options - Object containing maxSize, TTL, and eviction strategy.
-     */
-  constructor(options?: QueryCacheOptions&lt;T&gt;) {
-    const { maxSize &#x3D; 1000, ttl, evictionStrategy &#x3D; &#x27;LRU&#x27; } &#x3D; options || {};
-    this.cache &#x3D; new LRUCache&lt;string, DocumentWithId&lt;T&gt;[]&gt;({
-      maxSize,
-      ttl,
-      evictionStrategy,
-    });
-  }
-
-  /**
-     * Retrieves a list of documents by the given key from the cache.
-     * Tracks cache hits and misses.
-     * @param key - The key to retrieve.
-     * @returns The array of DocumentWithId&lt;T&gt; associated with the key, or undefined if not found or expired.
-     */
-  public get(key: string): DocumentWithId&lt;T&gt;[] | undefined {
-    const result &#x3D; this.cache.get(key);
-    if (result) {
-      this.cacheHits +&#x3D; 1;
-    } else {
-      this.cacheMisses +&#x3D; 1;
-    }
-    return result;
-  }
-
-  /**
-     * Adds or updates a list of documents in the cache.
-     * Supports custom TTL for each entry.
-     * @param key - The key of the cache entry.
-     * @param value - The array of DocumentWithId&lt;T&gt; to cache.
-     * @param ttl - Optional TTL for this specific entry, overriding global TTL.
-     */
-  public set(key: string, value: DocumentWithId&lt;T&gt;[], ttl?: number): void {
-    this.cache.set(key, value, ttl); // Allow custom TTL per entry
-  }
-
-  /**
-     * Invalidates (removes) a cache entry by key, or clears the entire cache if no key is provided.
-     * @param key - Optional key to remove from the cache. If not provided, the entire cache is cleared.
-     */
-  public invalidate(key?: string): void {
-    if (key) {
-      this.cache.delete(key);
-    } else {
-      this.cache.clear();
-    }
-  }
-
-  /**
-     * Returns cache hit/miss statistics.
-     * @returns An object with hit and miss counts.
-     */
-  public getStats(): { hits: number; misses: number } {
-    return {
-      hits: this.cacheHits,
-      misses: this.cacheMisses,
-    };
-  }
-}
-
-export default QueryCache;
 </code></pre>
     </div>
 </div>

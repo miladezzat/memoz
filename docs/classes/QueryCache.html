@@ -202,7 +202,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/utils/query-cache.ts:16</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/utils/query-cache.ts:11</a></div>
                             </td>
                         </tr>
 
@@ -274,7 +274,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/utils/query-cache.ts:11</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/utils/query-cache.ts:6</a></div>
                         </td>
                     </tr>
 
@@ -306,7 +306,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/utils/query-cache.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/utils/query-cache.ts:9</a></div>
                         </td>
                     </tr>
 
@@ -338,7 +338,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/utils/query-cache.ts:16</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/utils/query-cache.ts:11</a></div>
                         </td>
                     </tr>
 
@@ -374,8 +374,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="37"
-                                    class="link-to-prism">src/utils/query-cache.ts:37</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="32"
+                                    class="link-to-prism">src/utils/query-cache.ts:32</a></div>
                         </td>
                     </tr>
 
@@ -454,8 +454,8 @@ Tracks cache hits and misses.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="74"
-                                    class="link-to-prism">src/utils/query-cache.ts:74</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="69"
+                                    class="link-to-prism">src/utils/query-cache.ts:69</a></div>
                         </td>
                     </tr>
 
@@ -499,8 +499,8 @@ Tracks cache hits and misses.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="62"
-                                    class="link-to-prism">src/utils/query-cache.ts:62</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="57"
+                                    class="link-to-prism">src/utils/query-cache.ts:57</a></div>
                         </td>
                     </tr>
 
@@ -577,8 +577,8 @@ Tracks cache hits and misses.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="54"
-                                    class="link-to-prism">src/utils/query-cache.ts:54</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="49"
+                                    class="link-to-prism">src/utils/query-cache.ts:49</a></div>
                         </td>
                     </tr>
 
@@ -680,13 +680,8 @@ Supports custom TTL for each entry.</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { LRUCache, LRUCacheOptions } from &#x27;./lru-cache&#x27;;
-import { DocumentWithId } from &#x27;../types&#x27;;
-
-export interface QueryCacheOptions&lt;T&gt; extends LRUCacheOptions&lt;string, DocumentWithId&lt;T&gt;[]&gt; {
-    ttl?: number;
-    evictionStrategy?: &#x27;LRU&#x27; | &#x27;FIFO&#x27;;
-}
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { LRUCache } from &#x27;./lru-cache&#x27;;
+import { DocumentWithId, QueryCacheOptions } from &#x27;../types&#x27;;
 
 export class QueryCache&lt;T&gt; {
   // Create an LRUCache instance that stores string keys and arrays of DocumentWithId&lt;T&gt; as values

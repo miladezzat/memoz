@@ -130,6 +130,9 @@
                             <a href="#isValidMemozId" title="src/utils/is-valid-memoz-id.ts" ><b>isValidMemozId</b>&nbsp;&nbsp;&nbsp;(src/.../is-valid-memoz-id.ts)</a>
                         </li>
                         <li>
+                            <a href="#memoCache" title="src/utils/evaluate-node.ts" ><b>memoCache</b>&nbsp;&nbsp;&nbsp;(src/.../evaluate-node.ts)</a>
+                        </li>
+                        <li>
                             <a href="#MEMOZ_ID_PATTERN" title="src/constants/memoz-id.ts" ><b>MEMOZ_ID_PATTERN</b>&nbsp;&nbsp;&nbsp;(src/.../memoz-id.ts)</a>
                         </li>
                         <li>
@@ -237,30 +240,79 @@ and regular expression matching.</p>
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>&lt;T&gt;(datum: T, node: ConditionNode&lt;T&gt;): boolean &#x3D;&gt; {
+                        <i>Default value : </i><code>&lt;T extends object&gt;(datum: T, node: ConditionNode&lt;T&gt;): boolean &#x3D;&gt; {
+  // Retrieve or initialize the cache for the current datum, ensuring type safety
+  let datumCache: Map&lt;ConditionNode&lt;T&gt;, boolean&gt; | undefined &#x3D; memoCache.get(datum);
+  if (!datumCache) {
+    datumCache &#x3D; new Map&lt;ConditionNode&lt;T&gt;, boolean&gt;();
+    memoCache.set(datum, datumCache);
+  }
+
+  // Check if the result is already cached for this condition node
+  if (datumCache.has(node)) {
+    return datumCache.get(node)!; // Use the cached result, safely asserting it exists
+  }
+
+  let result: boolean;
+
+  // Evaluate the condition
   if (&#x27;$and&#x27; in node) {
     // AND logic: all conditions must pass
-    return node.$and.every((subNode) &#x3D;&gt; evaluateNode(datum, subNode));
-  }
-  if (&#x27;$or&#x27; in node) {
+    result &#x3D; node.$and.every((subNode) &#x3D;&gt; evaluateNode(datum, subNode));
+  } else if (&#x27;$or&#x27; in node) {
     // OR logic: at least one condition must pass
-    return node.$or.some((subNode) &#x3D;&gt; evaluateNode(datum, subNode));
+    result &#x3D; node.$or.some((subNode) &#x3D;&gt; evaluateNode(datum, subNode));
+  } else {
+    // Handle simple condition
+    result &#x3D; evaluateCondition(datum, node);
   }
-  // Handle simple condition
-  return evaluateCondition(datum, node);
+
+  // Cache the result for the current node and datum
+  datumCache.set(node, result);
+
+  return result;
 }</code>
                     </td>
                 </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Evaluates a logical condition node against a given datum (data object).</p>
+                    <div class="io-description"><p>Evaluates a logical condition node against a given datum (data object) with memoization.</p>
 <p>This function supports both AND and OR logical operations:</p>
 <ul>
 <li>For AND (<code>$and</code>), all conditions must evaluate to true.</li>
 <li>For OR (<code>$or</code>), at least one condition must evaluate to true.
 If the node is a simple condition, it will be evaluated directly.</li>
 </ul>
+<p>Memoization is applied to avoid redundant computations of the same condition for the same datum.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="memoCache"></a>
+                    <span class="name">
+                        <span ><b>memoCache</b></span>
+                        <a href="#memoCache"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new WeakMap&lt;object, Map&lt;ConditionNode&lt;any&gt;, boolean&gt;&gt;()</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>A cache that maps a datum to a Map of condition nodes and their evaluation results.
+The <code>WeakMap</code> ensures that the cache is memory-safe and automatically cleans up
+when the datum is no longer in use.</p>
 </div>
                 </td>
             </tr>
@@ -283,13 +335,15 @@ If the node is a simple condition, it will be evaluated directly.</li>
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>&lt;T&gt;(data: T[], query: ConditionNode&lt;T&gt;): T[] &#x3D;&gt; data.filter((datum) &#x3D;&gt; evaluateNode(datum, query))</code>
+                        <i>Default value : </i><code>&lt;T extends object&gt;(data: T[], query: ConditionNode&lt;T&gt;): T[] &#x3D;&gt; data.filter((datum) &#x3D;&gt; evaluateNode(datum, query))</code>
                     </td>
                 </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Precompile conditions to reduce repeated logic checks and handle early exits more effectively.</p>
+                    <div class="io-description"><p>Filters the dataset to find all items that match the provided condition node.</p>
+<p>This function uses <code>evaluateNode</code> to efficiently evaluate each datum against
+the condition node, leveraging memoization to avoid redundant computations.</p>
 </div>
                 </td>
             </tr>
@@ -312,13 +366,15 @@ If the node is a simple condition, it will be evaluated directly.</li>
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>&lt;T&gt;(data: T[], query: ConditionNode&lt;T&gt;): T | undefined &#x3D;&gt; data.find((datum) &#x3D;&gt; evaluateNode(datum, query))</code>
+                        <i>Default value : </i><code>&lt;T extends object&gt;(data: T[], query: ConditionNode&lt;T&gt;): T | undefined &#x3D;&gt; data.find((datum) &#x3D;&gt; evaluateNode(datum, query))</code>
                     </td>
                 </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Precompile conditions to reduce repeated logic checks and handle early exits more effectively.</p>
+                    <div class="io-description"><p>Finds the first item in the dataset that matches the provided condition node.</p>
+<p>This function uses <code>evaluateNode</code> to efficiently evaluate each datum against
+the condition node, stopping as soon as a match is found to improve performance.</p>
 </div>
                 </td>
             </tr>

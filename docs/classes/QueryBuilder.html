@@ -552,7 +552,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>    <code>Array&lt;Record&lt;string, &quot;asc&quot; | &quot;desc&quot;&gt;&gt;</code>
+                        <i>Type : </i>    <code>Array&lt;Record&lt;T, &quot;asc&quot; | &quot;desc&quot;&gt;&gt;</code>
 
                     </td>
                 </tr>
@@ -677,8 +677,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="64"
-                                    class="link-to-prism">src/utils/get-many-query-builder.ts:64</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="63"
+                                    class="link-to-prism">src/utils/get-many-query-builder.ts:63</a></div>
                         </td>
                     </tr>
 
@@ -1117,7 +1117,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { DocumentWithId } from &#x27;../types&#x27;;
-import QueryCache from &#x27;./query-cache&#x27;;
+import { QueryCache } from &#x27;./query-cache&#x27;;
 
 export class QueryBuilder&lt;T&gt; implements PromiseLike&lt;DocumentWithId&lt;T&gt;[]&gt; {
   private result: DocumentWithId&lt;T&gt;[] &#x3D; [];
@@ -1128,7 +1128,7 @@ export class QueryBuilder&lt;T&gt; implements PromiseLike&lt;DocumentWithId&lt;T
 
   private queryKey: string;
 
-  private sortConditions: Array&lt;Record&lt;string, &#x27;asc&#x27; | &#x27;desc&#x27;&gt;&gt; &#x3D; [];
+  private sortConditions: Array&lt;Record&lt;keyof T, &#x27;asc&#x27; | &#x27;desc&#x27;&gt;&gt; &#x3D; [];
 
   private skipCount: number &#x3D; 0;
 
@@ -1178,7 +1178,6 @@ export class QueryBuilder&lt;T&gt; implements PromiseLike&lt;DocumentWithId&lt;T
     return this;
   }
 
-  // Executes the query and returns the sorted and paginated results
   public async exec(): Promise&lt;DocumentWithId&lt;T&gt;[]&gt; {
     const resolvedResult &#x3D; await this.resolveResult();
 
@@ -1189,11 +1188,12 @@ export class QueryBuilder&lt;T&gt; implements PromiseLike&lt;DocumentWithId&lt;T
 
         this.sortConditions.forEach((sortObj) &#x3D;&gt; {
           Object.entries(sortObj).forEach(([key, order]) &#x3D;&gt; {
-            const aValue &#x3D; a[key];
-            const bValue &#x3D; b[key];
+            const typedKey &#x3D; key as keyof T; // Ensure the key is treated as keyof T
+            const aValue &#x3D; a[typedKey];
+            const bValue &#x3D; b[typedKey];
 
-            // Skip undefined values
-            if (aValue &#x3D;&#x3D;&#x3D; undefined || bValue &#x3D;&#x3D;&#x3D; undefined) return;
+            // Skip undefined or null values
+            if (aValue &#x3D;&#x3D;&#x3D; undefined || bValue &#x3D;&#x3D;&#x3D; undefined || aValue &#x3D;&#x3D;&#x3D; null || bValue &#x3D;&#x3D;&#x3D; null) return;
 
             if (aValue &lt; bValue) {
               comparisonResult &#x3D; order &#x3D;&#x3D;&#x3D; &#x27;asc&#x27; ? -1 : 1;
