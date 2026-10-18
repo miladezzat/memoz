@@ -100,17 +100,20 @@ export class Memoz<T> {
   public async beginTransaction(): Promise<void> {
     await this.ready;
     this.transactionManager.beginTransaction();
+    this.queryCache.invalidate();
   }
 
   public async commitTransaction(): Promise<void> {
     await this.ready;
     this.transactionManager.commitTransaction();
+    this.queryCache.invalidate();
     await this.persistenceManager.saveToDisk();
   }
 
   public async rollbackTransaction(): Promise<void> {
     await this.ready;
     this.transactionManager.rollbackTransaction();
+    this.queryCache.invalidate();
   }
 
   /**
@@ -235,6 +238,7 @@ export class Memoz<T> {
           targetDb.set(doc.id, doc); // Set document in DB
           this.indexManager.updateIndexes(doc); // Update index for each document
         });
+        this.queryCache.invalidate();
 
         // Persist chunk to disk
         await this.persistenceManager.saveToDisk();
@@ -428,6 +432,7 @@ export class Memoz<T> {
       const updatedObject = { ...existingObject, ...newData };
       this.transactionManager.getCurrentDb().set(id, updatedObject);
       this.indexManager.updateIndexes(updatedObject);
+      this.queryCache.invalidate();
       await this.persistenceManager.saveToDisk();
 
       return updatedObject;
@@ -467,6 +472,7 @@ export class Memoz<T> {
       const targetDb = this.transactionManager.getCurrentDb();
       targetDb.set(existingObject.id, updatedObject);
       this.indexManager.updateIndexes(updatedObject); // Update indexes after modifying
+      this.queryCache.invalidate();
       await this.persistenceManager.saveToDisk();
 
       return updatedObject;
@@ -496,10 +502,19 @@ export class Memoz<T> {
       }
 
       const documents = await this.getMany(query);
-      documents.forEach((document) => this.updateById(document.id, newData));
+      const targetDb = this.transactionManager.getCurrentDb();
+      // Apply the whole batch under this operation's lock; calling updateById
+      // here would attempt to acquire the same mutex again.
+      const updatedDocuments = documents.map((document) => {
+        const updatedDocument = { ...document, ...newData };
+        targetDb.set(document.id, updatedDocument);
+        this.indexManager.updateIndexes(updatedDocument);
+        return updatedDocument;
+      });
+      this.queryCache.invalidate();
       await this.persistenceManager.saveToDisk();
 
-      return { updated: true, n: documents.length, documents };
+      return { updated: true, n: updatedDocuments.length, documents: updatedDocuments };
     };
 
     return this.mutex ? this.mutex.lock(operation) : operation();
@@ -552,6 +567,7 @@ export class Memoz<T> {
       const { size } = targetDb;
       targetDb.clear();
       this.indexManager.clear();
+      this.queryCache.invalidate();
       await this.persistenceManager.saveToDisk();
 
       return { deleted: true, n: size };
@@ -578,8 +594,7 @@ export class Memoz<T> {
     const objectToDelete = await this.getOne(query);
     if (!objectToDelete) return undefined;
 
-    this.deleteById(objectToDelete.id);
-    await this.persistenceManager.saveToDisk();
+    await this.deleteById(objectToDelete.id);
 
     return objectToDelete;
   }
@@ -602,8 +617,7 @@ export class Memoz<T> {
     }
 
     const documents = await this.getMany(query);
-    documents.forEach((doc) => this.deleteById(doc.id));
-    await this.persistenceManager.saveToDisk();
+    await Promise.all(documents.map((doc) => this.deleteById(doc.id)));
 
     return { deleted: true, n: documents.length };
   }

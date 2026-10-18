@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import { Memoz } from '../src/index';
 import { isValidMemozId } from '../src/utils/is-valid-memoz-id';
@@ -12,41 +13,23 @@ type User = {
 };
 
 describe('Memoz Functionality with Persistence', () => {
-  const tempFilePath = path.resolve(__dirname, 'test-db.json'); // Path to the temporary file
+  let tempDirectory: string;
+  let tempFilePath: string;
   let memoz: Memoz<User>;
-  // eslint-disable-next-line no-undef
-  let timeoutId: NodeJS.Timeout;
 
   function checkPersistence(length = 1): void {
-    timeoutId = setTimeout(() => {
-      if (fs.existsSync(tempFilePath)) {
-        const fileData = fs.readFileSync(tempFilePath, 'utf8');
-
-        const persistedData = JSON.parse(fileData) as [string, User][];
-        expect(persistedData).to.have.lengthOf(length);
-      }
-    }, 3000);
+    const persistedData = JSON.parse(fs.readFileSync(tempFilePath, 'utf8')) as [string, User][];
+    expect(persistedData).to.have.lengthOf(length);
   }
 
   beforeEach(() => {
+    tempDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'memoz-test-'));
+    tempFilePath = path.join(tempDirectory, 'db.json');
     memoz = new Memoz<User>({ storagePath: tempFilePath, persistToDisk: true });
   });
 
   afterEach(() => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-      if (fs.existsSync(tempFilePath)) {
-        fs.unlinkSync(tempFilePath);
-      }
-    }
-  });
-
-  after(() => {
-    setTimeout(() => {
-      if (fs.existsSync(tempFilePath)) {
-        fs.unlinkSync(tempFilePath);
-      }
-    }, 6000);
+    fs.rmSync(tempDirectory, { recursive: true, force: true });
   });
 
   it('should create and persist one document', async () => {

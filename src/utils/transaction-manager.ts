@@ -1,7 +1,7 @@
 import { DocumentWithId, MEMOZID } from '../types';
 
 export class TransactionManager<T> {
-  private db: Map<MEMOZID, DocumentWithId<T>>;
+  private readonly db: Map<MEMOZID, DocumentWithId<T>>;
 
   private transactionDb: Map<MEMOZID, DocumentWithId<T>> | null = null;
 
@@ -25,8 +25,9 @@ export class TransactionManager<T> {
     if (!this.transactionDb) {
       throw new Error('No transaction in progress');
     }
-    // Apply the changes made in the transaction to the main db
-    this.db = this.transactionDb;
+    // Preserve the Map shared with persistence and search.
+    this.db.clear();
+    this.transactionDb.forEach((document, id) => this.db.set(id, document));
     this.transactionDb = null;
     this.dbSnapshot = null; // Clear the snapshot after committing
   }
@@ -38,8 +39,9 @@ export class TransactionManager<T> {
     if (!this.dbSnapshot) {
       throw new Error('No snapshot available for rollback');
     }
-    // Restore the original db state from the snapshot
-    this.db = this.dbSnapshot;
+    // Restore the snapshot without replacing the shared Map.
+    this.db.clear();
+    this.dbSnapshot.forEach((document, id) => this.db.set(id, document));
     this.transactionDb = null;
     this.dbSnapshot = null; // Clear the snapshot after rollback
   }

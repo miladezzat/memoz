@@ -34,6 +34,8 @@ export class PersistenceManager<T> {
    */
   private persistToDisk: boolean | undefined;
 
+  private writeQueue: Promise<void> = Promise.resolve();
+
   /**
    * Creates an instance of PersistenceManager.
    *
@@ -56,13 +58,16 @@ export class PersistenceManager<T> {
    */
   public async saveToDisk(): Promise<void> {
     if (this.persistToDisk && this.filePath) {
-      const dir = path.dirname(this.filePath);
+      const filePath = this.filePath;
+      const data = JSON.stringify(Array.from(this.db.entries()));
+      const save = this.writeQueue.then(async () => {
+        await fsPromises.mkdir(path.dirname(filePath), { recursive: true });
+        await fsPromises.writeFile(filePath, data, 'utf8');
+      });
 
-      await fsPromises.mkdir(dir, { recursive: true });
-      const writeStream = fs.createWriteStream(this.filePath);
-
-      writeStream.write(JSON.stringify(Array.from(this.db.entries())));
-      writeStream.end();
+      // Serialize writes, but allow subsequent saves to recover after a failure.
+      this.writeQueue = save.catch(() => undefined);
+      await save;
     }
   }
 
